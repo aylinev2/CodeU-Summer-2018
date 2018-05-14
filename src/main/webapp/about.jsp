@@ -57,12 +57,24 @@
           internationalization.</li>
       </ul>
 
-      <p>
-        This is your code now. Get familiar with it and get comfortable
-        working with your team to plan and make changes. Start by updating the
-        homepage and this about page to tell your users more about your team.
-        This page should also be used to describe the features and improvements
-        you've added.
+      <p> <br>
+        <strong>Meet the Team!</strong>
+        <ul>
+        	
+        		 <img src="Default-Profile-IMG.png" width = "150" height = "150" style = "float:left"> 
+        		<li> <strong>Marcel Gonzalez</strong>
+        		Currently studying Computer Science at Tecnologico de Monterrey </li> <br> <br> <br>
+
+       
+        		<br> <img src="Default-Profile-IMG.png" width = "150" height = "150" style = "float:left"> 
+        		<li> <strong>Ayline Villegas</strong>
+        		Currently studying Computer Science at The University of Illinois at Urbana Champaign </li> <br> <br> <br>
+
+
+        		<br> <img src="Anthony-Profile-IMG.jpg" width = "150" height = "150" style = "float:left;border-radius:50%""> 
+        		<li> <strong>Anthony Beltran</strong> 
+        		Currently studying Computer Science at The University of Illinois at Chicago. Passions include: nature, AI, and food! <a href = "https://www.linkedin.com/in/abeltran1804/">linkedin</a> </li> <br> <br> <br>
+        </ul>
       </p>
     </div>
   </div>
