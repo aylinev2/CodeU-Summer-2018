@@ -30,9 +30,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import org.kefirsf.bb.BBProcessorFactory;
+import org.kefirsf.bb.TextProcessor;
 
 /** Servlet class responsible for the chat page. */
-public class ChatServlet extends HttpServlet {
+public class ChatServlet extends HttpServlet{
 
   /** Store class that gives access to Conversations. */
   private ConversationStore conversationStore;
@@ -138,10 +140,13 @@ public class ChatServlet extends HttpServlet {
       return;
     }
 
+    // processor needed for BBCode to HTML translation
+    TextProcessor processor = BBProcessorFactory.getInstance().create();
+
     String messageContent = request.getParameter("message");
 
-    // this removes any HTML from the message content
-    String cleanedMessageContent = Jsoup.clean(messageContent, Whitelist.none());
+    // this removes any HTML from the message content and then parses any BBCode to HTML
+    String cleanedMessageContent = processor.process(Jsoup.clean(messageContent, Whitelist.none()));
 
     Message message =
         new Message(
