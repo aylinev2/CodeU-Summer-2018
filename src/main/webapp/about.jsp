@@ -1,12 +1,9 @@
 <%--
   Copyright 2017 Google Inc.
-
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-
      http://www.apache.org/licenses/LICENSE-2.0
-
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,6 +27,7 @@
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
+    <a href="/activity">Activity</a>
   </nav>
 
   <div id="container">
@@ -60,19 +58,19 @@
       <p> <br>
         <strong>Meet the Team!</strong>
         <ul>
-        	
-        		 <img src="Default-Profile-IMG.png" width = "150" height = "150" style = "float:left"> 
+
+        		 <img src="Default-Profile-IMG.png" width = "150" height = "150" style = "float:left">
         		<li> <strong>Marcel Gonzalez</strong>
         		Currently studying Computer Science at Tecnologico de Monterrey </li> <br> <br> <br>
 
-       
-        		<br> <img src="Default-Profile-IMG.png" width = "150" height = "150" style = "float:left"> 
+
+        		<br> <img src="Default-Profile-IMG.png" width = "150" height = "150" style = "float:left">
         		<li> <strong>Ayline Villegas</strong>
         		Currently studying Computer Science at The University of Illinois at Urbana Champaign </li> <br> <br> <br>
 
 
-        		<br> <img src="Anthony-Profile-IMG.jpg" width = "150" height = "150" style = "float:left;border-radius:50%""> 
-        		<li> <strong>Anthony Beltran</strong> 
+        		<br> <img src="Anthony-Profile-IMG.jpg" width = "150" height = "150" style = "float:left;border-radius:50%"">
+        		<li> <strong>Anthony Beltran</strong>
         		Currently studying Computer Science at The University of Illinois at Chicago. Passions include: nature, AI, and food! <a href = "https://www.linkedin.com/in/abeltran1804/">linkedin</a> </li> <br> <br> <br>
         </ul>
       </p>
