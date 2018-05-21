@@ -15,6 +15,8 @@
 <head>
   <title>CodeU Chat App</title>
   <link rel="stylesheet" href="/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
 </head>
 <body>
 
@@ -58,20 +60,43 @@
       <p> <br>
         <strong>Meet the Team!</strong>
         <ul>
+          <div class="social-icons">
+            <table cellpadding = "15" cellspacing = "1">
+              <tr><td align="center"><img src="About-IMG/Default-Profile-IMG.png" class="prof-pic">
+                <a href="https://github.com/MarcelRG"><i class="fa fa-github"></i></a>
 
-        		 <img src="Default-Profile-IMG.png" width = "150" height = "150" style = "float:left">
-        		<li> <strong>Marcel Gonzalez</strong>
-        		Currently studying Computer Science at Tecnologico de Monterrey </li> <br> <br> <br>
+                <a href="ADD LINK HERE!!!!"><i class="fa fa-linkedin-square"></i></a>
+
+                </td>
+                <td><strong>Marcel Gonzalez</strong>
+                Currently studying Computer Science at Tecnologico de Monterrey</td></tr>
+              
+
+              <tr><td align="center" ><img src="About-IMG/Ayline-Profile.gif" class="prof-pic">
+                <a href="https://www.facebook.com/ayline.villegas"><i class="fa fa-facebook-square"></i></a>
+
+                <a href="https://www.instagram.com/ayline_villegas/"><i class="fa fa-instagram"></i></a>
+
+                <a href="https://github.com/aylinev2"><i class="fa fa-github"></i></a>
+
+                <a href="https://www.linkedin.com/in/aylinev/"><i class="fa fa-linkedin-square"></i></a>
+
+                </td>
+                <td><a href="http://aylinev2.github.io"><strong>Ayline Villegas</strong></a>
+                Currently studying Computer Science at The University of Illinois at Urbana Champaign. Passions include: cats, baking, and music!</td></tr>
 
 
-        		<br> <img src="Default-Profile-IMG.png" width = "150" height = "150" style = "float:left">
-        		<li> <strong>Ayline Villegas</strong>
-        		Currently studying Computer Science at The University of Illinois at Urbana Champaign </li> <br> <br> <br>
+              <tr><td align="center"><img src="About-IMG/Anthony-Profile-IMG.jpg" class="prof-pic">
+                <a href="https://github.com/abeltran1804"><i class="fa fa-github"></i></a>
 
+                <a href="https://www.linkedin.com/in/abeltran1804/"><i class="fa fa-linkedin-square"></i></a>
 
-        		<br> <img src="Anthony-Profile-IMG.jpg" width = "150" height = "150" style = "float:left;border-radius:50%"">
-        		<li> <strong>Anthony Beltran</strong>
-        		Currently studying Computer Science at The University of Illinois at Chicago. Passions include: nature, AI, and food! <a href = "https://www.linkedin.com/in/abeltran1804/">linkedin</a> </li> <br> <br> <br>
+                </td>
+                <td><strong>Anthony Beltran</strong>
+                Currently studying Computer Science at The University of Illinois at Chicago. Passions include: nature, AI, and food!
+              </td></tr>
+            </table>
+          </div>
         </ul>
       </p>
     </div>
