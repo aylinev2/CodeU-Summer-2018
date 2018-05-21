@@ -56,3 +56,13 @@ input {
 button {
   font-size: 18px;
 }
+
+.social-icons a { 
+  color: black;
+}
+
+.prof-pic {
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+}
