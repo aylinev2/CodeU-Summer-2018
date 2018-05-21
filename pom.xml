@@ -53,6 +53,12 @@
     </dependency>
     
     <dependency>
+      <groupId>org.kefirsf</groupId>
+      <artifactId>kefirbb</artifactId>
+      <version>1.5</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.mindrot</groupId>
       <artifactId>jbcrypt</artifactId>
       <version>0.3m</version>
