@@ -68,7 +68,7 @@
                 <a href="ADD LINK HERE!!!!"><i class="fa fa-linkedin-square"></i></a>
 
                 </td>
-                <td><b>Marcel Gonzalez</b>
+                <td><strong>Marcel Gonzalez</strong>
                 Currently studying Computer Science at Tecnologico de Monterrey</td></tr>
               
 
