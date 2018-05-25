@@ -9,7 +9,9 @@
 <%@ page import= "java.util.Date" %>
 <%@ page import= "java.time.LocalDateTime" %>
 <%@ page import= "java.time.ZoneId" %>
-
+<%@ page import= "java.time.Instant" %>
+<%@ page import= "java.time.format.FormatStyle" %>
+<%@ page import= "java.util.Locale" %>
 
 <!DOCTYPE html>
 <html>
@@ -27,7 +29,7 @@
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
-    <a href="/activity.jsp">Activity</a>
+    <a href="/activity">Activity</a>
   </nav>
 
   <div id="container">
@@ -49,9 +51,12 @@
       <%
         for(Conversation conversation : conversations){
       %>
-        <li> 
-         
-            <a> <%= conversation.getTitle() %> created at <%= conversation.getCreationTime()%> </a>
+         <li> 
+          <% DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT ).withLocale( Locale.US ).withZone( ZoneId.systemDefault() );
+          Instant instant = conversation.getCreationTime();
+          String output = formatter.format( instant ); %>
+          <a> <%= conversation.getTitle() %> created at 
+          <strong><%= output %></strong> </a>
         </li>
       <%
         }
@@ -67,8 +72,11 @@
         for(User user : users){
       %>
         <li> 
-         
-            <a> <%= user.getName() %> joined at <%= user.getCreationTime()%> </a>
+         <% DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT ).withLocale( Locale.US ).withZone( ZoneId.systemDefault() );
+          Instant instant = user.getCreationTime();
+          String output = formatter.format( instant ); %>
+          <a> <%= user.getName() %> joined at 
+          <strong> <%= output %> </strong></a>
         </li>
       <%
         }
