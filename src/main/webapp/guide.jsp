@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>CodeU Chat App</title>
+  <meta charset="UTF-8">
   <link rel="stylesheet" href="/css/main.css">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
@@ -26,7 +27,15 @@
 
       <h1>How to style your text on the CodeU Chat App</h1>
       <p>
-        Our chat app currently uses the BBCode markup language to allow users to syle their text. We currently do not allow HTML tags for text styling in order for our app to be as user friendly as possible. You can see the guide below that lists all the possible BBCode tags that you can use when starting a conversation on our chat app.
+        <ul>
+          <li>Our chat app currently uses the BBCode markup language to allow users to syle their text. We currently do not allow HTML tags for text styling in order for our app to be as user friendly as possible. You can see the guide below that lists all the possible BBCode tags that you can use when starting a conversation on our chat app.</li>
+          <li>Our chat app also allows emoji! You may copy and paste an emoji in our application or you can access an emoji by simply typing in the emoji name enclosed by colons.
+            <ul>
+              <li>Example - :smile: would become &#X1F601;</li>
+              <li>Can't figure out the name of the emoji that you want to use? <a href="https://www.webpagefx.com/tools/emoji-cheat-sheet/">Click here</a> for a cheat sheet!</li>
+            </ul>
+          </li>
+        </ul>
       </p>
       <br>
             <table cellpadding = "15" cellspacing = "1" border="4">
@@ -51,7 +60,7 @@
                   <td><s>strikethrough text</s></td>
               </tr>
               <tr>
-                  <td>[url]https://www.google.com/[/url]</td>
+                  <td>[url]https://www.google.com/[/url] <br><br>or<br><br> just enter the link! (be sure to include https://)</td>
                   <td><a href="https://www.google.com/">https://www.google.com/</a></td>
               </tr>
               <tr>
@@ -66,6 +75,10 @@
                   <td>[color=red]LOOK AT ME![/color] <br><br>
                     or <br><br> [color=#FF0000]LOOK AT ME![/color]</td>
                   <td><span style="color:#FF0000;">LOOK AT ME!</span></td>
+              </tr>
+              <tr>
+                  <td>[font=Comic Sans MS]Look at me![/font]</td>
+                  <td><span style="font-family: Comic Sans MS">Look at me!</span> <br><br> To see supported fonts <a href="https://en.wikipedia.org/wiki/Font_family_(HTML)">click here!</a></td>
               </tr>
               <tr>
                   <td>[code]monospaced text[/code]</td>
