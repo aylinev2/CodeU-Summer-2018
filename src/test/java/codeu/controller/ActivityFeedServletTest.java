@@ -81,7 +81,7 @@ public class ActivityFeedServletTest {
     @Test
     public void testDoGet() throws IOException, ServletException {
         List<Conversation> fakeConversationList = new ArrayList<>();
-        fakeConversationList.add( new Conversation(UUID.randomUUID(), UUID.randomUUID(), "test_conversation", Instant.now()));
+        fakeConversationList.add( new Conversation(UUID.randomUUID(), USER_ONE.getId(), "test_conversation", Instant.now()));
         Mockito.when(mockConversationStore.getAllConversations()).thenReturn(fakeConversationList);
 
         final List<User> userList = new ArrayList<>();

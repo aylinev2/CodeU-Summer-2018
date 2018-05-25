@@ -64,7 +64,7 @@ public class UserStore {
     users = new ArrayList<>();
   }
     
-  /** Access the current set of conversations known to the application. */
+  /** Access the current set of users known to the application. */
   public List<User> getAllUsers() {
     return users;
   }
