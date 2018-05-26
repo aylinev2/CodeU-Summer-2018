@@ -142,12 +142,8 @@ public class ChatServlet extends HttpServlet{
       return;
     }
 
-    // Needed to get absoule path of file that configures BBCode processor
-    ClassLoader classLoader = getClass().getClassLoader();
-    File file = new File(classLoader.getResource("kefirbb.xml").getFile());
-
     // processor needed for BBCode to HTML translation
-    TextProcessor processor = BBProcessorFactory.getInstance().create(file.getAbsolutePath());
+    TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("kefirbb.xml");
 
     String messageContent = request.getParameter("message");
 
