@@ -20,26 +20,20 @@
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-  <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
-    <a href="/conversations">Conversations</a>
-    <% if(request.getSession().getAttribute("user") != null){ %>
-      <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
-    <% } else{ %>
-      <a href="/login">Login</a>
-    <% } %>
-    <a href="/about.jsp">About</a>
-    <a href="/activity">Activity</a>
-  </nav>
+
+  <%@ include file="navbar.jsp" %>
 
   <div id="container">
+      <% DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT ).withLocale( Locale.US ).withZone( ZoneId.systemDefault() ); %>
 
       <h1>Site Activity</h1>
+      <p> All that's going on:</p>
       <strong> Conversations: </strong>
       <%
       List<Conversation> conversations =
         (List<Conversation>) request.getAttribute("conversations");
-      List<User> users = (List<User>) request.getAttribute("users");
+      List<User> users = 
+        (List<User>) request.getAttribute("users");
       if(conversations == null || conversations.isEmpty()){
       %>
         <p>Aww nothing so far!</p>
@@ -49,13 +43,14 @@
       %>
         <ul class="mdl-list">
       <%
-        for(Conversation conversation : conversations){
+        for(int i=conversations.size()-1; i>=0; i--){
       %>
          <li> 
-          <% DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT ).withLocale( Locale.US ).withZone( ZoneId.systemDefault() );
-          Instant instant = conversation.getCreationTime();
+          <% 
+          Instant instant = conversations.get(i).getCreationTime();
           String output = formatter.format( instant ); %>
-          <a> <%= conversation.getTitle() %> created at 
+          <a href="/chat/<%= conversations.get(i).getTitle() %>">
+        <%= conversations.get(i).getTitle() %></a> created at 
           <strong><%= output %></strong> </a>
         </li>
       <%
@@ -67,21 +62,32 @@
       %>
       <hr/>
       <strong> Users: </strong>
-      <ul class="mdl-list">
       <%
-        for(User user : users){
+      if(users == null || users.isEmpty()){
+      %>
+        <p>Aww nothing so far!</p>
+      <%
+      }
+      else{
+      %>
+        <ul class="mdl-list">
+      <%
+        for(int i=users.size()-1; i>=0; i--){
       %>
         <li> 
-         <% DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT ).withLocale( Locale.US ).withZone( ZoneId.systemDefault() );
-          Instant instant = user.getCreationTime();
+         <% 
+          Instant instant = users.get(i).getCreationTime();
           String output = formatter.format( instant ); %>
-          <a> <%= user.getName() %> joined at 
+          <a> <%= users.get(i).getName() %> joined at 
           <strong> <%= output %> </strong></a>
         </li>
       <%
         }
       %>
       </ul>
+      <%
+      }
+      %>
        <hr/>
 
     </div>

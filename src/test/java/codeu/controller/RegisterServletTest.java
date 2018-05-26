@@ -51,6 +51,33 @@ public class RegisterServletTest {
         .setAttribute("error", "Please enter only letters, numbers, and spaces.");
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
   }
+    
+  @Test
+  public void testDoPost_NoUsername() throws IOException, ServletException {
+    Mockito.when(mockRequest.getParameter("username")).thenReturn("");
+    
+    registerServlet.doPost(mockRequest, mockResponse);
+        
+    Mockito.verify(mockRequest)
+      .setAttribute("error", "Please enter atleast one letter or number for username.");
+    Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
+    }
+    
+  @Test
+  public void testDoPost_NoPassword() throws IOException, ServletException {
+    Mockito.when(mockRequest.getParameter("username")).thenReturn("test username");
+    Mockito.when(mockRequest.getParameter("password")).thenReturn("");
+    UserStore mockUserStore = Mockito.mock(UserStore.class);
+    Mockito.when(mockUserStore.isUserRegistered("test username")).thenReturn(false);
+    registerServlet.setUserStore(mockUserStore);
+      
+    registerServlet.doPost(mockRequest, mockResponse);
+        
+    Mockito.verify(mockRequest)
+      .setAttribute("error", "Please enter atleast one letter or number for password.");
+    Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
+    }
+
 
   @Test
   public void testDoPost_NewUser() throws IOException, ServletException {
