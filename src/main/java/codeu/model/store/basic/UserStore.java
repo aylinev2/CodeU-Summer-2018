@@ -119,6 +119,18 @@ public class UserStore {
     return false;
   }
 
+  /** Return true if the given username has admin privileges. */
+  public boolean hasAdmin(String username) {
+    if (username.equals("adminama")) {
+      return true;
+    }
+    return false;
+  }
+
+  public Integer totalNumberOfUsers(){
+    return users.size();
+  }
+
   /**
    * Sets the List of Users stored by this UserStore. This should only be called once, when the data
    * is loaded from Datastore.
