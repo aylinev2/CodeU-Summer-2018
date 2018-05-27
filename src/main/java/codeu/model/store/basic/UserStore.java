@@ -63,6 +63,11 @@ public class UserStore {
     this.persistentStorageAgent = persistentStorageAgent;
     users = new ArrayList<>();
   }
+    
+  /** Access the current set of conversations known to the application. */
+  public List<User> getAllUsers() {
+    return users;
+  }
 
   /**
    * Access the User object with the given name.

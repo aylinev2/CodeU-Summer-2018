@@ -1,12 +1,9 @@
 <%--
   Copyright 2017 Google Inc.
-
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-
      http://www.apache.org/licenses/LICENSE-2.0
-
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,6 +15,8 @@
 <head>
   <title>CodeU Chat App</title>
   <link rel="stylesheet" href="/css/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
 </head>
 <body>
 
@@ -30,6 +29,7 @@
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
+    <a href="/activity">Activity</a>
   </nav>
 
   <div id="container">
@@ -57,12 +57,47 @@
           internationalization.</li>
       </ul>
 
-      <p>
-        This is your code now. Get familiar with it and get comfortable
-        working with your team to plan and make changes. Start by updating the
-        homepage and this about page to tell your users more about your team.
-        This page should also be used to describe the features and improvements
-        you've added.
+      <p> <br>
+        <strong>Meet the Team!</strong>
+        <ul>
+          <div class="social-icons">
+            <table cellpadding = "15" cellspacing = "1">
+              <tr><td align="center"><img src="About-IMG/Default-Profile-IMG.png" class="prof-pic">
+                <a href="https://github.com/MarcelRG"><i class="fa fa-github"></i></a>
+
+                <a href="ADD LINK HERE!!!!"><i class="fa fa-linkedin-square"></i></a>
+
+                </td>
+                <td><strong>Marcel Gonzalez</strong>
+                Currently studying Computer Science at Tecnologico de Monterrey</td></tr>
+              
+
+              <tr><td align="center" ><img src="About-IMG/Ayline-Profile.gif" class="prof-pic">
+                <a href="https://www.facebook.com/ayline.villegas"><i class="fa fa-facebook-square"></i></a>
+
+                <a href="https://www.instagram.com/ayline_villegas/"><i class="fa fa-instagram"></i></a>
+
+                <a href="https://github.com/aylinev2"><i class="fa fa-github"></i></a>
+
+                <a href="https://www.linkedin.com/in/aylinev/"><i class="fa fa-linkedin-square"></i></a>
+
+                </td>
+                <td><a href="http://aylinev2.github.io"><strong>Ayline Villegas</strong></a>
+                Currently studying Computer Science at The University of Illinois at Urbana Champaign. Passions include: cats, baking, and music!</td></tr>
+
+
+              <tr><td align="center"><img src="About-IMG/Anthony-Profile-IMG.jpg" class="prof-pic">
+                <a href="https://github.com/abeltran1804"><i class="fa fa-github"></i></a>
+
+                <a href="https://www.linkedin.com/in/abeltran1804/"><i class="fa fa-linkedin-square"></i></a>
+
+                </td>
+                <td><strong>Anthony Beltran</strong>
+                Currently studying Computer Science at The University of Illinois at Chicago. Passions include: nature, AI, and food!
+              </td></tr>
+            </table>
+          </div>
+        </ul>
       </p>
     </div>
   </div>

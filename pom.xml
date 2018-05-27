@@ -53,6 +53,18 @@
     </dependency>
     
     <dependency>
+      <groupId>org.kefirsf</groupId>
+      <artifactId>kefirbb</artifactId>
+      <version>1.5</version>
+    </dependency>
+
+    <dependency>
+     <groupId>com.vdurmont</groupId>
+     <artifactId>emoji-java</artifactId>
+     <version>4.0.0</version>
+    </dependency>
+
+    <dependency>
       <groupId>org.mindrot</groupId>
       <artifactId>jbcrypt</artifactId>
       <version>0.3m</version>
@@ -109,7 +121,7 @@
         <artifactId>appengine-maven-plugin</artifactId>
         <version>1.9.59</version>
       </plugin>
-    </plugins>
+    </plugins> 
   </build>
 
 </project>

@@ -21,6 +21,7 @@ import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
 import java.io.IOException;
+import java.io.File;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -30,9 +31,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+import org.kefirsf.bb.BBProcessorFactory;
+import org.kefirsf.bb.TextProcessor;
+import com.vdurmont.emoji.EmojiParser;
 
 /** Servlet class responsible for the chat page. */
-public class ChatServlet extends HttpServlet {
+public class ChatServlet extends HttpServlet{
 
   /** Store class that gives access to Conversations. */
   private ConversationStore conversationStore;
@@ -138,17 +142,22 @@ public class ChatServlet extends HttpServlet {
       return;
     }
 
+    // processor needed for BBCode to HTML translation
+    TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("kefirbb.xml");
+
     String messageContent = request.getParameter("message");
 
-    // this removes any HTML from the message content
-    String cleanedMessageContent = Jsoup.clean(messageContent, Whitelist.none());
+    // this removes any HTML from the message content and then parses any BBCode to HTML
+    String cleanedMessageContent = processor.process(Jsoup.clean(messageContent, Whitelist.none()));
+
+    String cleanedAndEmojiCheckedMsg = EmojiParser.parseToUnicode(cleanedMessageContent);
 
     Message message =
         new Message(
             UUID.randomUUID(),
             conversation.getId(),
             user.getId(),
-            cleanedMessageContent,
+            cleanedAndEmojiCheckedMsg,
             Instant.now());
 
     messageStore.addMessage(message);
