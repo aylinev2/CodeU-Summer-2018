@@ -59,7 +59,7 @@ public class RegisterServletTest {
     registerServlet.doPost(mockRequest, mockResponse);
         
     Mockito.verify(mockRequest)
-      .setAttribute("error", "Please enter atleast one letter or number for username.");
+      .setAttribute("error", "Please enter at least one letter or number for username.");
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
     }
     
@@ -74,7 +74,7 @@ public class RegisterServletTest {
     registerServlet.doPost(mockRequest, mockResponse);
         
     Mockito.verify(mockRequest)
-      .setAttribute("error", "Please enter atleast one letter or number for password.");
+      .setAttribute("error", "Please enter at least one letter or number for password.");
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
     }
 

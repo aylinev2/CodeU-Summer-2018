@@ -71,6 +71,11 @@ public class MessageStore {
     persistentStorageAgent.writeThrough(message);
   }
 
+  /** Access the current set of users known to the application. */
+  public List<Message> getAllMessages() {
+    return messages;
+  }
+
   /** Access the current set of Messages within the given Conversation. */
   public List<Message> getMessagesInConversation(UUID conversationId) {
 
@@ -89,4 +94,6 @@ public class MessageStore {
   public void setMessages(List<Message> messages) {
     this.messages = messages;
   }
+    
+
 }

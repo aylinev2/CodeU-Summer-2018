@@ -106,8 +106,8 @@ public class ConversationServlet extends HttpServlet {
       return;
     }
           
-    if (conversationTitle.length() == 0) {
-        request.setAttribute("error", "Please enter atleast one letter or number for the conversation title.");
+    if (conversationTitle.isEmpty()) {
+        request.setAttribute("error", "Please enter at least one letter or number for the conversation title.");
         List<Conversation> conversations = conversationStore.getAllConversations();
         request.setAttribute("conversations", conversations);
         request.getRequestDispatcher("/WEB-INF/view/conversations.jsp").forward(request, response);

@@ -8,4 +8,9 @@
     <% } %>
     <a href="/about.jsp">About</a>
     <a href="/activity">Activity</a>
+    <% String username = (String) request.getSession().getAttribute("user");
+    if(username !=null && username.equals("adminama")){
+    %>
+     <a href="/admin">Admin</a> 
+     <% } %>
 </nav>

@@ -55,8 +55,8 @@ public class RegisterServlet extends HttpServlet {
       return;
     }
           
-    if (username.length() == 0) {
-        request.setAttribute("error", "Please enter atleast one letter or number for username.");
+    if (username.isEmpty()) {
+        request.setAttribute("error", "Please enter at least one letter or number for username.");
         request.getRequestDispatcher("/WEB-INF/view/register.jsp").forward(request, response);
         return;
     }
@@ -69,8 +69,8 @@ public class RegisterServlet extends HttpServlet {
     }
 
     String password = request.getParameter("password");
-    if (password.length() == 0) {
-        request.setAttribute("error", "Please enter atleast one letter or number for password.");
+    if (password.isEmpty()) {
+        request.setAttribute("error", "Please enter at least one letter or number for password.");
         request.getRequestDispatcher("/WEB-INF/view/register.jsp").forward(request, response);
         return;
     }

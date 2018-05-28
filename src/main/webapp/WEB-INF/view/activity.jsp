@@ -1,6 +1,11 @@
 <%@ page import= "java.util.List" %>
 <%@ page import= "codeu.model.data.Conversation" %>
+<%@ page import= "codeu.model.store.basic.ConversationStore"%>
+<%@ page import="codeu.model.store.basic.MessageStore"%>
+<%@ page import="codeu.model.data.Message" %>
 <%@ page import= "codeu.model.data.User" %>
+<%@ page import= "codeu.model.store.basic.UserStore" %>
+<%@ page import= "java.util.UUID" %>
 <%@ page import= "codeu.model.store.persistence.PersistentDataStore" %>
 <%@ page import= "com.google.appengine.api.datastore.DatastoreService" %>
 <%@ page import= "com.google.appengine.api.datastore.DatastoreServiceFactory" %>
@@ -12,6 +17,11 @@
 <%@ page import= "java.time.Instant" %>
 <%@ page import= "java.time.format.FormatStyle" %>
 <%@ page import= "java.util.Locale" %>
+
+<%MessageStore messageStore = MessageStore.getInstance();
+List<Message> messages = messageStore.getAllMessages();
+%>
+
 
 <!DOCTYPE html>
 <html>
@@ -43,15 +53,16 @@
       %>
         <ul class="mdl-list">
       <%
-        for(int i=conversations.size()-1; i>=0; i--){
+        for(Conversation conversation : conversations){
       %>
          <li> 
           <% 
-          Instant instant = conversations.get(i).getCreationTime();
+          String owner = UserStore.getInstance().getUser(conversation.getOwnerId()).getName();
+          Instant instant = conversation.getCreationTime();
           String output = formatter.format( instant ); %>
-          <a href="/chat/<%= conversations.get(i).getTitle() %>">
-        <%= conversations.get(i).getTitle() %></a> created at 
-          <strong><%= output %></strong> </a>
+          <strong><%= output %>:</strong>
+          <a href="/chat/<%= conversation.getTitle() %>">
+        <%= conversation.getTitle() %></a> created by <%= owner %> 
         </li>
       <%
         }
@@ -72,14 +83,14 @@
       %>
         <ul class="mdl-list">
       <%
-        for(int i=users.size()-1; i>=0; i--){
+        for(User user: users){
       %>
         <li> 
          <% 
-          Instant instant = users.get(i).getCreationTime();
+          Instant instant = user.getCreationTime();
           String output = formatter.format( instant ); %>
-          <a> <%= users.get(i).getName() %> joined at 
-          <strong> <%= output %> </strong></a>
+          <strong> <%= output %>: </strong>
+          <%= user.getName() %> joined! 
         </li>
       <%
         }
@@ -89,6 +100,38 @@
       }
       %>
        <hr/>
+      <strong> Messsages: </strong>
+      <%
+      if(messages == null || messages.isEmpty()){
+      %>
+        <p>Aww nothing so far!</p>
+      <%
+      }
+      else{
+      %>
+        <ul class="mdl-list">
+      <%
+        for(Message message: messages){
+      %>
+        <li> 
+         <% 
+          String owner = UserStore.getInstance().getUser(message.getAuthorId()).getName();
+          String title = ConversationStore.getInstance().getConversationWithUUID(message.getConversationId()).getTitle();
+          Instant instant = message.getCreationTime();
+          String output = formatter.format( instant ); %>
+          <strong> <%= output %>: </strong>
+          <%= owner %> sent a message in
+          <a href="/chat/<%= title %>">
+          <%= title %></a>
+          : "<%=message.getContent()%>"
+        </li>
+      <%
+        }
+      %>
+      </ul>
+      <%
+      }
+      %>
 
     </div>
   </div>

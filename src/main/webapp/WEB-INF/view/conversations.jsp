@@ -60,10 +60,10 @@
     %>
       <ul class="mdl-list">
     <%
-      for(int i=conversations.size()-1; i>=0; i--){
+      for(Conversation conversation: conversations){
     %>
-      <li><a href="/chat/<%= conversations.get(i).getTitle() %>">
-        <%= conversations.get(i).getTitle() %></a></li>
+      <li><a href="/chat/<%= conversation.getTitle() %>">
+        <%= conversation.getTitle() %></a></li>
     <%
       }
     %>

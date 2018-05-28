@@ -138,7 +138,7 @@ public class ConversationServletTest {
         
         Mockito.verify(mockConversationStore, Mockito.never())
         .addConversation(Mockito.any(Conversation.class));
-        Mockito.verify(mockRequest).setAttribute("error", "Please enter atleast one letter or number for the conversation title.");
+        Mockito.verify(mockRequest).setAttribute("error", "Please enter at least one letter or number for the conversation title.");
         Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
     }
 

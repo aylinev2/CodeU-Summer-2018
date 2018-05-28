@@ -26,6 +26,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 /** Servlet class responsible for the conversations page. */
 public class ActivityFeedServlet extends HttpServlet {
@@ -35,6 +36,7 @@ public class ActivityFeedServlet extends HttpServlet {
     
     /** Store class that gives access to Conversations. */
     private ConversationStore conversationStore;
+    
     
     /**
      * Set up state for handling conversation-related requests. This method is only called when
@@ -64,21 +66,24 @@ public class ActivityFeedServlet extends HttpServlet {
     }
     
     /**
-     * This function fires when a user navigates to the conversations page. It gets all of the
-     * conversations from the model and forwards to conversations.jsp for rendering the list.
+     * This function fires when a user navigates to the activity page. It gets all of the
+     * conversations from the model and forwards to activity.jsp for rendering the list.
      */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws IOException, ServletException {
         List<Conversation> conversations = conversationStore.getAllConversations();
         List<User> users = userStore.getAllUsers();
+
+//            Collections.reverse(users);
+//            Collections.reverse(conversations);
         request.setAttribute("conversations", conversations);
         request.setAttribute("users", users);
         request.getRequestDispatcher("/WEB-INF/view/activity.jsp").forward(request, response);
     }
     
     /**
-     * This function fires when a user submits the form on the conversations page. It gets the
+     * This function fires when a user submits the form on the activity page. It gets the
      * logged-in username from the session and the new conversation title from the submitted form
      * data. It uses this to create a new Conversation object that it adds to the model.
      */
