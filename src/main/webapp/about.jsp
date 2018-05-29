@@ -20,17 +20,7 @@
 </head>
 <body>
 
-  <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
-    <a href="/conversations">Conversations</a>
-    <% if(request.getSession().getAttribute("user") != null){ %>
-      <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
-    <% } else{ %>
-      <a href="/login">Login</a>
-    <% } %>
-    <a href="/about.jsp">About</a>
-    <a href="/activity">Activity</a>
-  </nav>
+  <%@ include file="/WEB-INF/view/navbar.jsp" %>
 
   <div id="container">
     <div
@@ -87,6 +77,8 @@
 
 
               <tr><td align="center"><img src="About-IMG/Anthony-Profile-IMG.jpg" class="prof-pic">
+                <a href="https://www.facebook.com/anthony.beltran.7796"><i class="fa fa-facebook-square"></i></a>
+
                 <a href="https://github.com/abeltran1804"><i class="fa fa-github"></i></a>
 
                 <a href="https://www.linkedin.com/in/abeltran1804/"><i class="fa fa-linkedin-square"></i></a>

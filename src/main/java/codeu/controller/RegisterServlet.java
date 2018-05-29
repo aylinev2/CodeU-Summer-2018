@@ -54,6 +54,13 @@ public class RegisterServlet extends HttpServlet {
       request.getRequestDispatcher("/WEB-INF/view/register.jsp").forward(request, response);
       return;
     }
+          
+    if (username.isEmpty()) {
+        request.setAttribute("error", "Please enter at least one letter or number for username.");
+        request.getRequestDispatcher("/WEB-INF/view/register.jsp").forward(request, response);
+        return;
+    }
+
 
     if (userStore.isUserRegistered(username)) {
       request.setAttribute("error", "That username is already taken.");
@@ -62,6 +69,11 @@ public class RegisterServlet extends HttpServlet {
     }
 
     String password = request.getParameter("password");
+    if (password.isEmpty()) {
+        request.setAttribute("error", "Please enter at least one letter or number for password.");
+        request.getRequestDispatcher("/WEB-INF/view/register.jsp").forward(request, response);
+        return;
+    }
     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
     User user = new User(UUID.randomUUID(), username, hashedPassword, Instant.now());

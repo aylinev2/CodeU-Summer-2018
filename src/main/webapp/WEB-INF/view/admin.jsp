@@ -26,18 +26,8 @@ Integer totalMessages = messageStore.totalNumberOfMessages();
 </head>
 <body>
 
-  <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
-    <% String username = (String) request.getSession().getAttribute("user");%>
-    <% if(username != null){ %>
-    <a href="/conversations">Conversations</a>
-      <a>Hello <%=username%>!</a>
-    <% } else{ %>
-      <a href="/login">Login</a>
-    <% } %>
-    <a href="/about.jsp">About</a>
-    <a href="/admin.jsp">Admin</a>
-  </nav>
+  <%@ include file="navbar.jsp" %>
+
 
   <div id="container">
       <h1>Admin Page</h1>

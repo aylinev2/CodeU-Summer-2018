@@ -1,6 +1,11 @@
 <%@ page import= "java.util.List" %>
 <%@ page import= "codeu.model.data.Conversation" %>
+<%@ page import= "codeu.model.store.basic.ConversationStore"%>
+<%@ page import="codeu.model.store.basic.MessageStore"%>
+<%@ page import="codeu.model.data.Message" %>
 <%@ page import= "codeu.model.data.User" %>
+<%@ page import= "codeu.model.store.basic.UserStore" %>
+<%@ page import= "java.util.UUID" %>
 <%@ page import= "codeu.model.store.persistence.PersistentDataStore" %>
 <%@ page import= "com.google.appengine.api.datastore.DatastoreService" %>
 <%@ page import= "com.google.appengine.api.datastore.DatastoreServiceFactory" %>
@@ -13,6 +18,11 @@
 <%@ page import= "java.time.format.FormatStyle" %>
 <%@ page import= "java.util.Locale" %>
 
+<%MessageStore messageStore = MessageStore.getInstance();
+List<Message> messages = messageStore.getAllMessages();
+%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,26 +30,20 @@
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-  <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
-    <a href="/conversations">Conversations</a>
-    <% if(request.getSession().getAttribute("user") != null){ %>
-      <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
-    <% } else{ %>
-      <a href="/login">Login</a>
-    <% } %>
-    <a href="/about.jsp">About</a>
-    <a href="/activity">Activity</a>
-  </nav>
+
+  <%@ include file="navbar.jsp" %>
 
   <div id="container">
+      <% DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT ).withLocale( Locale.US ).withZone( ZoneId.systemDefault() ); %>
 
       <h1>Site Activity</h1>
+      <p> All that's going on:</p>
       <strong> Conversations: </strong>
       <%
       List<Conversation> conversations =
         (List<Conversation>) request.getAttribute("conversations");
-      List<User> users = (List<User>) request.getAttribute("users");
+      List<User> users = 
+        (List<User>) request.getAttribute("users");
       if(conversations == null || conversations.isEmpty()){
       %>
         <p>Aww nothing so far!</p>
@@ -52,11 +56,13 @@
         for(Conversation conversation : conversations){
       %>
          <li> 
-          <% DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT ).withLocale( Locale.US ).withZone( ZoneId.systemDefault() );
+          <% 
+          String owner = UserStore.getInstance().getUser(conversation.getOwnerId()).getName();
           Instant instant = conversation.getCreationTime();
           String output = formatter.format( instant ); %>
-          <a> <%= conversation.getTitle() %> created at 
-          <strong><%= output %></strong> </a>
+          <strong><%= output %>:</strong>
+          <a href="/chat/<%= conversation.getTitle() %>">
+        <%= conversation.getTitle() %></a> created by <%= owner %> 
         </li>
       <%
         }
@@ -67,22 +73,65 @@
       %>
       <hr/>
       <strong> Users: </strong>
-      <ul class="mdl-list">
       <%
-        for(User user : users){
+      if(users == null || users.isEmpty()){
+      %>
+        <p>Aww nothing so far!</p>
+      <%
+      }
+      else{
+      %>
+        <ul class="mdl-list">
+      <%
+        for(User user: users){
       %>
         <li> 
-         <% DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT ).withLocale( Locale.US ).withZone( ZoneId.systemDefault() );
+         <% 
           Instant instant = user.getCreationTime();
           String output = formatter.format( instant ); %>
-          <a> <%= user.getName() %> joined at 
-          <strong> <%= output %> </strong></a>
+          <strong> <%= output %>: </strong>
+          <%= user.getName() %> joined! 
         </li>
       <%
         }
       %>
       </ul>
+      <%
+      }
+      %>
        <hr/>
+      <strong> Messsages: </strong>
+      <%
+      if(messages == null || messages.isEmpty()){
+      %>
+        <p>Aww nothing so far!</p>
+      <%
+      }
+      else{
+      %>
+        <ul class="mdl-list">
+      <%
+        for(Message message: messages){
+      %>
+        <li> 
+         <% 
+          String owner = UserStore.getInstance().getUser(message.getAuthorId()).getName();
+          String title = ConversationStore.getInstance().getConversationWithUUID(message.getConversationId()).getTitle();
+          Instant instant = message.getCreationTime();
+          String output = formatter.format( instant ); %>
+          <strong> <%= output %>: </strong>
+          <%= owner %> sent a message in
+          <a href="/chat/<%= title %>">
+          <%= title %></a>
+          : "<%=message.getContent()%>"
+        </li>
+      <%
+        }
+      %>
+      </ul>
+      <%
+      }
+      %>
 
     </div>
   </div>
