@@ -34,6 +34,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ActivityFeedServletTest {
     
@@ -80,10 +82,17 @@ public class ActivityFeedServletTest {
     
     @Test
     public void testDoGet() throws IOException, ServletException {
+        UUID testUUID = UUID.randomUUID();
+        HashMap<UUID, String> idToName = new HashMap<>();
+        idToName.put(USER_ONE.getId(), USER_ONE.getName());
+        
+        HashMap<UUID, String> idToTitle = new HashMap<>();
+        idToTitle.put(testUUID, "test_conversation");
+        
         List<Conversation> fakeConversationList = new ArrayList<>();
-        fakeConversationList.add( new Conversation(UUID.randomUUID(), USER_ONE.getId(), "test_conversation", Instant.now()));
+        fakeConversationList.add( new Conversation(testUUID, USER_ONE.getId(), "test_conversation", Instant.now()));
         Mockito.when(mockConversationStore.getAllConversations()).thenReturn(fakeConversationList);
-
+        
         final List<User> userList = new ArrayList<>();
         userList.add(USER_ONE);
         Mockito.when(mockUserStore.getAllUsers()).thenReturn(userList);
@@ -92,6 +101,8 @@ public class ActivityFeedServletTest {
         
         Mockito.verify(mockRequest).setAttribute("conversations", fakeConversationList);
         Mockito.verify(mockRequest).setAttribute("users", userList);
+        Mockito.verify(mockRequest).setAttribute("idToTitle", idToTitle);
+        Mockito.verify(mockRequest).setAttribute("idToName", idToName);
         Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
     }
     
