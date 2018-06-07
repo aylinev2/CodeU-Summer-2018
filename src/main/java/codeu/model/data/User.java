@@ -18,7 +18,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 /** Class representing a registered user. */
-public class User {
+public class User implements Comparable<User>{
   private final UUID id;
   private final String name;
   private final String passwordHash;
@@ -57,5 +57,16 @@ public class User {
   /** Returns the creation time of this User. */
   public Instant getCreationTime() {
     return creation;
+  }
+
+  @Override
+  public int compareTo(User otherUser) {
+    if(otherUser == null)
+       throw new NullPointerException("Object being compared is null");
+    else if(getCreationTime().equals(otherUser.getCreationTime()))
+        // user names are unique
+       return getName().compareTo(otherUser.getName());
+    else
+       return getCreationTime().compareTo(otherUser.getCreationTime());
   }
 }
