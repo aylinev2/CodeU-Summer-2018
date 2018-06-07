@@ -61,6 +61,12 @@ public class User implements Comparable<User>{
 
   @Override
   public int compareTo(User otherUser) {
-    return getCreationTime().compareTo(otherUser.getCreationTime());
+    if(otherUser.equals(null) || this.equals(null))
+       throw new NullPointerException("Object being compared is null");
+    else if(getCreationTime().equals(otherUser.getCreationTime()))
+        // user names are unique
+       return getName().compareTo(otherUser.getName());
+    else
+       return getCreationTime().compareTo(otherUser.getCreationTime());
   }
 }
