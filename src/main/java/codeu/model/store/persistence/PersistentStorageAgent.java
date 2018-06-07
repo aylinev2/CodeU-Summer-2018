@@ -88,6 +88,16 @@ public class PersistentStorageAgent {
   public List<Message> loadMessages() throws PersistentDataStoreException {
     return persistentDataStore.loadMessages();
   }
+    
+  /**
+  * Retrieve all Message objects from the Datastore service. The returned list may be empty.
+  *
+  * @throws PersistentDataStoreException if an error was detected during the load from the
+  *     Datastore service
+  */
+  public List<Message> loadReplies() throws PersistentDataStoreException {
+    return persistentDataStore.loadReplies();
+  }
 
   /** Write a User object to the Datastore service. */
   public void writeThrough(User user) {
@@ -103,4 +113,10 @@ public class PersistentStorageAgent {
   public void writeThrough(Message message) {
     persistentDataStore.writeThrough(message);
   }
+    
+  /** Write a Message object to the Datastore service. */
+  public void writeThroughReply(Message message) {
+    persistentDataStore.writeThroughReply(message);
+  }
+
 }

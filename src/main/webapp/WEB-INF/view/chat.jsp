@@ -17,6 +17,7 @@
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.data.Message" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
+<%@ page import="codeu.model.store.basic.MessageStore" %>
 <%
 Conversation conversation = (Conversation) request.getAttribute("conversation");
 List<Message> messages = (List<Message>) request.getAttribute("messages");
@@ -34,6 +35,10 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       background-color: white;
       height: 500px;
       overflow-y: scroll
+    }
+
+    function toogleReply() {
+
     }
   </style>
 
@@ -61,12 +66,33 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <%
       for (Message message : messages) {
         String author = UserStore.getInstance()
-          .getUser(message.getAuthorId()).getName();
+        .getUser(message.getAuthorId()).getName();
     %>
-      <li><strong><%= author %>:</strong> <%= message.getContent() %></li>
+      <li><strong><%= author %>:</strong> <%= message.getContent() %>
+      <% 
+      List<Message> replies = MessageStore.getInstance().getRepliesInMessage(message.getId());
+      if( replies != null) {
+        for(Message reply: replies) {
+        String replyAuthor = UserStore.getInstance()
+        .getUser(reply.getAuthorId()).getName();
+    %>
+      <p style ="padding-left:2em">
+      <strong><%= replyAuthor %>:</strong> <%= reply.getContent()%> </p>
     <%
       }
+    }
     %>
+      </li>
+    <%
+     if (request.getSession().getAttribute("user") != null) { %> 
+      <form action="/chat/<%= conversation.getTitle() %>" method="POST" id="replyForm">
+        <input type="hidden" name="msg" value="<%= message.getId().toString() %>" />
+        <input type="text" name="reply">
+        <button type="submit">Reply</button>
+      </form>
+      <% 
+      }
+    } %>
       </ul>
     </div>
 
@@ -79,7 +105,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
         <button type="submit">Send</button>
         <br>
         <p> Our chat app currently supports BBCode for text styling. <a href="/guide.jsp">Click here</a> to learn more about our text styling options.</p>
-    </form>
+    </form> 
     <% } else { %>
       <p><a href="/login">Login</a> to send a message.</p>
     <% } %>
@@ -87,6 +113,6 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <hr/>
 
   </div>
-
 </body>
 </html>
+

@@ -13,9 +13,11 @@
 // limitations under the License.
 
 package codeu.model.data;
+import java.util.*;
 
 import java.time.Instant;
 import java.util.UUID;
+import java.util.List;
 
 /** Class representing a message. Messages are sent by a User in a Conversation. */
 public class Message {

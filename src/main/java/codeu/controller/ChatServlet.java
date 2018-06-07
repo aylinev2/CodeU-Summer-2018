@@ -102,7 +102,7 @@ public class ChatServlet extends HttpServlet{
     UUID conversationId = conversation.getId();
 
     List<Message> messages = messageStore.getMessagesInConversation(conversationId);
-
+    
     request.setAttribute("conversation", conversation);
     request.setAttribute("messages", messages);
     request.getRequestDispatcher("/WEB-INF/view/chat.jsp").forward(request, response);
@@ -145,22 +145,41 @@ public class ChatServlet extends HttpServlet{
     // processor needed for BBCode to HTML translation
     TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("kefirbb.xml");
 
-    String messageContent = request.getParameter("message");
+    String messageContent;
+    if(request.getParameter("message") != null)
+        messageContent = request.getParameter("message");
+    else
+        messageContent = request.getParameter("reply");
 
     // this removes any HTML from the message content and then parses any BBCode to HTML
     String cleanedMessageContent = processor.process(Jsoup.clean(messageContent, Whitelist.none()));
 
     String cleanedAndEmojiCheckedMsg = EmojiParser.parseToUnicode(cleanedMessageContent);
 
-    Message message =
+   
+    if(request.getParameter("reply")!= null && request.getParameter("msg") != null) {
+        String og = request.getParameter("msg");
+        UUID messageId = (UUID) UUID.fromString(og);
+        Message ogMsg = (Message) messageStore.getMessage(messageId);
+        Message message =
         new Message(
-            UUID.randomUUID(),
-            conversation.getId(),
-            user.getId(),
-            cleanedAndEmojiCheckedMsg,
-            Instant.now());
-
-    messageStore.addMessage(message);
+                    UUID.randomUUID(),
+                    ogMsg.getId(),
+                    user.getId(),
+                    cleanedAndEmojiCheckedMsg,
+                    Instant.now());
+        messageStore.addReply(message);
+    }
+    else {
+        Message message =
+        new Message(
+                    UUID.randomUUID(),
+                    conversation.getId(),
+                    user.getId(),
+                    cleanedAndEmojiCheckedMsg,
+                    Instant.now());
+        messageStore.addMessage(message);
+    }
 
     // redirect to a GET request
     response.sendRedirect("/chat/" + conversationTitle);
