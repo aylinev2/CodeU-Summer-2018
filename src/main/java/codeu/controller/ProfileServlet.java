@@ -43,6 +43,14 @@ public class ProfileServlet extends HttpServlet{
         String username = requestUrl.substring("/profile/".length());
 
         User user = userStore.getUser(username);
+
+        if (user == null) {
+        // if user doesn't exist, send to chat homepage 
+          System.out.println("User '" + username + "' was not found");
+          response.sendRedirect("/");
+          return;
+
+        }
         request.setAttribute("user", user);
         request.getRequestDispatcher("/WEB-INF/view/profile.jsp").forward(request, response);
   }

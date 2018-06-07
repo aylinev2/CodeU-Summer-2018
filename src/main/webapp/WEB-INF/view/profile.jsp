@@ -8,7 +8,7 @@ User user = (User) request.getAttribute("user");
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CodeU Chat App</title>
+  <title>Profile Page</title>
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
