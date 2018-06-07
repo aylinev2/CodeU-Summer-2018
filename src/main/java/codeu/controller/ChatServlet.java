@@ -157,14 +157,15 @@ public class ChatServlet extends HttpServlet{
     String cleanedAndEmojiCheckedMsg = EmojiParser.parseToUnicode(cleanedMessageContent);
 
    
-    if(request.getParameter("reply")!= null && request.getParameter("msg") != null) {
-        String og = request.getParameter("msg");
-        UUID messageId = (UUID) UUID.fromString(og);
-        Message ogMsg = (Message) messageStore.getMessage(messageId);
+    if(request.getParameter("reply")!= null) {
+        String mainMessageUUID = request.getParameter("messageUUID");
+        UUID messageId = (UUID) UUID.fromString(mainMessageUUID);
+        Message mainMessage = (Message) messageStore.getMessage(messageId);
         Message message =
+        // Second param is for conversation, but is replaced with original meessage's UUID
         new Message(
                     UUID.randomUUID(),
-                    ogMsg.getId(),
+                    mainMessage.getId(),
                     user.getId(),
                     cleanedAndEmojiCheckedMsg,
                     Instant.now());
