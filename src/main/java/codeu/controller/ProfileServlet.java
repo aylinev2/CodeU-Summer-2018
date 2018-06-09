@@ -40,7 +40,7 @@ public class ProfileServlet extends HttpServlet{
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
         String requestUrl = request.getRequestURI();
-        String username = requestUrl.substring("/profile/".length());
+        String username = (requestUrl.substring("/profile".length())).replace("/", "");
 
         User user = userStore.getUser(username);
 
