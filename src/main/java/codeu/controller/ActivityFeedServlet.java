@@ -27,6 +27,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /** Servlet class responsible for the conversations page. */
 public class ActivityFeedServlet extends HttpServlet {
@@ -74,11 +76,22 @@ public class ActivityFeedServlet extends HttpServlet {
     throws IOException, ServletException {
         List<Conversation> conversations = conversationStore.getAllConversations();
         List<User> users = userStore.getAllUsers();
-
-//            Collections.reverse(users);
-//            Collections.reverse(conversations);
+        Collections.sort(users);
+        
+        HashMap<UUID, String> idToName = new HashMap<>();
+        for(User user: users) {
+            idToName.put(user.getId(), user.getName());
+        }
+        
+        HashMap<UUID, String> idToTitle = new HashMap<>();
+        for(Conversation conversation: conversations) {
+            idToTitle.put(conversation.getId(), conversation.getTitle());
+        }
+        
         request.setAttribute("conversations", conversations);
         request.setAttribute("users", users);
+        request.setAttribute("idToTitle", idToTitle);
+        request.setAttribute("idToName", idToName);
         request.getRequestDispatcher("/WEB-INF/view/activity.jsp").forward(request, response);
     }
     

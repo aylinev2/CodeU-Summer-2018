@@ -1,3 +1,5 @@
+<%@ page import= "codeu.model.store.basic.UserStore" %>
+
 <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
     <% String username = (String) request.getSession().getAttribute("user");
@@ -10,7 +12,7 @@
     <a href="/about.jsp">About</a>
     <a href="/activity">Activity</a>
     <% 
-    if(username !=null && username.equals("adminama")){
+    if(username !=null && UserStore.getInstance().hasAdmin(username)){
     %>
      <a href="/admin">Admin</a> 
      <% } %>

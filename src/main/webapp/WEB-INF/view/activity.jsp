@@ -17,11 +17,8 @@
 <%@ page import= "java.time.Instant" %>
 <%@ page import= "java.time.format.FormatStyle" %>
 <%@ page import= "java.util.Locale" %>
-
-<%MessageStore messageStore = MessageStore.getInstance();
-List<Message> messages = messageStore.getAllMessages();
-%>
-
+<%@ page import= "java.util.HashMap" %>
+<%@ page import= "java.util.Map" %>
 
 <!DOCTYPE html>
 <html>
@@ -44,6 +41,11 @@ List<Message> messages = messageStore.getAllMessages();
         (List<Conversation>) request.getAttribute("conversations");
       List<User> users = 
         (List<User>) request.getAttribute("users");
+      HashMap<UUID, String> idToName =
+        (HashMap<UUID, String>) request.getAttribute("idToName");
+      HashMap<UUID, String> idToTitle =
+        (HashMap<UUID, String>) request.getAttribute("idToTitle");
+
       if(conversations == null || conversations.isEmpty()){
       %>
         <p>Aww nothing so far!</p>
@@ -57,7 +59,7 @@ List<Message> messages = messageStore.getAllMessages();
       %>
          <li> 
           <% 
-          String owner = UserStore.getInstance().getUser(conversation.getOwnerId()).getName();
+          String owner = (String) idToName.get(conversation.getOwnerId());
           Instant instant = conversation.getCreationTime();
           String output = formatter.format( instant ); %>
           <strong><%= output %>:</strong>
@@ -100,8 +102,10 @@ List<Message> messages = messageStore.getAllMessages();
       }
       %>
        <hr/>
-      <strong> Messsages: </strong>
+      <strong> Messages: </strong>
       <%
+      MessageStore messageStore = MessageStore.getInstance();
+      List<Message> messages = messageStore.getAllMessages();
       if(messages == null || messages.isEmpty()){
       %>
         <p>Aww nothing so far!</p>
@@ -115,8 +119,8 @@ List<Message> messages = messageStore.getAllMessages();
       %>
         <li> 
          <% 
-          String owner = UserStore.getInstance().getUser(message.getAuthorId()).getName();
-          String title = ConversationStore.getInstance().getConversationWithUUID(message.getConversationId()).getTitle();
+          String owner = (String) idToName.get(message.getAuthorId());
+          String title = (String) idToTitle.get(message.getConversationId());
           Instant instant = message.getCreationTime();
           String output = formatter.format( instant ); %>
           <strong> <%= output %>: </strong>
