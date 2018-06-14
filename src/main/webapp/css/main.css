@@ -50,6 +50,11 @@ nav a {
   width: 800px;
 }
 
+#about-me {
+  padding:3%;
+  font:18px sans-serif;
+}
+
 h1 {
   color: #757575;
 }

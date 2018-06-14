@@ -9,6 +9,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.jsoup.Jsoup;
+import org.jsoup.safety.Whitelist;
+import org.kefirsf.bb.BBProcessorFactory;
+import org.kefirsf.bb.TextProcessor;
+import com.vdurmont.emoji.EmojiParser;
 
 /** Servlet class responsible for a profile page. */
 public class ProfileServlet extends HttpServlet{
@@ -51,7 +56,7 @@ public class ProfileServlet extends HttpServlet{
           return;
 
         }
-        request.setAttribute("user", user);
+        request.setAttribute("userToAccess", user);
         request.getRequestDispatcher("/WEB-INF/view/profile.jsp").forward(request, response);
   }
 
@@ -59,6 +64,33 @@ public class ProfileServlet extends HttpServlet{
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
-        
+        String username = (String) request.getSession().getAttribute("user");
+    if (username == null) {
+      // user is not logged in, don't let them edit profile
+      return;
+    }
+
+    User user = userStore.getUser(username);
+    if (user == null) {
+      // user was not found, don't let them edit profile
+      return;
+    }
+
+    // processor needed for BBCode to HTML translation
+    TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("kefirbb.xml");
+
+    String messageContent = request.getParameter("info");
+
+    // this removes any HTML from the message content and then parses any BBCode to HTML
+    String cleanedMessageContent = Jsoup.clean(messageContent, Whitelist.none());
+
+    String cleanedAndEmojiCheckedMsg = EmojiParser.parseToUnicode(cleanedMessageContent);
+
+    user.changeAboutMe(cleanedAndEmojiCheckedMsg);
+
+    userStore.updateUser(user);
+
+    // redirect to a GET request
+    response.sendRedirect("/profile/" + username);
   }
 }

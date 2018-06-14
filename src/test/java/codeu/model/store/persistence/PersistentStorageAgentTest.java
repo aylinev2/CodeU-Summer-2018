@@ -49,7 +49,7 @@ public class PersistentStorageAgentTest {
     User user =
         new User(
             UUID.randomUUID(),
-            "test_username",
+            "test_username", "test_about_me",
             "$2a$10$5GNCbSPS1sqqM9.hdiE2hexn1w.vnNoR.CaHIztFEhdAD7h82tqX.",
             Instant.now());
     persistentStorageAgent.writeThrough(user);
