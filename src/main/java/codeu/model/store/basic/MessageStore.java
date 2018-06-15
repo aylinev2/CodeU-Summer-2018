@@ -58,7 +58,6 @@ public class MessageStore {
 
   /** The in-memory list of Messages. */
   private List<Message> messages;
-  private List<Message> replies;
 
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private MessageStore(PersistentStorageAgent persistentStorageAgent) {
@@ -77,7 +76,7 @@ public class MessageStore {
     List<Message> messagesInConversation = new ArrayList<>();
 
     for (Message message : messages) {
-      if (message.getConversationId().equals(conversationId)) {
+      if (message.getConversationId() != null && message.getConversationId().equals(conversationId) && message.getParentMessageId() == null) {
         messagesInConversation.add(message);
       }
     }
@@ -103,19 +102,13 @@ public class MessageStore {
     persistentStorageAgent.writeThrough(message);
   }
     
-  /** Add a new message to the current set of messages known to the application. */
-  public void addReply(Message message) {
-    replies.add(message);
-    persistentStorageAgent.writeThroughReply(message);
-  }
-    
   /** Access the current set of Replies within the given Message. */
   public List<Message> getRepliesInMessage(UUID messageId) {
         
     List<Message> repliesInMsg = new ArrayList<>();
     
-    for (Message reply : replies) {
-        if (reply.getConversationId().equals(messageId)) {
+    for (Message reply : messages) {
+        if (reply.getParentMessageId() != null && reply.getParentMessageId().equals(messageId)) {
             repliesInMsg.add(reply);
         }
     }
@@ -128,8 +121,4 @@ public class MessageStore {
     this.messages = messages;
   }
 
-  /** Sets the List of Replies stored by this MessageStore. */
-  public void setReplies(List<Message> replies) {
-     this.replies = replies;
-    }
 }

@@ -136,7 +136,12 @@ public class PersistentDataStore {
         UUID authorUuid = UUID.fromString((String) entity.getProperty("author_uuid"));
         Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
         String content = (String) entity.getProperty("content");
-        Message message = new Message(uuid, conversationUuid, authorUuid, content, creationTime);
+        UUID parentUuid;
+        if(entity.getProperty("parent_uuid") == null)
+            parentUuid = null;
+        else
+            parentUuid = UUID.fromString((String) entity.getProperty("parent_uuid"));
+        Message message = new Message(uuid, conversationUuid, authorUuid, content, creationTime, parentUuid);
         messages.add(message);
       } catch (Exception e) {
         // In a production environment, errors should be very rare. Errors which may
@@ -149,41 +154,6 @@ public class PersistentDataStore {
     return messages;
   }
     
-  /**
-  * Loads all Message objects from the Datastore service and returns them in a List, sorted in
-  * ascending order by creation time.
-  *
-  * @throws PersistentDataStoreException if an error was detected during the load from the
-  *     Datastore service
-  */
-  public List<Message> loadReplies() throws PersistentDataStoreException {
-        
-    List<Message> replies = new ArrayList<>();
-    
-    // Retrieve all messages from the datastore.
-    Query query = new Query("reply-messages").addSort("creation_time", SortDirection.ASCENDING);
-    PreparedQuery results = datastore.prepare(query);
-    
-    for (Entity entity : results.asIterable()) {
-        try {
-            UUID uuid = UUID.fromString((String) entity.getProperty("uuid"));
-            UUID conversationUuid = UUID.fromString((String) entity.getProperty("conv_uuid"));
-            UUID authorUuid = UUID.fromString((String) entity.getProperty("author_uuid"));
-            Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
-            String content = (String) entity.getProperty("content");
-            Message message = new Message(uuid, conversationUuid, authorUuid, content, creationTime);
-            replies.add(message);
-        } catch (Exception e) {
-            // In a production environment, errors should be very rare. Errors which may
-            // occur include network errors, Datastore service errors, authorization errors,
-            // database entity definition mismatches, or service mismatches.
-            throw new PersistentDataStoreException(e);
-        }
-    }
-    
-    return replies;
-  }
-
   /** Write a User object to the Datastore service. */
   public void writeThrough(User user) {
     Entity userEntity = new Entity("chat-users", user.getId().toString());
@@ -202,17 +172,10 @@ public class PersistentDataStore {
     messageEntity.setProperty("author_uuid", message.getAuthorId().toString());
     messageEntity.setProperty("content", message.getContent());
     messageEntity.setProperty("creation_time", message.getCreationTime().toString());
-    datastore.put(messageEntity);
-  }
-
-  /** Write a Message object to the Datastore service. */
-  public void writeThroughReply(Message message) {
-    Entity messageEntity = new Entity("reply-messages", message.getId().toString());
-    messageEntity.setProperty("uuid", message.getId().toString());
-    messageEntity.setProperty("conv_uuid", message.getConversationId().toString());
-    messageEntity.setProperty("author_uuid", message.getAuthorId().toString());
-    messageEntity.setProperty("content", message.getContent());
-    messageEntity.setProperty("creation_time", message.getCreationTime().toString());
+    if(message.getParentMessageId() == null)
+        messageEntity.setProperty("parent_uuid", message.getParentMessageId());
+    else
+        messageEntity.setProperty("parent_uuid", message.getParentMessageId().toString());
     datastore.put(messageEntity);
   }
 

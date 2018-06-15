@@ -31,6 +31,8 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
   <link rel="stylesheet" href="/css/main.css" type="text/css">
 
   <style>
+    form.hide {display: none;}
+
     #chat {
       background-color: white;
       height: 500px;
@@ -48,6 +50,15 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       var chatDiv = document.getElementById('chat');
       chatDiv.scrollTop = chatDiv.scrollHeight;
     };
+
+    function toggleReply(name) {
+    var x = document.getElementById("replyForm");
+    if (x.style.display == "none") {
+        x.style.display = "block";
+        document.getElementById("replyingTo").innerHTML = "Replying to: "+name;
+    } 
+    
+  };
   </script>
 </head>
 <body onload="scrollChat()">
@@ -68,16 +79,16 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
         String author = UserStore.getInstance()
         .getUser(message.getAuthorId()).getName();
     %>
-      <li><strong><%= author %>:</strong> <%= message.getContent() %>
+      <li><strong><a id="link" href="/profile/<%= author%>"><%= author%>:</a></strong> <%= message.getContent() %>
       <% 
       List<Message> replies = MessageStore.getInstance().getRepliesInMessage(message.getId());
       if( replies != null) {
         for(Message reply: replies) {
         String replyAuthor = UserStore.getInstance()
         .getUser(reply.getAuthorId()).getName();
-    %>
+      %>
       <p style ="padding-left:2em">
-      <strong><%= replyAuthor %>:</strong> <%= reply.getContent()%> </p>
+      <strong><a id="link" href="/profile/<%= replyAuthor%>"><%= replyAuthor%>: </a></strong><%= reply.getContent()%> </p>
     <%
       }
     }
@@ -87,12 +98,13 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
      if (request.getSession().getAttribute("user") != null) { %> 
       <form action="/chat/<%= conversation.getTitle() %>" method="POST" id="replyForm">
         <input type="hidden" name="messageUUID" value="<%= message.getId().toString() %>" />
-        <input type="text" name="reply">
-        <button type="submit">Reply</button>
-      </form>
+        <input type="text" name="reply"> 
+        <button onclick="toggleReply('test')">Reply</button>
+     </form>
       <% 
       }
-    } %>
+    } 
+    %>
       </ul>
     </div>
 
@@ -106,6 +118,13 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
         <br>
         <p> Our chat app currently supports BBCode for text styling. <a href="/guide.jsp">Click here</a> to learn more about our text styling options.</p>
     </form> 
+    <br>
+    <form action="/chat/<%= conversation.getTitle() %>" method="POST" id="replyForm" class="hide">
+        <p id="replyingTo"></p>
+        <input type="hidden" name="messageUUID" value="null" />
+        <input type="text" name="reply">
+        <button type="submit">Reply</button>
+      </form>
     <% } else { %>
       <p><a href="/login">Login</a> to send a message.</p>
     <% } %>

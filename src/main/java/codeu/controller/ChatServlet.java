@@ -162,14 +162,14 @@ public class ChatServlet extends HttpServlet{
         UUID messageId = (UUID) UUID.fromString(mainMessageUUID);
         Message mainMessage = (Message) messageStore.getMessage(messageId);
         Message message =
-        // Second param is for conversation, but is replaced with original meessage's UUID
         new Message(
                     UUID.randomUUID(),
-                    mainMessage.getId(),
+                    conversation.getId(),
                     user.getId(),
                     cleanedAndEmojiCheckedMsg,
-                    Instant.now());
-        messageStore.addReply(message);
+                    Instant.now(),
+                    mainMessage.getId());
+        messageStore.addMessage(message);
     }
     else {
         Message message =
@@ -178,7 +178,8 @@ public class ChatServlet extends HttpServlet{
                     conversation.getId(),
                     user.getId(),
                     cleanedAndEmojiCheckedMsg,
-                    Instant.now());
+                    Instant.now(),
+                    null);
         messageStore.addMessage(message);
     }
 
