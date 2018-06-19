@@ -64,7 +64,9 @@
           String output = formatter.format( instant ); %>
           <strong><%= output %>:</strong>
           <a href="/chat/<%= conversation.getTitle() %>">
-        <%= conversation.getTitle() %></a> created by <%= owner %> 
+        <%= conversation.getTitle() %></a> created by 
+        <strong><a id="link" href="/profile/<%= owner%>">
+        <%= owner %> </a> </strong>
         </li>
       <%
         }
@@ -92,7 +94,8 @@
           Instant instant = user.getCreationTime();
           String output = formatter.format( instant ); %>
           <strong> <%= output %>: </strong>
-          <%= user.getName() %> joined! 
+          <strong> <a id="link" href="/profile/<%= user.getName()%>">
+          <%= user.getName() %> </a> </strong> joined! 
         </li>
       <%
         }
@@ -122,12 +125,21 @@
           String owner = (String) idToName.get(message.getAuthorId());
           String title = (String) idToTitle.get(message.getConversationId());
           Instant instant = message.getCreationTime();
-          String output = formatter.format( instant ); %>
+          String output = formatter.format( instant ); 
+          if (message.getParentMessageId() == null) { %>
           <strong> <%= output %>: </strong>
-          <%= owner %> sent a message in
+          <strong> <a id="link" href="/profile/<%= owner%>"><%= owner %> </a> </strong> sent a message in
           <a href="/chat/<%= title %>">
           <%= title %></a>
           : "<%=message.getContent()%>"
+          <% } 
+          else { %>
+          <strong> <%= output %>: </strong>
+          <strong> <a id="link" href="/profile/<%= owner%>"><%= owner %> </a> </strong> replied to a message in
+          <a href="/chat/<%= title %>">
+          <%= title %></a>
+          : "<%=message.getContent()%>"
+          <% } %>
         </li>
       <%
         }

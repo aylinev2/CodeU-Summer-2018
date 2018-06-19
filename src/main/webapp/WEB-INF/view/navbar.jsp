@@ -5,6 +5,7 @@
     <% String username = (String) request.getSession().getAttribute("user");
         if(username != null){ %>
       <a href= "/profile/<%=username%>">Hello <%=username%>!</a>
+      
      <% } else{ %>
       <a href="/login">Login</a>
     <% } %>

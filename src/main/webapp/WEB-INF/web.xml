@@ -95,5 +95,4 @@
       <servlet-name>ProfileServlet</servlet-name>
       <url-pattern>/profile/*</url-pattern>
   </servlet-mapping>
-
 </web-app>

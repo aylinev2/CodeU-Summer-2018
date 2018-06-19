@@ -115,18 +115,20 @@ public class PersistentDataStoreTest {
     UUID idOne = UUID.fromString("10000000-2222-3333-4444-555555555555");
     UUID conversationOne = UUID.fromString("10000001-2222-3333-4444-555555555555");
     UUID authorOne = UUID.fromString("10000002-2222-3333-4444-555555555555");
+    UUID parentMsgOne = UUID.fromString("10000006-2222-3333-4444-555555555555");
     String contentOne = "test content one";
     Instant creationOne = Instant.ofEpochMilli(1000);
     Message inputMessageOne =
-        new Message(idOne, conversationOne, authorOne, contentOne, creationOne);
+        new Message(idOne, conversationOne, authorOne, contentOne, creationOne, parentMsgOne);
 
     UUID idTwo = UUID.fromString("10000003-2222-3333-4444-555555555555");
     UUID conversationTwo = UUID.fromString("10000004-2222-3333-4444-555555555555");
     UUID authorTwo = UUID.fromString("10000005-2222-3333-4444-555555555555");
+    UUID parentMsgTwo = UUID.fromString("10000007-2222-3333-4444-555555555555");
     String contentTwo = "test content one";
     Instant creationTwo = Instant.ofEpochMilli(2000);
     Message inputMessageTwo =
-        new Message(idTwo, conversationTwo, authorTwo, contentTwo, creationTwo);
+        new Message(idTwo, conversationTwo, authorTwo, contentTwo, creationTwo, parentMsgTwo);
 
     // save
     persistentDataStore.writeThrough(inputMessageOne);
@@ -142,6 +144,7 @@ public class PersistentDataStoreTest {
     Assert.assertEquals(authorOne, resultMessageOne.getAuthorId());
     Assert.assertEquals(contentOne, resultMessageOne.getContent());
     Assert.assertEquals(creationOne, resultMessageOne.getCreationTime());
+    Assert.assertEquals(parentMsgOne, resultMessageOne.getParentMessageId());
 
     Message resultMessageTwo = resultMessages.get(1);
     Assert.assertEquals(idTwo, resultMessageTwo.getId());
@@ -149,5 +152,6 @@ public class PersistentDataStoreTest {
     Assert.assertEquals(authorTwo, resultMessageTwo.getAuthorId());
     Assert.assertEquals(contentTwo, resultMessageTwo.getContent());
     Assert.assertEquals(creationTwo, resultMessageTwo.getCreationTime());
+    Assert.assertEquals(parentMsgTwo, resultMessageTwo.getParentMessageId());
   }
 }
