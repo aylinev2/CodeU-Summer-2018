@@ -34,7 +34,7 @@ TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("k
         <%= processor.process(user.getAboutMe())%>
       </p>
 
-    <% if (loggedInUser != null && loggedInUser.getName().equalsIgnoreCase(user.getName())) { %>
+    <% if (loggedInUser != null && loggedInUser.getName().equals(user.getName())) { %>
 
     <h2>Edit your About Me (Only you can see this)</h2>
 
