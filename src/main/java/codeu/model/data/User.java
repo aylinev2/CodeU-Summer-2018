@@ -51,13 +51,13 @@ public class User implements Comparable<User>{
     return name;
   }
 
-  /** Returns the User's about me statemt. */
+  /** Returns the User's about me statement. */
   public String getAboutMe() {
     return aboutMe;
   }
 
-  /** Changes the User's about me statemt. */
-  public void changeAboutMe(String newAboutMe) {
+  /** Changes the User's about me statement. */
+  public void setAboutMe(String newAboutMe) {
     aboutMe = newAboutMe;
   }
 

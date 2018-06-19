@@ -86,7 +86,7 @@ public class ProfileServlet extends HttpServlet{
 
     String cleanedAndEmojiCheckedMsg = EmojiParser.parseToUnicode(cleanedMessageContent);
 
-    user.changeAboutMe(cleanedAndEmojiCheckedMsg);
+    user.setAboutMe(cleanedAndEmojiCheckedMsg);
 
     userStore.updateUser(user);
 
