@@ -38,10 +38,6 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       height: 500px;
       overflow-y: scroll
     }
-
-    function toogleReply() {
-
-    }
   </style>
 
   <script>
@@ -50,15 +46,6 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
       var chatDiv = document.getElementById('chat');
       chatDiv.scrollTop = chatDiv.scrollHeight;
     };
-
-    function toggleReply(name) {
-    var x = document.getElementById("replyForm");
-    if (x.style.display == "none") {
-        x.style.display = "block";
-        document.getElementById("replyingTo").innerHTML = "Replying to: "+name;
-    } 
-    
-  };
   </script>
 </head>
 <body onload="scrollChat()">
@@ -97,8 +84,8 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <%
      if (request.getSession().getAttribute("user") != null) { %> 
       <form action="/chat/<%= conversation.getTitle() %>" method="POST" id="replyForm">
-        <input type="hidden" name="messageUUID" value="<%= message.getId().toString() %>" />
-        <input type="text" name="reply"> 
+        <input type="hidden" name="parentMessageId" value="<%= message.getId().toString() %>" />
+        <input type="text" name="message"> 
         <button onclick="toggleReply('test')">Reply</button>
      </form>
       <% 
@@ -121,7 +108,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
     <br>
     <form action="/chat/<%= conversation.getTitle() %>" method="POST" id="replyForm" class="hide">
         <p id="replyingTo"></p>
-        <input type="hidden" name="messageUUID" value="null" />
+        <input type="hidden" name="messageUUID"/>
         <input type="text" name="reply">
         <button type="submit">Reply</button>
       </form>

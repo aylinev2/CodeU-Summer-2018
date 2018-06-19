@@ -145,42 +145,38 @@ public class ChatServlet extends HttpServlet{
     // processor needed for BBCode to HTML translation
     TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("kefirbb.xml");
 
-    String messageContent;
-    if(request.getParameter("message") != null)
-        messageContent = request.getParameter("message");
-    else
-        messageContent = request.getParameter("reply");
+        String messageContent = request.getParameter("message");
+
 
     // this removes any HTML from the message content and then parses any BBCode to HTML
     String cleanedMessageContent = processor.process(Jsoup.clean(messageContent, Whitelist.none()));
 
     String cleanedAndEmojiCheckedMsg = EmojiParser.parseToUnicode(cleanedMessageContent);
 
-   
-    if(request.getParameter("reply")!= null) {
-        String mainMessageUUID = request.getParameter("messageUUID");
-        UUID messageId = (UUID) UUID.fromString(mainMessageUUID);
-        Message mainMessage = (Message) messageStore.getMessage(messageId);
-        Message message =
-        new Message(
-                    UUID.randomUUID(),
-                    conversation.getId(),
-                    user.getId(),
-                    cleanedAndEmojiCheckedMsg,
-                    Instant.now(),
-                    mainMessage.getId());
-        messageStore.addMessage(message);
+    if(request.getParameter("parentMessageId") != null){
+      String mainMessageUUID = request.getParameter("parentMessageId");
+      UUID messageId = (UUID) UUID.fromString(mainMessageUUID);
+      Message mainMessage = (Message) messageStore.getMessage(messageId);
+      Message message =
+      new Message(
+        UUID.randomUUID(),
+        conversation.getId(),
+        user.getId(),
+        cleanedAndEmojiCheckedMsg,
+        Instant.now(),
+        messageId);
+      messageStore.addMessage(message);
     }
     else {
-        Message message =
-        new Message(
-                    UUID.randomUUID(),
-                    conversation.getId(),
-                    user.getId(),
-                    cleanedAndEmojiCheckedMsg,
-                    Instant.now(),
-                    null);
-        messageStore.addMessage(message);
+    Message message =
+    new Message(
+        UUID.randomUUID(),
+        conversation.getId(),
+        user.getId(),
+        cleanedAndEmojiCheckedMsg,
+        Instant.now(),
+        null);
+    messageStore.addMessage(message);
     }
 
     // redirect to a GET request
