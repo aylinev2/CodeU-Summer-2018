@@ -74,7 +74,7 @@ public class LoginServletTest {
     User user =
         new User(
             UUID.randomUUID(),
-            "test username",
+            "test username", "test_aboutMe",
             "$2a$10$.e.4EEfngEXmxAO085XnYOmDntkqod0C384jOR9oagwxMnPNHaGLa",
             Instant.now());
 

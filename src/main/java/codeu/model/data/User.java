@@ -21,6 +21,7 @@ import java.util.UUID;
 public class User implements Comparable<User>{
   private final UUID id;
   private final String name;
+  private String aboutMe;
   private final String passwordHash;
   private final Instant creation;
 
@@ -32,9 +33,10 @@ public class User implements Comparable<User>{
    * @param passwordHash the password hash of this User
    * @param creation the creation time of this User
    */
-  public User(UUID id, String name, String passwordHash, Instant creation) {
+  public User(UUID id, String name, String aboutMe, String passwordHash, Instant creation) {
     this.id = id;
     this.name = name;
+    this.aboutMe = aboutMe;
     this.passwordHash = passwordHash;
     this.creation = creation;
   }
@@ -47,6 +49,16 @@ public class User implements Comparable<User>{
   /** Returns the username of this User. */
   public String getName() {
     return name;
+  }
+
+  /** Returns the User's about me statement. */
+  public String getAboutMe() {
+    return aboutMe;
+  }
+
+  /** Changes the User's about me statement. */
+  public void setAboutMe(String newAboutMe) {
+    aboutMe = newAboutMe;
   }
 
   /** Returns the password hash of this User. */

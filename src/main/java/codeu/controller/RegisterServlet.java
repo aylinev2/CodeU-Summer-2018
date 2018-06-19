@@ -76,7 +76,9 @@ public class RegisterServlet extends HttpServlet {
     }
     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-    User user = new User(UUID.randomUUID(), username, hashedPassword, Instant.now());
+    String defaultAboutMe = "Welcome to " + username + "'s profile!";
+
+    User user = new User(UUID.randomUUID(), username, defaultAboutMe, hashedPassword, Instant.now());
     userStore.addUser(user);
 
     response.sendRedirect("/login");

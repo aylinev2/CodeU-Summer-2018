@@ -138,7 +138,7 @@ public class ChatServletTest {
     User fakeUser =
         new User(
             UUID.randomUUID(),
-            "test_username",
+            "test_username", "test_aboutMe",
             "$2a$10$bBiLUAVmUFK6Iwg5rmpBUOIBW6rIMhU1eKfi3KR60V9UXaYTwPfHy",
             Instant.now());
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
@@ -160,7 +160,7 @@ public class ChatServletTest {
     User fakeUser =
         new User(
             UUID.randomUUID(),
-            "test_username",
+            "test_username", "test_aboutMe",
             "$2a$10$bBiLUAVmUFK6Iwg5rmpBUOIBW6rIMhU1eKfi3KR60V9UXaYTwPfHy",
             Instant.now());
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
@@ -189,7 +189,7 @@ public class ChatServletTest {
     User fakeUser =
         new User(
             UUID.randomUUID(),
-            "test_username",
+            "test_username", "test_aboutMe",
             "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
             Instant.now());
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
@@ -220,7 +220,7 @@ public class ChatServletTest {
     User fakeUser =
         new User(
             UUID.randomUUID(),
-            "test_username",
+            "test_username", "test_aboutMe",
             "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
             Instant.now());
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
@@ -251,7 +251,7 @@ public class ChatServletTest {
     User fakeUser =
         new User(
             UUID.randomUUID(),
-            "test_username",
+            "test_username", "test_aboutMe",
             "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
             Instant.now());
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);

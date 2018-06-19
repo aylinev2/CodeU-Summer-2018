@@ -49,7 +49,7 @@ public class ProfileServletTest {
     Mockito.when(mockRequest.getRequestURI()).thenReturn("/profile/fake_user");
 
     User fakeUser = new User(UUID.randomUUID(),
-          "fake_user",
+          "fake_user", "test_aboutMe",
           "$2a$10$/zf4WlT2Z6tB5sULB9Wec.QQdawmF0f1SbqBw5EeJg5uoVpKFFXAa",
           Instant.now());
     Mockito.when(mockUserStore.getUser("fake_user"))
@@ -57,7 +57,7 @@ public class ProfileServletTest {
 
     profileServlet.doGet(mockRequest, mockResponse);
 
-    Mockito.verify(mockRequest).setAttribute("user", fakeUser);
+    Mockito.verify(mockRequest).setAttribute("userToAccess", fakeUser);
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
   }
 
