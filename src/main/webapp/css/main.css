@@ -35,6 +35,12 @@ nav a {
   text-decoration: none;
 }
 
+#activity {
+  background-color: white;
+  height: 475px;
+  overflow-y: scroll
+}
+
 #navTitle {
   font-size: 36px;
 }
