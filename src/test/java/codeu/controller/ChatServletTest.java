@@ -141,7 +141,8 @@ public class ChatServletTest {
             UUID.randomUUID(),
             "test_username", "test_aboutMe",
             "$2a$10$bBiLUAVmUFK6Iwg5rmpBUOIBW6rIMhU1eKfi3KR60V9UXaYTwPfHy",
-            Instant.now());
+            Instant.now(),
+            false);
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
 
     Mockito.when(mockConversationStore.getConversationWithTitle("test_conversation"))
@@ -163,7 +164,8 @@ public class ChatServletTest {
             UUID.randomUUID(),
             "test_username", "test_aboutMe",
             "$2a$10$bBiLUAVmUFK6Iwg5rmpBUOIBW6rIMhU1eKfi3KR60V9UXaYTwPfHy",
-            Instant.now());
+            Instant.now(),
+            false);
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
 
     Conversation fakeConversation =
@@ -192,7 +194,8 @@ public class ChatServletTest {
             UUID.randomUUID(),
             "test_username", "test_aboutMe",
             "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
-            Instant.now());
+            Instant.now(),
+            false);
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
 
     Conversation fakeConversation =
@@ -223,7 +226,8 @@ public class ChatServletTest {
             UUID.randomUUID(),
             "test_username", "test_aboutMe",
             "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
-            Instant.now());
+            Instant.now(),
+            false);
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
 
     Conversation fakeConversation =
@@ -254,7 +258,8 @@ public class ChatServletTest {
             UUID.randomUUID(),
             "test_username", "test_aboutMe",
             "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
-            Instant.now());
+            Instant.now(),
+            false);
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
 
     Conversation fakeConversation =

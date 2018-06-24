@@ -54,7 +54,8 @@ public class ActivityFeedServletTest {
           UUID.randomUUID(),
           "test_username_one", "test_aboutMe",
           "$2a$10$/zf4WlT2Z6tB5sULB9Wec.QQdawmF0f1SbqBw5EeJg5uoVpKFFXAa",
-          Instant.ofEpochMilli(1000));
+          Instant.ofEpochMilli(1000),
+          false);
     
     @Before
     public void setup() {
