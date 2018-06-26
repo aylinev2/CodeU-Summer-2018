@@ -62,7 +62,7 @@ public class MessageStore {
   private List<Message> messages;
 
   /** The map of messages to their authors. */
-  private HashMap<UUID, List<Message>> userMessages = new HashMap<UUID, List<Message>>(); 
+  private HashMap<UUID, List<Message>> userMessages; 
 
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private MessageStore(PersistentStorageAgent persistentStorageAgent) {
@@ -76,7 +76,8 @@ public class MessageStore {
   }
 
   /** Maps each message to its author. */
-  private void sortMessagesByAuthor(){
+  private void filterMessagesByAuthor(){
+    userMessages = new HashMap<UUID, List<Message>>();
     for (Message message : messages){
       List<Message> msgs = userMessages.get(message.getAuthorId());
       if (msgs == null) {
@@ -148,7 +149,7 @@ public class MessageStore {
   /** Sets the List of Messages stored by this MessageStore. */
   public void setMessages(List<Message> messages) {
     this.messages = messages;
-    sortMessagesByAuthor();
+    filterMessagesByAuthor();
   }
 
 }

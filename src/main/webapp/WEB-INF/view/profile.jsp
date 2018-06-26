@@ -20,7 +20,6 @@
 User user = (User) request.getAttribute("userToAccess");
 String loggedInUserename = (String) request.getSession().getAttribute("user");
 User loggedInUser = UserStore.getInstance().getUser(loggedInUserename);
-List<Message> messages = MessageStore.getInstance().getMessagesByAuthor(user.getId());
 // processor needed for BBCode to HTML translation
 TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("kefirbb.xml");
 DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG).withLocale(Locale.US).withZone(ZoneId.systemDefault());
@@ -77,10 +76,10 @@ DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.
      <div id="activity">
       <ul>
      <%
+      List<Message> messages = MessageStore.getInstance().getMessagesByAuthor(user.getId());
       for (Message message : messages) {
-        String author = UserStore.getInstance().getUser(message.getAuthorId()).getName();
          %>
-         <li><b> <%= author %> <%= formatter.format(message.getCreationTime()) %> : </b> <%= message.getContent() %>
+         <li><b><%= formatter.format(message.getCreationTime()) %> : </b> <%= message.getContent() %>
         <% 
       }
       %>
