@@ -1,5 +1,8 @@
+<%@ page import= "java.util.UUID" %>
 <%@ page import="codeu.model.data.User" %>
 <%@ page import="codeu.model.data.Message" %>
+<%@ page import= "java.util.HashMap" %>
+<%@ page import= "java.util.Map" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.store.basic.MessageStore" %>
 <%@ page import="org.kefirsf.bb.BBProcessorFactory" %>
@@ -17,7 +20,7 @@
 User user = (User) request.getAttribute("userToAccess");
 String loggedInUserename = (String) request.getSession().getAttribute("user");
 User loggedInUser = UserStore.getInstance().getUser(loggedInUserename);
-List<Message> messages = MessageStore.getInstance().getAllMessages();
+List<Message> messages = MessageStore.getInstance().getMessagesByAuthor(user.getId());
 // processor needed for BBCode to HTML translation
 TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("kefirbb.xml");
 DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG).withLocale(Locale.US).withZone(ZoneId.systemDefault());
@@ -76,12 +79,9 @@ DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.
      <%
       for (Message message : messages) {
         String author = UserStore.getInstance().getUser(message.getAuthorId()).getName();
-
-        if (user.getName().equals(author)){
          %>
-         <li><b> <%= formatter.format(message.getCreationTime()) %> : </b> <%= message.getContent() %>
+         <li><b> <%= author %> <%= formatter.format(message.getCreationTime()) %> : </b> <%= message.getContent() %>
         <% 
-        }
       }
       %>
     </li>
