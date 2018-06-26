@@ -19,6 +19,8 @@ import codeu.model.store.persistence.PersistentStorageAgent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Store class that uses in-memory data structures to hold values and automatically loads from and
@@ -59,6 +61,9 @@ public class MessageStore {
   /** The in-memory list of Messages. */
   private List<Message> messages;
 
+  /** The map of messages to their authors. */
+  private HashMap<UUID, List<Message>> userMessages; 
+
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private MessageStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
@@ -68,6 +73,24 @@ public class MessageStore {
   /** Access the current set of users known to the application. */
   public List<Message> getAllMessages() {
     return messages;
+  }
+
+  /** Maps each message to its author. */
+  private void filterMessagesByAuthor(){
+    userMessages = new HashMap<UUID, List<Message>>();
+    for (Message message : messages){
+      List<Message> msgs = userMessages.get(message.getAuthorId());
+      if (msgs == null) {
+          msgs = new ArrayList<>();
+          userMessages.put(message.getAuthorId(), msgs);
+      }
+      msgs.add(message);
+    }   
+  }
+
+  /** Returns the list of messages by a specific author. */
+  public List<Message> getMessagesByAuthor(UUID authorId){
+    return userMessages.get(authorId); 
   }
 
   /** Access the current set of Messages within the given Conversation. */
@@ -99,7 +122,14 @@ public class MessageStore {
   /** Add a new message to the current set of messages known to the application. */
   public void addMessage(Message message) {
     messages.add(message);
-    persistentStorageAgent.writeThrough(message);
+    persistentStorageAgent.writeThrough(message); 
+
+    List<Message> msgs = userMessages.get(message.getAuthorId());
+    if (msgs == null) {
+        msgs = new ArrayList<>();
+        userMessages.put(message.getAuthorId(), msgs);
+    }
+    msgs.add(message);    
   }
     
   /** Access the current set of Replies within the given Message. */
@@ -119,6 +149,7 @@ public class MessageStore {
   /** Sets the List of Messages stored by this MessageStore. */
   public void setMessages(List<Message> messages) {
     this.messages = messages;
+    filterMessagesByAuthor();
   }
 
 }
