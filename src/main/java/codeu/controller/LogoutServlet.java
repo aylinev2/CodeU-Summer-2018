@@ -20,8 +20,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.mindrot.jbcrypt.BCrypt;
-
 /** Servlet class responsible for the logout page. */
 public class LogoutServlet extends HttpServlet {
 
@@ -36,11 +34,7 @@ public class LogoutServlet extends HttpServlet {
     if(request.getSession(false) != null){
       request.setAttribute("error", "Logout successful!");
       request.getSession(false).invalidate();
-      request.getRequestDispatcher("/login").forward(request,response);
-     }
-    else{
-      request.setAttribute("error", "Logout error!");
-      request.getRequestDispatcher("/login").forward(request,response);
+      request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request,response);
     }
   }
 }
