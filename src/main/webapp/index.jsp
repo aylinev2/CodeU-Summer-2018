@@ -36,6 +36,11 @@
             create or join a conversation.</li>
         <li>View the <a href="/about.jsp">about</a> page to learn more about the
             project and the team behind it!.</li>
+        <iframe
+          width="350"
+          height="430"
+          src="https://console.dialogflow.com/api-client/demo/embedded/489352d4-07ce-4546-8684-747ee1a9a09d">
+        </iframe>
       </ul>
     </div>
   </div>
