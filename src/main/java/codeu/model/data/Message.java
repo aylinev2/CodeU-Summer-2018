@@ -18,7 +18,7 @@ import java.util.UUID;
 import java.util.List;
 
 /** Class representing a message. Messages are sent by a User in a Conversation. */
-public class Message {
+public class Message implements Comparable<Message> {
 
   private final UUID id;
   private final UUID conversation;
@@ -74,5 +74,16 @@ public class Message {
   /** Returns the creation time of this Message. */
   public Instant getCreationTime() {
     return creation;
+  }
+    
+  @Override
+  public int compareTo(Message otherMessage) {
+    if(otherMessage == null)
+        throw new NullPointerException("Object being compared is null");
+    else if(getCreationTime().equals(otherMessage.getCreationTime()))
+        // UUID's are unique
+            return getId().compareTo(otherMessage.getId());
+    else
+        return getCreationTime().compareTo(otherMessage.getCreationTime());
   }
 }

@@ -39,6 +39,8 @@
       <%
       List<Conversation> conversations =
         (List<Conversation>) request.getAttribute("conversations");
+      List<Message> messages =
+        (List<Message>) request.getAttribute("messages");
       List<User> users = 
         (List<User>) request.getAttribute("users");
       HashMap<UUID, String> idToName =
@@ -107,8 +109,6 @@
        <hr/>
       <strong> Messages: </strong>
       <%
-      MessageStore messageStore = MessageStore.getInstance();
-      List<Message> messages = messageStore.getAllMessages();
       if(messages == null || messages.isEmpty()){
       %>
         <p>Aww nothing so far!</p>
