@@ -19,22 +19,26 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /** Servlet class responsible for the logout page. */
 public class LogoutServlet extends HttpServlet {
-
-  /**
-   * This function fires when a user requests the /login URL. It simply forwards the request to
-   * login.jsp.
-   */
+  /** Set up state for handling profile pages. */
+  @Override
+  public void init() throws ServletException {
+    super.init();
+  }
+    
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
-        
-    if(request.getSession(false) != null){
+    
+    HttpSession session = request.getSession(false);
+    String user = (session != null) ? (String) session.getAttribute("user") : null;
+    if(user != null){
       request.setAttribute("error", "Logout successful!");
       request.getSession(false).invalidate();
-      request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request,response);
-    }
+      request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
+      }
   }
 }

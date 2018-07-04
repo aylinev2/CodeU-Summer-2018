@@ -25,29 +25,28 @@ public class LogoutServletTest {
   @Before
   public void setup() {
     logoutServlet = new LogoutServlet();
-    mockSession = Mockito.mock(HttpSession.class);
     mockRequest = Mockito.mock(HttpServletRequest.class);
+    mockSession = Mockito.mock(HttpSession.class);
     mockResponse = Mockito.mock(HttpServletResponse.class);
     mockRequestDispatcher = Mockito.mock(RequestDispatcher.class);
-    Mockito.when(mockRequest.getRequestDispatcher("/WEB-INF/view/logout.jsp"))
+    Mockito.when(mockRequest.getRequestDispatcher("/WEB-INF/view/login.jsp"))
       .thenReturn(mockRequestDispatcher);
   }
 
   @Test
   public void testDoGetSession() throws IOException, ServletException {
-    Mockito.when(mockRequest.getSession()).thenReturn(mockSession);
+    Mockito.when(mockRequest.getSession(false)).thenReturn(mockSession);
+    Mockito.when(mockSession.getAttribute("user")).thenReturn("testUser");
     logoutServlet.doGet(mockRequest, mockResponse);
-    // Mockito.verify(mockResponse).sendRedirect("/login");
-    // If there was a session the user should have been redirected to the login page
-    // GIVES ERROR: "Actually, there were zero interactions with this mock"
-    }
+    //Assert.assertEquals("Logout successful!", mockRequest.getAttribute("error"));
+    // ERROR: is null?
+    Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
+  }
     
   @Test
   public void testDoGetnoSession() throws IOException, ServletException {
-    Mockito.when(mockRequest.getSession()).thenReturn(null);
+    Mockito.when(mockRequest.getSession(false)).thenReturn(null);
     logoutServlet.doGet(mockRequest, mockResponse);
-    // Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
-    // GIVES ERROR: "Actually, there were zero interactions with this mock"
-    // If there was no session our app silently fails. So what do we check for?
+    Assert.assertEquals(null, mockRequest.getAttribute("error"));
     }
 }
