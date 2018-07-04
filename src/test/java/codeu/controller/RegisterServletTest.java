@@ -6,6 +6,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
@@ -22,6 +23,7 @@ public class RegisterServletTest {
   private RegisterServlet registerServlet;
   private HttpServletRequest mockRequest;
   private HttpServletResponse mockResponse;
+  private HttpSession mockSession;
   private RequestDispatcher mockRequestDispatcher;
 
   @Before
@@ -29,6 +31,7 @@ public class RegisterServletTest {
     registerServlet = new RegisterServlet();
     mockRequest = Mockito.mock(HttpServletRequest.class);
     mockResponse = Mockito.mock(HttpServletResponse.class);
+    mockSession = Mockito.mock(HttpSession.class);
     mockRequestDispatcher = Mockito.mock(RequestDispatcher.class);
     Mockito.when(mockRequest.getRequestDispatcher("/WEB-INF/view/register.jsp"))
         .thenReturn(mockRequestDispatcher);
@@ -83,10 +86,12 @@ public class RegisterServletTest {
   public void testDoPost_NewUser() throws IOException, ServletException {
     Mockito.when(mockRequest.getParameter("username")).thenReturn("test username");
     Mockito.when(mockRequest.getParameter("password")).thenReturn("test password");
-
+    
     UserStore mockUserStore = Mockito.mock(UserStore.class);
     Mockito.when(mockUserStore.isUserRegistered("test username")).thenReturn(false);
     registerServlet.setUserStore(mockUserStore);
+      
+    Mockito.when(mockRequest.getSession()).thenReturn(mockSession);
 
     registerServlet.doPost(mockRequest, mockResponse);
 
@@ -98,7 +103,7 @@ public class RegisterServletTest {
         userArgumentCaptor.getValue().getPasswordHash(), CoreMatchers.containsString("$2a$10$"));
     Assert.assertEquals(60, userArgumentCaptor.getValue().getPasswordHash().length());
 
-    Mockito.verify(mockResponse).sendRedirect("/login");
+    Mockito.verify(mockResponse).sendRedirect("/profile/test username");
   }
 
   @Test
