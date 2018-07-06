@@ -16,9 +16,11 @@ package codeu.controller;
 
 import codeu.model.data.Conversation;
 import codeu.model.data.User;
+import codeu.model.data.Message;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.persistence.PersistentStorageAgent;
 import codeu.model.store.basic.UserStore;
+import codeu.model.store.basic.MessageStore;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -47,6 +49,7 @@ public class ActivityFeedServletTest {
     private RequestDispatcher mockRequestDispatcher;
     private ConversationStore mockConversationStore;
     private UserStore mockUserStore;
+    private MessageStore mockMessageStore;
     private PersistentStorageAgent mockPersistentStorageAgent;
 
     private final User USER_ONE =
@@ -75,9 +78,11 @@ public class ActivityFeedServletTest {
         mockPersistentStorageAgent = Mockito.mock(PersistentStorageAgent.class);
         mockUserStore = UserStore.getTestInstance(mockPersistentStorageAgent);
         
-        
         mockUserStore = Mockito.mock(UserStore.class);
         activityFeedServlet.setUserStore(mockUserStore);
+        
+        mockMessageStore = Mockito.mock(MessageStore.class);
+        activityFeedServlet.setMessageStore(mockMessageStore);
     }
     
     @Test
@@ -93,6 +98,10 @@ public class ActivityFeedServletTest {
         fakeConversationList.add( new Conversation(testUUID, USER_ONE.getId(), "test_conversation", Instant.now()));
         Mockito.when(mockConversationStore.getAllConversations()).thenReturn(fakeConversationList);
         
+        List<Message> fakeMessageList = new ArrayList<>();
+        fakeMessageList.add(new Message(UUID.randomUUID(), UUID.randomUUID(), UUID.randomUUID(), "test message", Instant.now(), UUID.randomUUID()));
+        Mockito.when(mockMessageStore.getAllMessages()).thenReturn(fakeMessageList);
+        
         final List<User> userList = new ArrayList<>();
         userList.add(USER_ONE);
         Mockito.when(mockUserStore.getAllUsers()).thenReturn(userList);
@@ -102,6 +111,7 @@ public class ActivityFeedServletTest {
         Mockito.verify(mockRequest).setAttribute("conversations", fakeConversationList);
         Mockito.verify(mockRequest).setAttribute("users", userList);
         Mockito.verify(mockRequest).setAttribute("idToTitle", idToTitle);
+        Mockito.verify(mockRequest).setAttribute("messages", fakeMessageList);
         Mockito.verify(mockRequest).setAttribute("idToName", idToName);
         Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
     }
