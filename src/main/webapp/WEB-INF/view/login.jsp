@@ -43,6 +43,8 @@
     </form>
 
     <p>New users can register <a href="/register">here</a>.</p>
+
+</form>
   </div>
 </body>
 </html>
