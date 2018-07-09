@@ -16,8 +16,10 @@ package codeu.controller;
 
 import codeu.model.data.Conversation;
 import codeu.model.data.User;
+import codeu.model.data.Message;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.UserStore;
+import codeu.model.store.basic.MessageStore;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
@@ -39,6 +41,9 @@ public class ActivityFeedServlet extends HttpServlet {
     /** Store class that gives access to Conversations. */
     private ConversationStore conversationStore;
     
+    /** Store class that gives access to Messages. */
+    private MessageStore messageStore;
+    
     
     /**
      * Set up state for handling conversation-related requests. This method is only called when
@@ -49,6 +54,7 @@ public class ActivityFeedServlet extends HttpServlet {
         super.init();
         setUserStore(UserStore.getInstance());
         setConversationStore(ConversationStore.getInstance());
+        setMessageStore(MessageStore.getInstance());
     }
     
     /**
@@ -68,6 +74,14 @@ public class ActivityFeedServlet extends HttpServlet {
     }
     
     /**
+     * Sets the MessageStore used by this servlet. This function provides a common setup method for
+     * use by the test framework or the servlet's init() function.
+     */
+    void setMessageStore(MessageStore messageStore) {
+        this.messageStore = messageStore;
+    }
+    
+    /**
      * This function fires when a user navigates to the activity page. It gets all of the
      * conversations from the model and forwards to activity.jsp for rendering the list.
      */
@@ -76,7 +90,10 @@ public class ActivityFeedServlet extends HttpServlet {
     throws IOException, ServletException {
         List<Conversation> conversations = conversationStore.getAllConversations();
         List<User> users = userStore.getAllUsers();
-        Collections.sort(users);
+        List<Message> messages = messageStore.getAllMessages();
+        Collections.sort(users, Collections.reverseOrder());
+        Collections.sort(messages, Collections.reverseOrder());
+        Collections.sort(conversations, Collections.reverseOrder());
         
         HashMap<UUID, String> idToName = new HashMap<>();
         for(User user: users) {
@@ -90,6 +107,7 @@ public class ActivityFeedServlet extends HttpServlet {
         
         request.setAttribute("conversations", conversations);
         request.setAttribute("users", users);
+        request.setAttribute("messages", messages);;
         request.setAttribute("idToTitle", idToTitle);
         request.setAttribute("idToName", idToName);
         request.getRequestDispatcher("/WEB-INF/view/activity.jsp").forward(request, response);

@@ -21,7 +21,7 @@ import java.util.UUID;
  * Class representing a conversation, which can be thought of as a chat room. Conversations are
  * created by a User and contain Messages.
  */
-public class Conversation {
+public class Conversation implements Comparable<Conversation> {
   public final UUID id;
   public final UUID owner;
   public final Instant creation;
@@ -60,5 +60,16 @@ public class Conversation {
   /** Returns the creation time of this Conversation. */
   public Instant getCreationTime() {
     return creation;
+  }
+    
+  @Override
+  public int compareTo(Conversation otherConversation) {
+    if(otherConversation == null)
+        throw new NullPointerException("Object being compared is null");
+    else if(getCreationTime().equals(otherConversation.getCreationTime()))
+        // UUID's are unique
+        return getId().compareTo(otherConversation.getId());
+    else
+        return getCreationTime().compareTo(otherConversation.getCreationTime());
   }
 }

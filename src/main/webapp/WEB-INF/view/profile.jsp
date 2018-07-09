@@ -77,11 +77,18 @@ DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.
       <ul>
      <%
       List<Message> messages = MessageStore.getInstance().getMessagesByAuthor(user.getId());
+      if(messages == null || messages.isEmpty()){
+      %>
+        <p>Aww nothing so far!</p>
+      <%
+      }
+      else{
       for (Message message : messages) {
          %>
          <li><b><%= formatter.format(message.getCreationTime()) %> : </b> <%= message.getContent() %>
         <% 
       }
+    }
       %>
     </li>
     </ul>

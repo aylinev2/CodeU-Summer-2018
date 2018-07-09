@@ -18,6 +18,7 @@ public class RegisterServlet extends HttpServlet {
 
   /** Store class that gives access to Users. */
   private UserStore userStore;
+  private LoginServlet loginServlet;
 
   /**
    * Set up state for handling registration-related requests. This method is only called when
@@ -81,6 +82,7 @@ public class RegisterServlet extends HttpServlet {
     User user = new User(UUID.randomUUID(), username, defaultAboutMe, hashedPassword, Instant.now());
     userStore.addUser(user);
 
-    response.sendRedirect("/login");
+    request.getSession().setAttribute("user", username);
+    response.sendRedirect("/conversations");
   }
 }
