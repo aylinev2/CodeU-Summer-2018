@@ -38,8 +38,7 @@ public class LogoutServletTest {
     Mockito.when(mockRequest.getSession(false)).thenReturn(mockSession);
     Mockito.when(mockSession.getAttribute("user")).thenReturn("testUser");
     logoutServlet.doGet(mockRequest, mockResponse);
-    //Assert.assertEquals("Logout successful!", mockRequest.getAttribute("error"));
-    // ERROR: is null?
+    Mockito.verify(mockRequest).setAttribute("error", "Logout successful!");
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
   }
     

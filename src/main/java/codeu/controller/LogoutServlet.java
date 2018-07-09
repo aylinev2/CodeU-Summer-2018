@@ -23,12 +23,7 @@ import javax.servlet.http.HttpSession;
 
 /** Servlet class responsible for the logout page. */
 public class LogoutServlet extends HttpServlet {
-  /** Set up state for handling profile pages. */
-  @Override
-  public void init() throws ServletException {
-    super.init();
-  }
-    
+  
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
