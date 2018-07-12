@@ -42,7 +42,7 @@ public class Marker {
   public UUID getId() {
     return id;
   }
-    
+
   /** Returns the name of this Marker. */
   public String getLocationName() {
     return locationName;
