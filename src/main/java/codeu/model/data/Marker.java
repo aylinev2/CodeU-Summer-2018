@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 import codeu.model.data.Message;
 
-/** Class representing a registered user. */
+/** Class representing a marker. */
 public class Marker {
   private String locationName;
   private String locationAddress;
