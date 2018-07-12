@@ -17,6 +17,7 @@ package codeu.model.store.persistence;
 import codeu.model.data.Conversation;
 import codeu.model.data.Message;
 import codeu.model.data.User;
+import codeu.model.data.Marker;
 import codeu.model.store.persistence.PersistentDataStore;
 import java.util.List;
 
@@ -102,5 +103,10 @@ public class PersistentStorageAgent {
   /** Write a Conversation object to the Datastore service. */
   public void writeThrough(Message message) {
     persistentDataStore.writeThrough(message);
+  }
+    
+  /** Write a Conversation object to the Datastore service. */
+  public void writeThrough(Marker marker) {
+    persistentDataStore.writeThrough(marker);
   }
 }

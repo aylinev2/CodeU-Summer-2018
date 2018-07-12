@@ -3,10 +3,12 @@ package codeu.model.store.persistence;
 import codeu.model.data.Conversation;
 import codeu.model.data.Message;
 import codeu.model.data.User;
+import codeu.model.data.Marker;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import java.time.Instant;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.UUID;
 import org.junit.After;
 import org.junit.Assert;
@@ -154,4 +156,39 @@ public class PersistentDataStoreTest {
     Assert.assertEquals(creationTwo, resultMessageTwo.getCreationTime());
     Assert.assertEquals(parentMsgTwo, resultMessageTwo.getParentMessageId());
   }
+    
+    @Test
+    public void testSaveAndLoadMarkers() throws PersistentDataStoreException {
+        
+        // Create a message
+        UUID idTwo = UUID.fromString("10000003-2222-3333-4444-555555555555");
+        UUID conversationTwo = UUID.fromString("10000004-2222-3333-4444-555555555555");
+        UUID authorTwo = UUID.fromString("10000005-2222-3333-4444-555555555555");
+        UUID parentMsgTwo = UUID.fromString("10000007-2222-3333-4444-555555555555");
+        String contentTwo = "test content one";
+        Instant creationTwo = Instant.ofEpochMilli(2000);
+        Message inputMessageTwo =
+        new Message(idTwo, conversationTwo, authorTwo, contentTwo, creationTwo, parentMsgTwo);
+        
+        UUID idOne = UUID.fromString("10000000-2222-3333-4444-555555555555");
+        String name = "example place";
+        String address = "example address";
+        String locationId = "exampleUniqueId";
+        Instant creationOne = Instant.ofEpochMilli(1000);
+        Marker inputMarkerOne =
+        new Marker(idOne, name, address, locationId, creationOne);
+        // save
+        persistentDataStore.writeThrough(inputMarkerOne);
+        
+        // load
+        List<Marker> resultMarkers = persistentDataStore.loadMarkers();
+        
+        // confirm that what we saved matches what we loaded
+        Marker resultMarkerOne = resultMarkers.get(0);
+        Assert.assertEquals(idOne, resultMarkerOne.getId());
+        Assert.assertEquals(name, resultMarkerOne.getLocationName());
+        Assert.assertEquals(address, resultMarkerOne.getLocationAddress());
+        Assert.assertEquals(locationId, resultMarkerOne.getLocationId());
+        Assert.assertEquals(creationOne, resultMarkerOne.getCreationTime());
+    }
 }

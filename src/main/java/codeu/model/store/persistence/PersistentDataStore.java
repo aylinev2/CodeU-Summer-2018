@@ -17,6 +17,7 @@ package codeu.model.store.persistence;
 import codeu.model.data.Conversation;
 import codeu.model.data.Message;
 import codeu.model.data.User;
+import codeu.model.data.Marker;
 import codeu.model.store.persistence.PersistentDataStoreException;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -155,6 +156,40 @@ public class PersistentDataStore {
     return messages;
   }
     
+  /**
+   * Loads all Marker from the Datastore service and returns them in a List
+   *
+   * @throws PersistentDataStoreException if an error was detected during the load from the
+   *     Datastore service
+   */
+  public List<Marker> loadMarkers() throws PersistentDataStoreException {
+    
+    List<Marker> markers = new ArrayList<>();
+        
+    // Retrieve all markers from the datastore.
+    Query query = new Query("chat-markers");
+    PreparedQuery results = datastore.prepare(query);
+    
+    for (Entity entity : results.asIterable()) {
+        try {
+            UUID uuid = UUID.fromString((String) entity.getProperty("uuid"));
+            String name = (String) entity.getProperty("name");
+            String address = (String) entity.getProperty("address");
+            String locationId = (String) entity.getProperty("location-id");
+            Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
+            Marker marker = new Marker(uuid, name, address, locationId, creationTime);
+            markers.add(marker);
+        } catch (Exception e) {
+            // In a production environment, errors should be very rare. Errors which may
+            // occur include network errors, Datastore service errors, authorization errors,
+            // database entity definition mismatches, or service mismatches.
+            throw new PersistentDataStoreException(e);
+        }
+    }
+    
+    return markers;
+  }
+    
   /** Write a User object to the Datastore service. */
   public void writeThrough(User user) {
     Entity userEntity = new Entity("chat-users", user.getId().toString());
@@ -190,5 +225,17 @@ public class PersistentDataStore {
     conversationEntity.setProperty("creation_time", conversation.getCreationTime().toString());
     datastore.put(conversationEntity);
   }
+    
+  /** Write a Marker object to the Datastore service. */
+  public void writeThrough(Marker marker) {
+    Entity markerEntity = new Entity("chat-markers", marker.getId().toString());
+    markerEntity.setProperty("uuid", marker.getId().toString());
+    markerEntity.setProperty("name", marker.getLocationName().toString());
+    markerEntity.setProperty("address", marker.getLocationAddress());
+    markerEntity.setProperty("location-id", marker.getLocationId());
+    markerEntity.setProperty("creation_time", marker.getCreationTime().toString());
+    datastore.put(markerEntity);
+  }
+    
 }
 
