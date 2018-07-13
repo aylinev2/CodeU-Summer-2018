@@ -61,7 +61,7 @@ DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.
     <h2>Edit your About Me (Only you can see this)</h2>
 
     <form action="/profile/<%= user.getName() %>" method="POST">
-        <textarea id="about-me" name="info" cols="60" rows="5"><%= user.getAboutMe()%>
+        <textarea id="text-box" name="info" cols="60" rows="5"><%= user.getAboutMe()%>
         </textarea>
         <br/>
         <button type="submit">Submit</button>

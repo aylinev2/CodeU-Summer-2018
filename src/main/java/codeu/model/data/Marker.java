@@ -14,55 +14,35 @@
 
 package codeu.model.data;
 
-import java.time.Instant;
-import java.util.List;
-import java.util.UUID;
-import codeu.model.data.Message;
+import codeu.model.data.Conversation;
 
 /** Class representing a marker. */
 public class Marker {
-  private String locationName;
-  private String locationAddress;
-  private String locationId;
-  private List<Message> locationReviews;
-  private Instant creation;
+  private Conversation conversation;
+  private double latitude;
+  private double longitude;
 
   /**
    * Constructs a new Marker.
    */
-  public Marker(String locationName, String locationAddress, String locationId, Instant creation) {
-    this.locationName = locationName;
-    this.locationAddress = locationAddress;
-    this.locationId = locationId;
-    this.creation = creation;
+  public Marker(Conversation conversation, double latitude, double longitude) {
+    this.conversation = conversation;
+    this.latitude = latitude;
+    this.longitude = longitude;
   }
 
-  /** Returns the name of this Marker. */
-  public String getLocationName() {
-    return locationName;
+  /** Returns the conversation going on at this Marker. */
+  public Conversation getConversation() {
+    return conversation;
   }
 
-  /** Returns the location of this Marker. */
-  public String getLocationAddress() {
-    return locationAddress;
+  /** Returns the longitude of this Marker. */
+  public double getLongitude() {
+    return longitude;
   }
 
-  /** Returns the id hash of this Marker. */
-  public String getLocationId() {
-    return locationId;
+  /** Returns the latitude of this Marker. */
+  public double getLatitude() {
+    return latitude;
   }
-
-  /** Returns the creation time of this Marker. */
-  public Instant getCreationTime() {
-    return creation;
-  }
-    
-  public List<Message> getLocationReviews() {
-    return locationReviews;
-  }
-    
-  void addReview(Message newReview) {
-      locationReviews.add(newReview);
-  }
-
 }

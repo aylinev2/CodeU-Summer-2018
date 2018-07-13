@@ -95,6 +95,16 @@
       <servlet-name>ProfileServlet</servlet-name>
       <url-pattern>/profile/*</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+      <servlet-name>MapServlet</servlet-name>
+      <servlet-class>codeu.controller.MapServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+      <servlet-name>MapServlet</servlet-name>
+      <url-pattern>/map</url-pattern>
+  </servlet-mapping>
   
   <servlet>
       <servlet-name>LogoutServlet</servlet-name>
