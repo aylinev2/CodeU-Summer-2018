@@ -14,26 +14,41 @@
 
 package codeu.model.data;
 
+import java.util.UUID;
 import codeu.model.data.Conversation;
 
 /** Class representing a marker. */
 public class Marker {
-  private Conversation conversation;
+  private final UUID conversationId;
+  private final UUID id;
+  private String locationName;
   private double latitude;
   private double longitude;
 
   /**
    * Constructs a new Marker.
    */
-  public Marker(Conversation conversation, double latitude, double longitude) {
-    this.conversation = conversation;
+  public Marker(UUID conversationId, UUID id, String locationName, double latitude, double longitude) {
+    this.conversationId = conversationId;
+    this.id = id;
+    this.locationName = locationName;
     this.latitude = latitude;
     this.longitude = longitude;
   }
 
-  /** Returns the conversation going on at this Marker. */
-  public Conversation getConversation() {
-    return conversation;
+  /** Returns the id of the conversation going on at this Marker. */
+  public UUID getConversationId() {
+    return conversationId;
+  }
+
+  /** Returns the Marker's id. */
+  public UUID getId() {
+    return id;
+  }
+
+  /** Returns the location name of this Marker. */
+  public String getLocationName() {
+    return locationName;
   }
 
   /** Returns the longitude of this Marker. */

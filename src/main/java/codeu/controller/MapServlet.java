@@ -119,14 +119,13 @@ public class MapServlet extends HttpServlet{
     }
 
     Conversation conversation =
-        new Conversation(UUID.randomUUID(), user.getId(), locName, Instant.now());
+        new Conversation(UUID.randomUUID(), user.getId(), locName.replaceAll("\\s", ""), Instant.now());
     
-    Marker marker = new Marker(conversation, lat, lng);
+    Marker marker = new Marker(conversation.getId(), UUID.randomUUID(), locName, lat, lng);
 
     conversationStore.addConversation(conversation);
 
     // redirect to a GET request
     response.sendRedirect("/map");
-  }
-  
+  } 
 }
