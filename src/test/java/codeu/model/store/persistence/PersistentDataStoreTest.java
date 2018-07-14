@@ -171,12 +171,13 @@ public class PersistentDataStoreTest {
         new Message(idTwo, conversationTwo, authorTwo, contentTwo, creationTwo, parentMsgTwo);
         
         UUID idOne = UUID.fromString("10000000-2222-3333-4444-555555555555");
+        UUID convoIdOne = UUID.fromString("10000000-4222-3333-4444-555555555555");
         String name = "example place";
-        String address = "example address";
-        String locationId = "exampleUniqueId";
+        double lat = 4.7909090;
+        double lng = -5.020392039;
         Instant creationOne = Instant.ofEpochMilli(1000);
         Marker inputMarkerOne =
-        new Marker(idOne, name, address, locationId, creationOne);
+        new Marker(convoIdOne, idOne, name, lat, lng, creationOne);
         // save
         persistentDataStore.writeThrough(inputMarkerOne);
         
@@ -186,9 +187,10 @@ public class PersistentDataStoreTest {
         // confirm that what we saved matches what we loaded
         Marker resultMarkerOne = resultMarkers.get(0);
         Assert.assertEquals(idOne, resultMarkerOne.getId());
+        Assert.assertEquals(convoIdOne, resultMarkerOne.getConversationId());
         Assert.assertEquals(name, resultMarkerOne.getLocationName());
-        Assert.assertEquals(address, resultMarkerOne.getLocationAddress());
-        Assert.assertEquals(locationId, resultMarkerOne.getLocationId());
+        Assert.assertEquals(lat, resultMarkerOne.getLatitude(), 0.0);
+        Assert.assertEquals(lng, resultMarkerOne.getLongitude(), 0.0);
         Assert.assertEquals(creationOne, resultMarkerOne.getCreationTime());
     }
 }

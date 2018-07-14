@@ -16,8 +16,10 @@ package codeu.controller;
 
 import codeu.model.data.Conversation;
 import codeu.model.data.User;
+import codeu.model.data.Marker;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.UserStore;
+import codeu.model.store.basic.MarkerStore;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -43,6 +45,7 @@ public class MapServletTest {
   private RequestDispatcher mockRequestDispatcher;
   private ConversationStore mockConversationStore;
   private UserStore mockUserStore;
+  private MarkerStore mockMarkerStore;
 
   @Before
   public void setup() {
@@ -62,11 +65,21 @@ public class MapServletTest {
 
     mockUserStore = Mockito.mock(UserStore.class);
     mapServlet.setUserStore(mockUserStore);
+
+    mockMarkerStore = Mockito.mock(MarkerStore.class);
+    mapServlet.setMarkerStore(mockMarkerStore);
   }
 
   @Test
   public void testDoGet() throws IOException, ServletException {
+    List<Marker> fakeMarkerList = new ArrayList<>();
+    fakeMarkerList.add(
+        new Marker(UUID.randomUUID(), UUID.randomUUID(), "test_marker", 4.5, 9.1, Instant.now()));
+    Mockito.when(mockMarkerStore.getAllMarkers()).thenReturn(fakeMarkerList);
+
     mapServlet.doGet(mockRequest, mockResponse);
+
+    Mockito.verify(mockRequest).setAttribute("markers", fakeMarkerList);
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
   }
 
@@ -77,6 +90,8 @@ public class MapServletTest {
 
     Mockito.verify(mockConversationStore, Mockito.never())
         .addConversation(Mockito.any(Conversation.class));
+    Mockito.verify(mockMarkerStore, Mockito.never())
+        .addMarker(Mockito.any(Marker.class));
     Mockito.verify(mockRequest).setAttribute("error", "Please log in to add a new marker.");
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
   }
@@ -90,6 +105,8 @@ public class MapServletTest {
 
     Mockito.verify(mockConversationStore, Mockito.never())
         .addConversation(Mockito.any(Conversation.class));
+    Mockito.verify(mockMarkerStore, Mockito.never())
+        .addMarker(Mockito.any(Marker.class));
     Mockito.verify(mockResponse).sendRedirect("/map");
   }
 
@@ -110,6 +127,8 @@ public class MapServletTest {
         
         Mockito.verify(mockConversationStore, Mockito.never())
         .addConversation(Mockito.any(Conversation.class));
+        Mockito.verify(mockMarkerStore, Mockito.never())
+        .addMarker(Mockito.any(Marker.class));
         Mockito.verify(mockRequest).setAttribute("error", "Please enter at least one letter or number for the location name.");
         Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
     }
@@ -133,6 +152,8 @@ public class MapServletTest {
 
     Mockito.verify(mockConversationStore, Mockito.never())
         .addConversation(Mockito.any(Conversation.class));
+    Mockito.verify(mockMarkerStore, Mockito.never())
+        .addMarker(Mockito.any(Marker.class));
     Mockito.verify(mockRequest).setAttribute("error", "Location name already taken. Please use a different location name.");
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
   }
@@ -158,6 +179,8 @@ public class MapServletTest {
 
     Mockito.verify(mockConversationStore, Mockito.never())
         .addConversation(Mockito.any(Conversation.class));
+    Mockito.verify(mockMarkerStore, Mockito.never())
+        .addMarker(Mockito.any(Marker.class));
     Mockito.verify(mockRequest).setAttribute("error", "Please enter only numbers/decimals for longitude/latitude values.");
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
   }
@@ -175,7 +198,18 @@ public class MapServletTest {
             "test_username", "test_aboutMe",
             "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
             Instant.now());
+
+    Marker fakeMarker =
+        new Marker(
+            UUID.randomUUID(), UUID.randomUUID(),
+            "test_locationName", 4.55555,
+            -11.64566,
+            Instant.now());
+
+
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
+
+    Mockito.when(mockMarkerStore.getMarkerByConvo(fakeUser.getId())).thenReturn(fakeMarker);
 
     Mockito.when(mockConversationStore.isTitleTaken("test_locationName")).thenReturn(false);
 
@@ -185,6 +219,11 @@ public class MapServletTest {
         ArgumentCaptor.forClass(Conversation.class);
     Mockito.verify(mockConversationStore).addConversation(conversationArgumentCaptor.capture());
     Assert.assertEquals(conversationArgumentCaptor.getValue().getTitle(), "test_locationName");
+
+    ArgumentCaptor<Marker> markerArgumentCaptor =
+        ArgumentCaptor.forClass(Marker.class);
+    Mockito.verify(mockMarkerStore).addMarker(markerArgumentCaptor.capture());
+    Assert.assertEquals(markerArgumentCaptor.getValue().getLatitude(), 4.55555, 0.0);
 
     Mockito.verify(mockResponse).sendRedirect("/map");
   }

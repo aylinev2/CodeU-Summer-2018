@@ -173,11 +173,12 @@ public class PersistentDataStore {
     for (Entity entity : results.asIterable()) {
         try {
             UUID uuid = UUID.fromString((String) entity.getProperty("uuid"));
+            UUID convoUuid = UUID.fromString((String) entity.getProperty("conversation-uuid"));
             String name = (String) entity.getProperty("name");
-            String address = (String) entity.getProperty("address");
-            String locationId = (String) entity.getProperty("location-id");
+            double longitude = (double) entity.getProperty("longitude");
+            double latitude = (double) entity.getProperty("latitude");
             Instant creationTime = Instant.parse((String) entity.getProperty("creation_time"));
-            Marker marker = new Marker(uuid, name, address, locationId, creationTime);
+            Marker marker = new Marker(convoUuid, uuid, name, latitude, longitude, creationTime);
             markers.add(marker);
         } catch (Exception e) {
             // In a production environment, errors should be very rare. Errors which may
@@ -230,9 +231,10 @@ public class PersistentDataStore {
   public void writeThrough(Marker marker) {
     Entity markerEntity = new Entity("chat-markers", marker.getId().toString());
     markerEntity.setProperty("uuid", marker.getId().toString());
+    markerEntity.setProperty("conversation-uuid", marker.getConversationId().toString());
     markerEntity.setProperty("name", marker.getLocationName().toString());
-    markerEntity.setProperty("address", marker.getLocationAddress());
-    markerEntity.setProperty("location-id", marker.getLocationId());
+    markerEntity.setProperty("longitude", marker.getLongitude());
+    markerEntity.setProperty("latitude", marker.getLatitude());
     markerEntity.setProperty("creation_time", marker.getCreationTime().toString());
     datastore.put(markerEntity);
   }

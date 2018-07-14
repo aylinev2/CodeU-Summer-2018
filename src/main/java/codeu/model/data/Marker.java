@@ -42,6 +42,7 @@ public class Marker {
   /** Returns the id of the conversation going on at this Marker. */
   public UUID getConversationId() {
     return conversationId;
+  }
 
   /** Returns the ID of this Marker. */
   public UUID getId() {
@@ -61,9 +62,11 @@ public class Marker {
   /** Returns the latitude of this Marker. */
   public double getLatitude() {
     return latitude;
+  }
 
   /** Returns the creation time of this Marker. */
   public Instant getCreationTime() {
     return creation;
   }
 }
+
