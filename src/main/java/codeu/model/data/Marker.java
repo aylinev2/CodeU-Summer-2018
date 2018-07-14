@@ -15,26 +15,32 @@
 package codeu.model.data;
 
 import java.time.Instant;
-import java.util.List;
 import java.util.UUID;
 import codeu.model.data.Message;
 
-/** Class representing a marker. */
+/** Class representing a registered user. */
 public class Marker {
+    
+  private final UUID id;
   private String locationName;
   private String locationAddress;
   private String locationId;
-  private List<Message> locationReviews;
   private Instant creation;
 
   /**
    * Constructs a new Marker.
    */
-  public Marker(String locationName, String locationAddress, String locationId, Instant creation) {
+  public Marker(UUID id, String locationName, String locationAddress, String locationId, Instant creation) {
+    this.id = id;
     this.locationName = locationName;
     this.locationAddress = locationAddress;
     this.locationId = locationId;
     this.creation = creation;
+  }
+
+  /** Returns the ID of this Marker. */
+  public UUID getId() {
+    return id;
   }
 
   /** Returns the name of this Marker. */
@@ -56,13 +62,4 @@ public class Marker {
   public Instant getCreationTime() {
     return creation;
   }
-    
-  public List<Message> getLocationReviews() {
-    return locationReviews;
-  }
-    
-  void addReview(Message newReview) {
-      locationReviews.add(newReview);
-  }
-
 }
