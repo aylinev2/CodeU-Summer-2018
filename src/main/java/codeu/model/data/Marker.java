@@ -16,47 +16,51 @@ package codeu.model.data;
 
 import java.time.Instant;
 import java.util.UUID;
-import codeu.model.data.Message;
 
 /** Class representing a registered user. */
 public class Marker {
-    
+  
+  private final UUID conversationId;
   private final UUID id;
   private String locationName;
-  private String locationAddress;
-  private String locationId;
+  private double latitude;
+  private double longitude;
   private Instant creation;
 
   /**
    * Constructs a new Marker.
    */
-  public Marker(UUID id, String locationName, String locationAddress, String locationId, Instant creation) {
+  public Marker(UUID conversationId, UUID id, String locationName, double latitude, double longitude, Instant creation) {
+    this.conversationId = conversationId;
     this.id = id;
     this.locationName = locationName;
-    this.locationAddress = locationAddress;
-    this.locationId = locationId;
+    this.latitude = latitude;
+    this.longitude = longitude;
     this.creation = creation;
   }
+
+  /** Returns the id of the conversation going on at this Marker. */
+  public UUID getConversationId() {
+    return conversationId;
 
   /** Returns the ID of this Marker. */
   public UUID getId() {
     return id;
   }
 
-  /** Returns the name of this Marker. */
+  /** Returns the location name of this Marker. */
   public String getLocationName() {
     return locationName;
   }
 
-  /** Returns the location of this Marker. */
-  public String getLocationAddress() {
-    return locationAddress;
+  /** Returns the longitude of this Marker. */
+  public double getLongitude() {
+    return longitude;
   }
 
-  /** Returns the id hash of this Marker. */
-  public String getLocationId() {
-    return locationId;
-  }
+  /** Returns the latitude of this Marker. */
+  public double getLatitude() {
+    return latitude;
 
   /** Returns the creation time of this Marker. */
   public Instant getCreationTime() {

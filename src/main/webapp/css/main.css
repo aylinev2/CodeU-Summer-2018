@@ -56,9 +56,22 @@ nav a {
   width: 800px;
 }
 
-#about-me {
+#container2 { 
+  margin-left: 100px;
+  margin-right: auto;
+  width: 550px;
+}
+
+#text-box {
   padding:3%;
   font:18px sans-serif;
+}
+
+#map {  
+  margin-left: 600px;
+  margin-top: -675px;
+  width: 700px;
+  height: 650px;
 }
 
 h1 {
