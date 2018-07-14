@@ -20,8 +20,9 @@ import codeu.model.data.User;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
-import java.io.IOException;
+import com.vdurmont.emoji.EmojiParser;
 import java.io.File;
+import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -33,7 +34,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.TextProcessor;
-import com.vdurmont.emoji.EmojiParser;
 
 /** Servlet class responsible for the chat page. */
 public class ChatServlet extends HttpServlet{
@@ -145,13 +145,24 @@ public class ChatServlet extends HttpServlet{
     // processor needed for BBCode to HTML translation
     TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("kefirbb.xml");
 
-        String messageContent = request.getParameter("message");
+    String messageContent = request.getParameter("message");
 
+    if (messageContent == null || messageContent.isEmpty()) {
+      // This is an empty message. Don't add anything and just redirect to a GET request.
+      response.sendRedirect("/chat/" + conversationTitle);
+      return;
+    }
 
     // this removes any HTML from the message content and then parses any BBCode to HTML
     String cleanedMessageContent = processor.process(Jsoup.clean(messageContent, Whitelist.none()));
 
     String cleanedAndEmojiCheckedMsg = EmojiParser.parseToUnicode(cleanedMessageContent);
+
+    if (cleanedAndEmojiCheckedMsg.isEmpty()) {
+      // This is an empty message. Don't add anything and just redirect to a GET request.
+      response.sendRedirect("/chat/" + conversationTitle);
+      return;
+    }
 
     if(request.getParameter("parentMessageId") != null){
       String mainMessageUUID = request.getParameter("parentMessageId");
