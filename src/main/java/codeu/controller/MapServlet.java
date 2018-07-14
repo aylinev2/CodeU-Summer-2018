@@ -121,7 +121,7 @@ public class MapServlet extends HttpServlet{
     Conversation conversation =
         new Conversation(UUID.randomUUID(), user.getId(), locName.replaceAll("\\s", ""), Instant.now());
     
-    Marker marker = new Marker(conversation.getId(), UUID.randomUUID(), locName, lat, lng);
+    Marker marker = new Marker(conversation.getId(), UUID.randomUUID(), locName, lat, lng, Instant.now());
 
     conversationStore.addConversation(conversation);
 
