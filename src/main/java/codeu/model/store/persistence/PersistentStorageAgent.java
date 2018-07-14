@@ -81,6 +81,16 @@ public class PersistentStorageAgent {
   }
 
   /**
+   * Retrieve all Marker objects from the Datastore service. The returned list may be empty.
+   *
+   * @throws PersistentDataStoreException if an error was detected during the load from the
+   *     Datastore service
+   */
+  public List<Marker> loadMarkers() throws PersistentDataStoreException {
+    return persistentDataStore.loadMarkers();
+  }
+
+  /**
    * Retrieve all Message objects from the Datastore service. The returned list may be empty.
    *
    * @throws PersistentDataStoreException if an error was detected during the load from the
@@ -105,7 +115,7 @@ public class PersistentStorageAgent {
     persistentDataStore.writeThrough(message);
   }
     
-  /** Write a Conversation object to the Datastore service. */
+  /** Write a Marker object to the Datastore service. */
   public void writeThrough(Marker marker) {
     persistentDataStore.writeThrough(marker);
   }

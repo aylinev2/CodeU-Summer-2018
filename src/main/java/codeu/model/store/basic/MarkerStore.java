@@ -69,19 +69,15 @@ public class MarkerStore {
     return markers;
   }
 
-  /**
-   * Access the marker object with the given id.
-   *
-   * @return null if username does not match any existing User.
-   */
-  public Marker getMarker(String markerID) {
-    // This approach will be pretty slow if we have many users.
+  /** Check whether a Marker location name is already known to the application. */
+  public boolean isNameTaken(String name) {
+    // This approach will be pretty slow if we have many Markers.
     for (Marker marker : markers) {
-      if (marker.getLocationId().equals(markerID)) {
-        return marker;
+      if (marker.getLocationName().equals(name)) {
+        return true;
       }
     }
-    return null;
+    return false;
   }
 
   /**
@@ -92,6 +88,20 @@ public class MarkerStore {
   public Marker getMarker(UUID id) {
     for (Marker marker : markers) {
       if (marker.getId().equals(id)) {
+        return marker;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Access the marker object with the given conversation UUID.
+   *
+   * @return null if the conversation UUID does not match any existing marker.
+   */
+  public Marker getMarkerByConvo(UUID convoId) {
+    for (Marker marker : markers) {
+      if (marker.getConversationId().equals(convoId)) {
         return marker;
       }
     }

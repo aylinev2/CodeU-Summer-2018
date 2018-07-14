@@ -5,6 +5,7 @@ import codeu.model.store.basic.UserStore;
 import codeu.model.data.Conversation;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.data.Marker;
+import codeu.model.store.basic.MarkerStore;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
@@ -24,13 +25,13 @@ public class MapServlet extends HttpServlet{
   private ConversationStore conversationStore;
 
   /** Store class that gives access to Markers. */
-  //private MarkerStore markerStore;
+  private MarkerStore markerStore;
 
   /** Set up state for handling map with markers. */
   @Override
   public void init() throws ServletException {
     super.init();
-    //setMarkerStore(MarkerStore.getInstance());
+    setMarkerStore(MarkerStore.getInstance());
     setUserStore(UserStore.getInstance());
     setConversationStore(ConversationStore.getInstance());
   }
@@ -55,9 +56,9 @@ public class MapServlet extends HttpServlet{
    * Sets the MarkerStore used by this servlet. This function provides a common setup method for use
    * by the test framework or the servlet's init() function.
    */
- // void setMarkerStore(MarkerStore markerStore) {
- //   this.markerStore = markerStore;
- // }
+  void setMarkerStore(MarkerStore markerStore) {
+    this.markerStore = markerStore;
+  }
 
   /**
    * This function fires when a user navigates to the map.
@@ -65,6 +66,8 @@ public class MapServlet extends HttpServlet{
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
+        List<Marker> markers = markerStore.getAllMarkers();
+        request.setAttribute("markers", markers);
         request.getRequestDispatcher("/WEB-INF/view/map.jsp").forward(request, response);
   }
 
@@ -90,13 +93,11 @@ public class MapServlet extends HttpServlet{
     String locName = request.getParameter("locationName");
     if (locName.isEmpty()) {
         request.setAttribute("error", "Please enter at least one letter or number for the location name.");
-        List<Conversation> conversations = conversationStore.getAllConversations();
-        request.setAttribute("conversations", conversations);
         request.getRequestDispatcher("/WEB-INF/view/map.jsp").forward(request, response);
         return;
     }
 
-    if (conversationStore.isTitleTaken(locName)) {
+    if (conversationStore.isTitleTaken(locName.replaceAll("\\s", "")) || markerStore.isNameTaken(locName)) {
       // location name is already taken, don't let them add new marker with that name
       request.setAttribute("error", "Location name already taken. Please use a different location name.");
       request.getRequestDispatcher("/WEB-INF/view/map.jsp").forward(request, response);
@@ -124,6 +125,7 @@ public class MapServlet extends HttpServlet{
     Marker marker = new Marker(conversation.getId(), UUID.randomUUID(), locName, lat, lng, Instant.now());
 
     conversationStore.addConversation(conversation);
+    markerStore.addMarker(marker);
 
     // redirect to a GET request
     response.sendRedirect("/map");

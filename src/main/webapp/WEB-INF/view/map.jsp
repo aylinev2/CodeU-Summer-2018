@@ -1,3 +1,9 @@
+<%@ page import= "java.util.UUID" %>
+<%@ page import="codeu.model.data.Marker" %>
+<%@ page import="codeu.model.data.Conversation" %>
+<%@ page import="codeu.model.store.basic.ConversationStore" %>
+<%@ page import="java.util.List" %>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -30,8 +36,6 @@
         <button type="submit">Submit</button>
     </form>
       <hr/>
-   
-
     <!--The div element for the map -->
       <div id="map"></div>
     </div> 
@@ -39,11 +43,12 @@
 
   var lat;
   var lng;
+  var map;
 
   // Initialize and add the map
   function initMap() {
   // The map, centered in the United States
-  var map = new google.maps.Map(
+     map = new google.maps.Map(
       document.getElementById('map'), {
         center: {lat: 41.881832, lng: -87.623177},
         zoom: 4
@@ -80,10 +85,10 @@
         marker.addListener('click', function() {
           infowindow.open(map, marker);
         });
-
       }
+
       google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
+      </script>
     <!--Load the API from the specified URL
     * The async attribute allows the browser to render the page while the API loads
     * The key parameter will contain your own API key (which is not needed for this tutorial)
