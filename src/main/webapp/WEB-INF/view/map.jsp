@@ -17,7 +17,7 @@
     <h1>The Map</h1>
     <ul>
     <li>To join a conversation that has already started at a location, just click on the marker that is there!</li>
-    <li>To add a new marker, log in and click on a spot on the map and then fill out the info below! <p>(Tip: click on the marker that you just created to see its exact coordinates)</p></li>
+    <li>To add a new marker, log in and click on a spot on the map and then fill out the information below! <p>(Tip: click on the marker that you just created to see its exact coordinates)</p></li>
     </ul>
 
     <% if(request.getAttribute("error") != null){ %>
@@ -29,9 +29,9 @@
         <h3>Location Name:</h3>
         <input type="text" name="locationName">
         <h3>Latitude:</h3>
-        <input type="text" name="latitudeVal">
+        <input id="latitudeVal" type="text" name="latitudeVal">
         <h3>Longitude:</h3>
-        <input type="text" name="longitudeVal">
+        <input id="longitudeVal" type="text" name="longitudeVal">
         <br/><br/>
         <button type="submit">Submit</button>
     </form>
@@ -39,10 +39,20 @@
     <!--The div element for the map -->
       <div id="map"></div>
     </div> 
-    <script>
 
-  var lat;
-  var lng;
+    <script>
+      var locNames = [];
+      var convoNames = [];
+      var markerLocs = [];
+    <%
+    List<Marker> markers = (List<Marker>) request.getAttribute("markers");
+    for(Marker marker: markers) {
+    %>
+       markerLocs.push({lat: <%= marker.getLatitude() %>, lng: <%= marker.getLongitude() %>},);
+       locNames.push("<%= marker.getLocationName() %>",);
+       convoNames.push("<%= marker.getLocationName().replaceAll("\\s", "") %>",);
+  <%}%>
+
   var map;
 
   // Initialize and add the map
@@ -56,22 +66,20 @@
 
   // This event listener calls addMarker() when the map is clicked.
         google.maps.event.addListener(map, 'click', function(event) {
-          lat = event.latLng.lat();
-          lng = event.latLng.lng();
           addMarker(event.latLng, map);
+          document.querySelector("#latitudeVal").value = event.latLng.lat();
+          document.querySelector("#longitudeVal").value = event.latLng.lng();
         });
+
+        for (var i in markerLocs) {
+           addMarkerFromStore(markerLocs[i], map, locNames[i], convoNames[i])
+        }
   }
 
-  // Adds a marker to the map.
-      function addMarker(location, map) {
-        var contentString = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<div id="bodyContent">'+
-            '<b>latitude:</b> ' + lat + '</br><br>' +
-            '<b>longitude:</b> ' + lng +
-            '</div>'+
-            '</div>';
+  // Adds a markerstore marker to the map.
+      function addMarkerFromStore(location, map, markerName, convoName) {
+        var contentString = '<h3 align="center">' + markerName +'</h3>' + '<a href="/chat/' + convoName 
+        +'">Click here</a> to join the conversation going on at this location!';
 
         var infowindow = new google.maps.InfoWindow({
           content: contentString
@@ -79,7 +87,28 @@
 
         var marker = new google.maps.Marker({
           position: location,
-          map: map
+          map: map,
+          icon: 'https://maps.google.com/mapfiles/kml/paddle/ltblu-circle.png'
+        });
+
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+      }
+
+  // Adds a marker to the map.
+      function addMarker(location, map) {
+        var contentString = 
+            '<b>coordinates: </b> ' + location + '<br><br>This marker has not been saved yet! Please fill out the form next to the map to save a marker!';
+
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+
+        var marker = new google.maps.Marker({
+          position: location,
+          map: map,
+          icon: 'https://maps.google.com/mapfiles/kml/paddle/pink-circle.png'
         });
 
         marker.addListener('click', function() {
