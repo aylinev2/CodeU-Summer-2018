@@ -13,6 +13,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>CodeU Chat App</title>
   <link rel="stylesheet" href="/css/main.css">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -24,27 +25,16 @@
 
   <div id="container">
     <div
-      style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
+      style="margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-      <h1>About the CodeU Chat App</h1>
+      <h1>About Team Ama's CodeU Chat App</h1>
       <p>
-        This is an example chat application designed to be a starting point
-        for your CodeU project team work. Here's some stuff to think about:
+        Welcome to our chat application! Our chat app allows users to connect through conversations that are started at different locations on a google map. We wanted the map to be the focal point of our app so we turned it into a way for a user to join or start a conversation. Our chat app also has some other features that include:
       </p>
-
       <ul>
-        <li><strong>Algorithms and data structures:</strong> We've made the app
-            and the code as simple as possible. You will have to extend the
-            existing data structures to support your enhancements to the app,
-            and also make changes for performance and scalability as your app
-            increases in complexity.</li>
-        <li><strong>Look and feel:</strong> The focus of CodeU is on the Java
-          side of things, but if you're particularly interested you might use
-          HTML, CSS, and JavaScript to make the chat app prettier.</li>
-        <li><strong>Customization:</strong> Think about a group you care about.
-          What needs do they have? How could you help? Think about technical
-          requirements, privacy concerns, and accessibility and
-          internationalization.</li>
+        <li><strong>Activity Feed:</strong> A feed that shows all of the application's activity such as when users start conversations, write messages, or join the application.</li>
+        <li><strong>Profile Pages:</strong> Pages that display a user's about me and a mini feed that includes all of the messages a user has sent. When logged in, users have the option to edit their about me right from their profile page.</li>
+        <li><strong>Text Styling:</strong> The ability to style text by using certain BBCode tags ([b]wow![/b] -> <b>wow!</b>) or parse text to emojis (:cat: -> &#x1F431;). Our website also has a <a href="/guide.jsp">text styling guide</a> available for those who aren't familiar with BBCode tags and would like to learn how to use them on our site. </li>
       </ul>
 
       <p> <br>
@@ -52,16 +42,6 @@
         <ul>
           <div class="social-icons">
             <table cellpadding = "15" cellspacing = "1">
-              <tr><td align="center"><img src="About-IMG/Default-Profile-IMG.png" class="prof-pic">
-                <a href="https://github.com/MarcelRG"><i class="fa fa-github"></i></a>
-
-                <a href="ADD LINK HERE!!!!"><i class="fa fa-linkedin-square"></i></a>
-
-                </td>
-                <td><strong>Marcel Gonzalez</strong>
-                Currently studying Computer Science at Tecnologico de Monterrey</td></tr>
-              
-
               <tr><td align="center" ><img src="About-IMG/Ayline-Profile.gif" class="prof-pic">
                 <a href="https://www.facebook.com/ayline.villegas"><i class="fa fa-facebook-square"></i></a>
 
@@ -73,7 +53,7 @@
 
                 </td>
                 <td><a href="http://aylinev2.github.io"><strong>Ayline Villegas</strong></a>
-                Currently studying Computer Science at The University of Illinois at Urbana Champaign. Passions include: cats, baking, and music!</td></tr>
+                Currently studying Computer Science at The University of Illinois at Urbana Champaign. Hobbies include: taking pictures of my cats, baking, and playing a lot of sims!</td></tr>
 
 
               <tr><td align="center"><img src="About-IMG/Anthony-Profile-IMG.jpg" class="prof-pic">
@@ -87,6 +67,13 @@
                 <td><strong>Anthony Beltran</strong>
                 Currently studying Computer Science at The University of Illinois at Chicago. Passions include: nature, AI, and food!
               </td></tr>
+
+
+              <tr><td align="center"><img src="About-IMG/Default-Profile-IMG.png" class="prof-pic">
+                </td>
+                <td><strong>Marcel Gonzalez</strong>
+                Currently studying Computer Science at Tecnologico de Monterrey</td></tr>
+
             </table>
           </div>
         </ul>

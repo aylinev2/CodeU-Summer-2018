@@ -31,16 +31,14 @@ DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.
   <meta charset="UTF-8">
   <title><%= user.getName() %>'s Profile Page</title>
   <link rel="stylesheet" href="/css/main.css">
-
-  <script>
+</head>
+<script>
     // scroll the chat div to the bottom
     function scrollActivity() {
       var activityDiv = document.getElementById('activity');
       activityDiv.scrollTop = activityDiv.scrollHeight;
     };
   </script>
-
-</head>
 <body onload="scrollActivity()">
 
   <%@ include file="/WEB-INF/view/navbar.jsp" %>
@@ -61,7 +59,7 @@ DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.
     <h2>Edit your About Me (Only you can see this)</h2>
 
     <form action="/profile/<%= user.getName() %>" method="POST">
-        <textarea id="text-box" name="info" cols="60" rows="5"><%= user.getAboutMe()%>
+        <textarea class="text-box" name="info" cols="60" rows="5"><%= user.getAboutMe()%>
         </textarea>
         <br/>
         <button type="submit">Submit</button>

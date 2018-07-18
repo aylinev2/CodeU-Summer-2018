@@ -46,15 +46,14 @@
       var markerLocs = [];
     <%
     List<Marker> markers = (List<Marker>) request.getAttribute("markers");
-    if(markers == null || markers.isEmpty()) {}
-    else {
-    for(Marker marker: markers) {
-    %>
-       markerLocs.push({lat: <%= marker.getLatitude() %>, lng: <%= marker.getLongitude() %>},);
-       locNames.push("<%= marker.getLocationName() %>",);
-       convoNames.push("<%= marker.getLocationName().replaceAll("\\s", "") %>",);
-  <%} 
-  }%>
+    if(markers != null && !markers.isEmpty()) {
+       for(Marker marker: markers) {
+       %>
+           markerLocs.push({lat: <%= marker.getLatitude() %>, lng: <%= marker.getLongitude() %>},);
+           locNames.push("<%= marker.getLocationName() %>",);
+          convoNames.push("<%= marker.getLocationName().replaceAll("\\s", "") %>",);
+       <%} 
+    }%>
 
   var map;
 
@@ -74,8 +73,7 @@
           document.querySelector("#longitudeVal").value = event.latLng.lng();
         });
 
-        if(markerLocs == null) {}
-        else {
+        if(markerLocs != null) {
           for (var i in markerLocs) {
             addMarkerFromStore(markerLocs[i], map, locNames[i], convoNames[i])
           }
