@@ -79,7 +79,7 @@ public class RegisterServlet extends HttpServlet {
 
     String defaultAboutMe = "Welcome to " + username + "'s profile!";
 
-    User user = new User(UUID.randomUUID(), username, defaultAboutMe, hashedPassword, Instant.now());
+    User user = new User(UUID.randomUUID(), username, defaultAboutMe, hashedPassword, Instant.now(), false);
     userStore.addUser(user);
 
     request.getSession().setAttribute("user", username);

@@ -45,7 +45,7 @@ public class AdminServlet extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/view/login.jsp").forward(request, response);
             return;
         }
-        if(userStore.hasAdmin(username)){
+        if(user.hasPrivileges() || userStore.hasAdmin(username)){
             request.getRequestDispatcher("/WEB-INF/view/admin.jsp").forward(request, response);
             return;
         } else{

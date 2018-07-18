@@ -24,6 +24,7 @@ public class User implements Comparable<User>{
   private String aboutMe;
   private final String passwordHash;
   private final Instant creation;
+  private final Boolean privileges;
 
   /**
    * Constructs a new User.
@@ -32,13 +33,15 @@ public class User implements Comparable<User>{
    * @param name the username of this User
    * @param passwordHash the password hash of this User
    * @param creation the creation time of this User
+   * @param privileges the privileges of this User 
    */
-  public User(UUID id, String name, String aboutMe, String passwordHash, Instant creation) {
+  public User(UUID id, String name, String aboutMe, String passwordHash, Instant creation, Boolean privileges) {
     this.id = id;
     this.name = name;
     this.aboutMe = aboutMe;
     this.passwordHash = passwordHash;
     this.creation = creation;
+    this.privileges = privileges;
   }
 
   /** Returns the ID of this User. */
@@ -69,6 +72,11 @@ public class User implements Comparable<User>{
   /** Returns the creation time of this User. */
   public Instant getCreationTime() {
     return creation;
+  }
+
+  /** Returns the privileges of this User. */
+  public Boolean hasPrivileges(){
+    return privileges;
   }
 
   @Override
