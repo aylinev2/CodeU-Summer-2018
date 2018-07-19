@@ -16,18 +16,24 @@
 <%@ page import="java.util.List" %>
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.data.Message" %>
+<%@ page import="codeu.model.data.Marker" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.store.basic.MessageStore" %>
+<%@ page import="codeu.model.store.basic.MarkerStore" %>
 <%
 Conversation conversation = (Conversation) request.getAttribute("conversation");
 List<Message> messages = (List<Message>) request.getAttribute("messages");
+Marker mkr = MarkerStore.getInstance().getMarkerByConvo(conversation.getId());
+String locName = mkr.getLocationName();
+double lat = mkr.getLatitude();
+double lng = mkr.getLongitude();
 %>
 
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
-  <title><%= conversation.getTitle() %></title>
+  <title><%= locName %></title>
   <link rel="stylesheet" href="/css/main.css" type="text/css">
 
   <style>
@@ -54,9 +60,9 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 
   <div id="container">
 
-    <h1><%= conversation.getTitle() %>
+    <h1><%= locName %>
       <a href="" style="float: right">&#8635;</a></h1>
-
+      Location: (Latitude: <%= lat %>, Longitude: <%= lng %>)
     <hr/>
 
     <div id="chat">

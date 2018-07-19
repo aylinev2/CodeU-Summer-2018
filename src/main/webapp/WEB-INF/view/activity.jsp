@@ -23,6 +23,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>Activity</title>
   <link rel="stylesheet" href="/css/main.css">
 </head>

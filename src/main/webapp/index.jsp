@@ -27,7 +27,7 @@
     <div
       style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-      <h1>Team AMAa's CodeU Chat App</h1>
+      <h1>Team AMA's Chat App</h1>
       <h2>Welcome!</h2>
 
       <ul>
@@ -35,7 +35,7 @@
         <li>Go to the <a href="/map">map</a> page to
             find or create a new conversation at a certain location.</li>
         <li>View the <a href="/about.jsp">about</a> page to learn more about the
-            project and the team behind it!.</li>
+            project and the team behind it!</li>
       </ul>
     </div>
   </div>
