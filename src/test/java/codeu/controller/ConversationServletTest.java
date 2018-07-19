@@ -16,8 +16,10 @@ package codeu.controller;
 
 import codeu.model.data.Conversation;
 import codeu.model.data.User;
+import codeu.model.data.Marker;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.UserStore;
+import codeu.model.store.basic.MarkerStore;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -43,6 +45,7 @@ public class ConversationServletTest {
   private RequestDispatcher mockRequestDispatcher;
   private ConversationStore mockConversationStore;
   private UserStore mockUserStore;
+  private MarkerStore mockMarkerStore;
 
   @Before
   public void setup() {
@@ -62,6 +65,9 @@ public class ConversationServletTest {
 
     mockUserStore = Mockito.mock(UserStore.class);
     conversationServlet.setUserStore(mockUserStore);
+
+    mockMarkerStore = Mockito.mock(MarkerStore.class);
+    conversationServlet.setMarkerStore(mockMarkerStore);
   }
 
   @Test
@@ -71,9 +77,15 @@ public class ConversationServletTest {
         new Conversation(UUID.randomUUID(), UUID.randomUUID(), "test_conversation", Instant.now()));
     Mockito.when(mockConversationStore.getAllConversations()).thenReturn(fakeConversationList);
 
+    List<Marker> fakeMarkerList = new ArrayList<>();
+    fakeMarkerList.add(
+        new Marker(UUID.randomUUID(), UUID.randomUUID(), "test_loc_name", 47.8989, -10.323, Instant.now()));
+    Mockito.when(mockMarkerStore.getAllMarkers()).thenReturn(fakeMarkerList);
+
     conversationServlet.doGet(mockRequest, mockResponse);
 
     Mockito.verify(mockRequest).setAttribute("conversations", fakeConversationList);
+    Mockito.verify(mockRequest).setAttribute("markers", fakeMarkerList);
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
   }
 

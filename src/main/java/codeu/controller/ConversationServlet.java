@@ -16,8 +16,10 @@ package codeu.controller;
 
 import codeu.model.data.Conversation;
 import codeu.model.data.User;
+import codeu.model.data.Marker;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.UserStore;
+import codeu.model.store.basic.MarkerStore;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.List;
@@ -36,6 +38,9 @@ public class ConversationServlet extends HttpServlet {
   /** Store class that gives access to Conversations. */
   private ConversationStore conversationStore;
 
+  /** Store class that gives access to Markers. */
+  private MarkerStore markerStore;
+
   /**
    * Set up state for handling conversation-related requests. This method is only called when
    * running in a server, not when running in a test.
@@ -45,6 +50,7 @@ public class ConversationServlet extends HttpServlet {
     super.init();
     setUserStore(UserStore.getInstance());
     setConversationStore(ConversationStore.getInstance());
+    setMarkerStore(MarkerStore.getInstance());
   }
 
   /**
@@ -64,6 +70,14 @@ public class ConversationServlet extends HttpServlet {
   }
 
   /**
+   * Sets the MarkerStore used by this servlet. This function provides a common setup method
+   * for use by the test framework or the servlet's init() function.
+   */
+  void setMarkerStore(MarkerStore markerStore) {
+    this.markerStore = markerStore;
+  }
+
+  /**
    * This function fires when a user navigates to the conversations page. It gets all of the
    * conversations from the model and forwards to conversations.jsp for rendering the list.
    */
@@ -72,6 +86,8 @@ public class ConversationServlet extends HttpServlet {
       throws IOException, ServletException {
     List<Conversation> conversations = conversationStore.getAllConversations();
     request.setAttribute("conversations", conversations);
+    List<Marker> markers = markerStore.getAllMarkers();
+    request.setAttribute("markers", markers);
     request.getRequestDispatcher("/WEB-INF/view/conversations.jsp").forward(request, response);
   }
 

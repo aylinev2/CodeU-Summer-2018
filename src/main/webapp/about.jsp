@@ -27,7 +27,7 @@
     <div
       style="margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-      <h1>About Team Ama's CodeU Chat App</h1>
+      <h1>About Team AMA's Chat App</h1>
       <p>
         Welcome to our chat application! Our chat app allows users to connect through conversations that are started at different locations on a google map. We wanted the map to be the focal point of our app so we turned it into a way for a user to join or start a conversation. Our chat app also has some other features that include:
       </p>
@@ -52,7 +52,7 @@
                 <a href="https://www.linkedin.com/in/aylinev/"><i class="fa fa-linkedin-square"></i></a>
 
                 </td>
-                <td><a href="http://aylinev2.github.io"><strong>Ayline Villegas</strong></a>
+                <td><a href="http://aylinev2.github.io"><strong>Ayline Villegas:</strong></a>
                 Currently studying Computer Science at The University of Illinois at Urbana Champaign. Hobbies include: taking pictures of my cats, baking, and playing a lot of sims!</td></tr>
 
 
@@ -64,14 +64,14 @@
                 <a href="https://www.linkedin.com/in/abeltran1804/"><i class="fa fa-linkedin-square"></i></a>
 
                 </td>
-                <td><strong>Anthony Beltran</strong>
+                <td><strong>Anthony Beltran:</strong>
                 Currently studying Computer Science at The University of Illinois at Chicago. Passions include: nature, AI, and food!
               </td></tr>
 
 
               <tr><td align="center"><img src="About-IMG/Default-Profile-IMG.png" class="prof-pic">
                 </td>
-                <td><strong>Marcel Gonzalez</strong>
+                <td><strong>Marcel Gonzalez:</strong>
                 Currently studying Computer Science at Tecnologico de Monterrey</td></tr>
 
             </table>

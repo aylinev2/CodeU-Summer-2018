@@ -31,14 +31,14 @@ DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.
   <meta charset="UTF-8">
   <title><%= user.getName() %>'s Profile Page</title>
   <link rel="stylesheet" href="/css/main.css">
-</head>
-<script>
+  <script>
     // scroll the chat div to the bottom
     function scrollActivity() {
       var activityDiv = document.getElementById('activity');
       activityDiv.scrollTop = activityDiv.scrollHeight;
     };
   </script>
+</head>
 <body onload="scrollActivity()">
 
   <%@ include file="/WEB-INF/view/navbar.jsp" %>

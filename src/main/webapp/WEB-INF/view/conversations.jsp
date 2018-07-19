@@ -14,7 +14,7 @@
   limitations under the License.
 --%>
 <%@ page import="java.util.List" %>
-<%@ page import="codeu.model.data.Conversation" %>
+<%@ page import="codeu.model.data.Marker" %>
 
 <!DOCTYPE html>
 <html>
@@ -28,46 +28,30 @@
 
   <div id="container">
 
-    <% if(request.getAttribute("error") != null){ %>
-        <h2 style="color:red"><%= request.getAttribute("error") %></h2>
-    <% } %>
-
-    <% if(request.getSession().getAttribute("user") != null){ %>
-      <h1>New Conversation</h1>
-      <form action="/conversations" method="POST">
-          <div class="form-group">
-            <label class="form-control-label">Title:</label>
-          <input type="text" name="conversationTitle">
-        </div>
-
-        <button type="submit">Create</button>
-      </form>
-
-      <hr/>
-    <% } %>
-
     <h1>Conversations</h1>
 
     <%
-    List<Conversation> conversations =
-      (List<Conversation>) request.getAttribute("conversations");
-    if(conversations == null || conversations.isEmpty()){
+    List<Marker> markers =
+      (List<Marker>) request.getAttribute("markers");
+    if(markers == null || markers.isEmpty()){
     %>
-      <p>Create a conversation to get started.</p>
+      <p>Create a conversation to get started. Visit the <a href="/map">map</a> page to start a new conversation.</p>
     <%
     }
     else{
     %>
       <ul class="mdl-list">
     <%
-      for(Conversation conversation: conversations){
+      for(Marker marker: markers){
+      String convoName = marker.getLocationName().replaceAll("\\s", "");
     %>
-      <li><a href="/chat/<%= conversation.getTitle() %>">
-        <%= conversation.getTitle() %></a></li>
+      <li><a href="/chat/<%= convoName %>">
+        <%= marker.getLocationName() %></a></li>
     <%
       }
     %>
       </ul>
+      Log in and visit the <a href="/map">map</a> page to start a new conversation.
     <%
     }
     %>

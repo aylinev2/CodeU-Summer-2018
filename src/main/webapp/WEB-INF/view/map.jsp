@@ -17,7 +17,7 @@
     <h1>The Map</h1>
     <ul>
     <li>To join a conversation that has already started at a location, just click on the marker that is there!</li>
-    <li>To add a new marker, log in and click on a spot on the map and then fill out the information below! <p>(Tip: click on the marker that you just created to see its exact coordinates)</p></li>
+    <li>To add a new marker, log in and click on a spot on the map. Be sure to fill out the location name field to succesfully save your marker and start a new conversation! <p>(Tip: click on the marker that you just created to see its exact coordinates)</p></li>
     </ul>
 
     <% if(request.getAttribute("error") != null){ %>
@@ -83,7 +83,7 @@
   // Adds a markerstore marker to the map.
       function addMarkerFromStore(location, map, markerName, convoName) {
         var contentString = '<h3 align="center">' + markerName +'</h3>' + '<a href="/chat/' + convoName 
-        +'">Click here</a> to join the conversation going on at this location!';
+        +'">Join</a> the conversation going on at this location!';
 
         var infowindow = new google.maps.InfoWindow({
           content: contentString
