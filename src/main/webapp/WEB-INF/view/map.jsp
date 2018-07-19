@@ -27,7 +27,7 @@
       <h2>Add a new marker:</h2>
       <form action="/map" method="POST">
         <h3>Location Name:</h3>
-        <input type="text" name="locationName">
+        <input id="placeName" type="text" name="locationName">
         <h3>Latitude:</h3>
         <input id="latitudeVal" type="text" name="latitudeVal">
         <h3>Longitude:</h3>
@@ -36,6 +36,9 @@
         <button type="submit">Submit</button>
     </form>
       <hr/>
+    <!--The search element for the map -->
+    <input id="pac-input" class="controls" type="text" placeholder="Search Google Maps">
+    <button id= "clearButton" onclick="resetSearch()">Clear</button>
     <!--The div element for the map -->
       <div id="map"></div>
     </div> 
@@ -56,6 +59,7 @@
     }%>
 
   var map;
+  var markers = [];
 
   // Initialize and add the map
   function initMap() {
@@ -78,6 +82,69 @@
             addMarkerFromStore(markerLocs[i], map, locNames[i], convoNames[i])
           }
         }
+
+      //!--------------------------
+      // Code to display search box
+      // Create the search box and link it to the UI element.
+      var stepDisplay = new google.maps.InfoWindow;
+      var input = document.getElementById('pac-input');
+      var clearButton = document.getElementById('clearButton');
+      var searchBox = new google.maps.places.SearchBox(input);
+      var locationDisplay = new google.maps.InfoWindow;
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+      map.controls[google.maps.ControlPosition.TOP_CENTER].push(clearButton);
+
+      // Bias the SearchBox results towards current map's viewport.
+      map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+      });
+
+      // Listen for the event fired when the user selects a prediction and retrieve more details for that place.
+      searchBox.addListener('places_changed', function() {
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+          return;
+        }
+        clearMarkers();
+
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+        
+        places.forEach(function(place) {
+          if (!place.geometry) {
+            console.log("Returned place contains no geometry");
+            return;
+          }
+          // Create a marker for each place.
+          var lookMarker = new google.maps.Marker({
+            map: map,
+            title: place.name,
+            position: place.geometry.location
+          });
+
+          markers.push(lookMarker);
+
+          google.maps.event.addListener(lookMarker, 'click', function() {
+
+            stepDisplay.setContent('Name: ' + place.name + '<br>Adress: ' + place.formatted_address + '<br>'+ place.geometry.location);
+
+            document.querySelector("#placeName").value = place.name;
+            document.querySelector("#latitudeVal").value = lookMarker.position.lat();
+            document.querySelector("#longitudeVal").value = lookMarker.position.lng();
+            stepDisplay.open(map, lookMarker);
+          });
+
+          if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+          }
+        });
+        map.fitBounds(bounds);
+      });
+
   }
 
   // Adds a markerstore marker to the map.
@@ -120,16 +187,33 @@
         });
       }
 
+      // Clears markers used for search bar
+      function clearMarkers() {
+        // Clear out the old search markers.
+        markers.forEach(function(marker) {
+          marker.setMap(null);
+        });
+        markers = [];
+      }
+
+      // Clears markers AND search bar entry
+      function resetSearch() {
+        document.querySelector("#pac-input").value = "";
+         markers.forEach(function(marker) {
+          marker.setMap(null);
+        });
+        markers = [];
+      }
+
       google.maps.event.addDomListener(window, 'load', initialize);
-      </script>
+    </script>
     <!--Load the API from the specified URL
     * The async attribute allows the browser to render the page while the API loads
     * The key parameter will contain your own API key (which is not needed for this tutorial)
     * The callback parameter executes the initMap() function
     -->
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB37P8-JjkAgqSEs4M0eHX0vlNRjvTVbzU&callback=initMap">
-    </script>
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB37P8-JjkAgqSEs4M0eHX0vlNRjvTVbzU&libraries=places&callback=initMap"
+         async defer></script>
   </body>
 </html>
 
