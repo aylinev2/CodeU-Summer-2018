@@ -42,7 +42,7 @@
       <button type="submit">Login</button>
     </form>
 
-    <p>New users can register <a href="/register">here</a>.</p>
+    <p>New users can register <a id="ul-link" href="/register">here</a>.</p>
 
 </form>
   </div>

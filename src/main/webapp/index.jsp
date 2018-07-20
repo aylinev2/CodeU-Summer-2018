@@ -31,10 +31,10 @@
       <h2>Welcome!</h2>
 
       <ul>
-        <li><a href="/login">Login</a> to get started.</li>
-        <li>Go to the <a href="/map">map</a> page to
+        <li><a id="ul-link" href="/login">Login</a> to get started.</li>
+        <li>Go to the <a id="ul-link" href="/map">map</a> page to
             find or create a new conversation at a certain location.</li>
-        <li>View the <a href="/about.jsp">about</a> page to learn more about the
+        <li>View the <a id="ul-link" href="/about.jsp">about</a> page to learn more about the
             project and the team behind it!</li>
       </ul>
     </div>
