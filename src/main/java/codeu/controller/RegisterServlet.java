@@ -83,6 +83,6 @@ public class RegisterServlet extends HttpServlet {
     userStore.addUser(user);
 
     request.getSession().setAttribute("user", username);
-    response.sendRedirect("/conversations");
+    response.sendRedirect("/map");
   }
 }
