@@ -103,7 +103,7 @@ public class RegisterServletTest {
         userArgumentCaptor.getValue().getPasswordHash(), CoreMatchers.containsString("$2a$10$"));
     Assert.assertEquals(60, userArgumentCaptor.getValue().getPasswordHash().length());
 
-    Mockito.verify(mockResponse).sendRedirect("/conversations");
+    Mockito.verify(mockResponse).sendRedirect("/map");
   }
 
   @Test
