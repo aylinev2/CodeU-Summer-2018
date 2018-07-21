@@ -111,7 +111,7 @@ public class ConversationServletTest {
         .addConversation(Mockito.any(Conversation.class));
     Mockito.verify(mockResponse).sendRedirect("/conversations");
   }
-    
+
     @Test
     public void testDoPost_NoConversationName() throws IOException, ServletException {
         Mockito.when(mockRequest.getParameter("conversationTitle")).thenReturn("");
@@ -122,7 +122,7 @@ public class ConversationServletTest {
                  UUID.randomUUID(),
                  "test_username", "test_aboutMe",
                  "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
-                 Instant.now());
+                 Instant.now(), "/About-IMG/Default-Profile-IMG.png");
         Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
         
         conversationServlet.doPost(mockRequest, mockResponse);
@@ -143,7 +143,7 @@ public class ConversationServletTest {
             UUID.randomUUID(),
             "test_username", "test_aboutMe",
             "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
-            Instant.now());
+            Instant.now(), "/About-IMG/Default-Profile-IMG.png");
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
 
     Mockito.when(mockConversationStore.isTitleTaken("test_conversation")).thenReturn(true);
@@ -165,7 +165,7 @@ public class ConversationServletTest {
             UUID.randomUUID(),
             "test_username", "test_aboutMe",
             "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
-            Instant.now());
+            Instant.now(), "/About-IMG/Default-Profile-IMG.png");
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
 
     Mockito.when(mockConversationStore.isTitleTaken("test_conversation")).thenReturn(false);

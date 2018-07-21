@@ -51,14 +51,22 @@ DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.
     <h1><%= user.getName() %>'s Profile Page</h1>
 
     <hr/>
-
+      <div style="text-align: center;">
+      <img src="<%=user.getPic()%>" class="prof-pic">
       <h2>About <%= user.getName()%></h2>
       <p>
         <%= processor.process(user.getAboutMe())%>
       </p>
+      <div>
 
+      <% if(request.getSession().getAttribute("error") != null) { %>
+       <h2 style="color:red"><%= request.getSession().getAttribute("error") %></h2>
+        <% request.getSession().setAttribute("error", null); } %>
     <% if (loggedInUser != null && loggedInUser.getName().equals(user.getName())) { %>
-
+    <br>
+      <form action="/profile/<%= user.getPic() %>" method="POST">
+        <p>Enter link to new profile picture: <input type="text" name="profilePic" id="profilePic"> <button type="submit">Submit</button> <p> 
+    </form>
     <h2>Edit your About Me (Only you can see this)</h2>
 
     <form action="/profile/<%= user.getName() %>" method="POST">
