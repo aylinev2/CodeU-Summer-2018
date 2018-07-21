@@ -74,6 +74,11 @@
                 <td><strong>Marcel Gonzalez:</strong>
                 Currently studying Computer Science at Tecnologico de Monterrey</td></tr>
 
+              <tr><td align="center"><img src="About-IMG/Default-Profile-IMG.png" class="prof-pic">
+                </td>
+                <td><strong>Aaron Colwell - PA:</strong>
+                Our super amazing project advisor who gave us so much support!</td></tr>
+
             </table>
           </div>
         </ul>
