@@ -26,15 +26,17 @@ public class UserTest {
     UUID id = UUID.randomUUID();
     String name = "test_username";
     String aboutMe = "hey welcome to my profile";
+    String pic = "/About-IMG/Default-Profile-IMG.png";
     String passwordHash = "$2a$10$bBiLUAVmUFK6Iwg5rmpBUOIBW6rIMhU1eKfi3KR60V9UXaYTwPfHy";
     Instant creation = Instant.now();
 
-    User user = new User(id, name, aboutMe, passwordHash, creation);
+    User user = new User(id, name, aboutMe, passwordHash, creation, pic);
 
     Assert.assertEquals(id, user.getId());
     Assert.assertEquals(name, user.getName());
     Assert.assertEquals(aboutMe, user.getAboutMe());
     Assert.assertEquals(passwordHash, user.getPasswordHash());
     Assert.assertEquals(creation, user.getCreationTime());
+    Assert.assertEquals(pic, user.getPic());
   }
 }

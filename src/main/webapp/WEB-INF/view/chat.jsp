@@ -17,6 +17,7 @@
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.data.Message" %>
 <%@ page import="codeu.model.data.Marker" %>
+<%@ page import="codeu.model.data.User" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.store.basic.MessageStore" %>
 <%@ page import="codeu.model.store.basic.MarkerStore" %>
@@ -71,8 +72,10 @@ double lng = mkr.getLongitude();
       for (Message message : messages) {
         String author = UserStore.getInstance()
         .getUser(message.getAuthorId()).getName();
+        User user = (User) UserStore.getInstance().getUser(author); 
     %>
-      <li><strong><a id="link" href="/profile/<%= author%>"><%= author%>:</a></strong> <%= message.getContent() %>
+      
+      <li> <img src="<%=user.getPic()%>" class="prof-picConvo"> <strong><a id="link" href="/profile/<%= author%>"><%= author%>:</a></strong> <%= message.getContent() %>
       <% 
       List<Message> replies = MessageStore.getInstance().getRepliesInMessage(message.getId());
       if( replies != null) {
