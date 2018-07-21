@@ -111,27 +111,6 @@ public class ConversationServletTest {
         .addConversation(Mockito.any(Conversation.class));
     Mockito.verify(mockResponse).sendRedirect("/conversations");
   }
-
-  @Test
-  public void testDoPost_BadConversationName() throws IOException, ServletException {
-    Mockito.when(mockRequest.getParameter("conversationTitle")).thenReturn("bad !@#$% name");
-    Mockito.when(mockSession.getAttribute("user")).thenReturn("test_username");
-
-    User fakeUser =
-        new User(
-            UUID.randomUUID(),
-            "test_username", "test_aboutMe",
-            "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
-            Instant.now());
-    Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
-
-    conversationServlet.doPost(mockRequest, mockResponse);
-
-    Mockito.verify(mockConversationStore, Mockito.never())
-        .addConversation(Mockito.any(Conversation.class));
-    Mockito.verify(mockRequest).setAttribute("error", "Please enter only letters and numbers.");
-    Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
-  }
     
     @Test
     public void testDoPost_NoConversationName() throws IOException, ServletException {
