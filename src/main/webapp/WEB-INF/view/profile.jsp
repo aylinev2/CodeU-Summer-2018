@@ -1,10 +1,12 @@
 <%@ page import= "java.util.UUID" %>
 <%@ page import="codeu.model.data.User" %>
 <%@ page import="codeu.model.data.Message" %>
+<%@ page import="codeu.model.data.Marker" %>
 <%@ page import= "java.util.HashMap" %>
 <%@ page import= "java.util.Map" %>
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.store.basic.MessageStore" %>
+<%@ page import="codeu.model.store.basic.MarkerStore" %>
 <%@ page import="org.kefirsf.bb.BBProcessorFactory" %>
 <%@ page import="org.kefirsf.bb.TextProcessor" %>
 <%@ page import="java.util.List" %>
@@ -20,9 +22,10 @@
 User user = (User) request.getAttribute("userToAccess");
 String loggedInUserename = (String) request.getSession().getAttribute("user");
 User loggedInUser = UserStore.getInstance().getUser(loggedInUserename);
+MarkerStore mkrStore = MarkerStore.getInstance();
 // processor needed for BBCode to HTML translation
 TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("kefirbb.xml");
-DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG).withLocale(Locale.US).withZone(ZoneId.systemDefault());
+DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(Locale.US).withZone(ZoneId.systemDefault());
 %>
 
 <!DOCTYPE html>
@@ -64,7 +67,7 @@ DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.
         <br/>
         <button type="submit">Submit</button>
         <br>
-        <p> Our chat app currently supports BBCode for text styling. <a href="/guide.jsp">Click here</a> to learn more about our text styling options.</p>
+        <p> Our chat app currently supports BBCode for text styling. <a id="ul-link" href="/guide.jsp">Click here</a> to learn more about our text styling options.</p>
     </form>
      <% } %>
 
@@ -82,9 +85,14 @@ DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.
       }
       else{
       for (Message message : messages) {
+          Marker mkr = mkrStore.getMarkerByConvo(message.getConversationId());
+          if (mkr != null){
+            String mkrName = mkr.getLocationName();
+            String convoName = mkrName.replaceAll("\\s", "");
          %>
-         <li><b><%= formatter.format(message.getCreationTime()) %> : </b> <%= message.getContent() %>
+         <li><b><%= formatter.format(message.getCreationTime()) %> in <a id="link" href="/chat/<%= convoName%>"><%= mkrName%></a>: </b> <%= message.getContent() %>
         <% 
+         }
       }
     }
       %>

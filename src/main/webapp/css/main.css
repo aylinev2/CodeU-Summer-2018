@@ -35,6 +35,10 @@ nav a {
   text-decoration: none;
 }
 
+nav a:hover {
+  color: #55d8d3;
+}
+
 #activity {
   background-color: white;
   height: 475px;
@@ -48,6 +52,20 @@ nav a {
 #link {
   text-decoration: none;
   color: black;
+}
+
+#link:hover {
+  color: #55d8d3;
+}
+
+#ul-link {
+  text-decoration: underline;
+  font-weight: bold;
+  color: black;
+}
+
+#ul-link:hover {
+  color: #55d8d3;
 }
 
 #container {

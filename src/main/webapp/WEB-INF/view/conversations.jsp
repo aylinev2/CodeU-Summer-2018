@@ -45,13 +45,13 @@
       for(Marker marker: markers){
       String convoName = marker.getLocationName().replaceAll("\\s", "");
     %>
-      <li><a href="/chat/<%= convoName %>">
+      <li><a id="link" href="/chat/<%= convoName %>">
         <%= marker.getLocationName() %></a></li>
     <%
       }
     %>
       </ul>
-      Log in and visit the <a href="/map">map</a> page to start a new conversation.
+      Log in and visit the <a id="ul-link" href="/map">map</a> page to start a new conversation.
     <%
     }
     %>

@@ -66,7 +66,7 @@
           Instant instant = conversation.getCreationTime();
           String output = formatter.format( instant ); %>
           <strong><%= output %>:</strong>
-          <a href="/chat/<%= conversation.getTitle() %>">
+          <a id="ul-link" href="/chat/<%= conversation.getTitle() %>">
         <%= conversation.getTitle() %></a> created by 
         <strong><a id="link" href="/profile/<%= owner%>">
         <%= owner %> </a> </strong>
@@ -130,14 +130,14 @@
           if (message.getParentMessageId() == null) { %>
           <strong> <%= output %>: </strong>
           <strong> <a id="link" href="/profile/<%= owner%>"><%= owner %> </a> </strong> sent a message in
-          <a href="/chat/<%= title %>">
+          <a id="ul-link" href="/chat/<%= title %>">
           <%= title %></a>
           : "<%=message.getContent()%>"
           <% } 
           else { %>
           <strong> <%= output %>: </strong>
           <strong> <a id="link" href="/profile/<%= owner%>"><%= owner %> </a> </strong> replied to a message in
-          <a href="/chat/<%= title %>">
+          <a id="ul-link" href="/chat/<%= title %>">
           <%= title %></a>
           : "<%=message.getContent()%>"
           <% } %>

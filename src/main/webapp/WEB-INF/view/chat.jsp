@@ -109,7 +109,7 @@ double lng = mkr.getLongitude();
         <br/>
         <button type="submit">Send</button>
         <br>
-        <p> Our chat app currently supports BBCode for text styling. <a href="/guide.jsp">Click here</a> to learn more about our text styling options.</p>
+        <p> Our chat app currently supports BBCode for text styling. <a id="ul-link" href="/guide.jsp">Click here</a> to learn more about our text styling options.</p>
     </form> 
     <br>
     <form action="/chat/<%= conversation.getTitle() %>" method="POST" id="replyForm" class="hide">
@@ -119,7 +119,7 @@ double lng = mkr.getLongitude();
         <button type="submit">Reply</button>
       </form>
     <% } else { %>
-      <p><a href="/login">Login</a> to send a message.</p>
+      <p><a id="ul-link" href="/login">Login</a> to send a message.</p>
     <% } %>
 
     <hr/>

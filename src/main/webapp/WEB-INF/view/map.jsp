@@ -120,14 +120,15 @@
           var lookMarker = new google.maps.Marker({
             map: map,
             title: place.name,
-            position: place.geometry.location
+            position: place.geometry.location,
+            icon: 'http://maps.google.com/mapfiles/kml/paddle/purple-circle.png'
           });
 
           markers.push(lookMarker);
 
           google.maps.event.addListener(lookMarker, 'click', function() {
 
-            stepDisplay.setContent('Name: ' + place.name + '<br>Adress: ' + place.formatted_address + '<br>'+ place.geometry.location);
+            stepDisplay.setContent('<b>Name:</b> ' + place.name + '<br><b>Address:</b> ' + place.formatted_address + '<br>'+ place.geometry.location + '<b><br>This marker has not been saved yet! Please fill out the form next to the map to save a marker!</b>');
 
             document.querySelector("#placeName").value = place.name;
             document.querySelector("#latitudeVal").value = lookMarker.position.lat();
@@ -149,7 +150,7 @@
 
   // Adds a markerstore marker to the map.
       function addMarkerFromStore(location, map, markerName, convoName) {
-        var contentString = '<h3 align="center">' + markerName +'</h3>' + '<a href="/chat/' + convoName 
+        var contentString = '<h3 align="center">' + markerName +'</h3>' + '<a id="ul-link" href="/chat/' + convoName 
         +'">Join</a> the conversation going on at this location!';
 
         var infowindow = new google.maps.InfoWindow({
