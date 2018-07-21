@@ -21,11 +21,12 @@
 <%@ page import="codeu.model.store.basic.UserStore" %>
 <%@ page import="codeu.model.store.basic.MessageStore" %>
 <%@ page import="codeu.model.store.basic.MarkerStore" %>
+<%@ page import="com.vdurmont.emoji.EmojiParser" %>
 <%
 Conversation conversation = (Conversation) request.getAttribute("conversation");
 List<Message> messages = (List<Message>) request.getAttribute("messages");
 Marker mkr = MarkerStore.getInstance().getMarkerByConvo(conversation.getId());
-String locName = mkr.getLocationName();
+String locName = EmojiParser.parseToUnicode(mkr.getLocationName());
 double lat = mkr.getLatitude();
 double lng = mkr.getLongitude();
 %>

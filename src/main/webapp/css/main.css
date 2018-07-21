@@ -15,7 +15,7 @@
 
 body {
   margin: 0;
-  font-family: Geneva;
+  font-family: Trebuchet MS;
   line-height: 1.6;
   font-size: 18px;
   line-height: 1.6;
@@ -87,9 +87,9 @@ nav a:hover {
 
 #map {  
   margin-left: 600px;
-  margin-top: -675px;
+  margin-top: -745px;
   width: 700px;
-  height: 650px;
+  height: 700px;
 }
 
 h1 {

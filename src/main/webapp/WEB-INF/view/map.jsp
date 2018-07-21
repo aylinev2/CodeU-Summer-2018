@@ -2,6 +2,7 @@
 <%@ page import="codeu.model.data.Marker" %>
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.store.basic.ConversationStore" %>
+<%@ page import="com.vdurmont.emoji.EmojiParser" %>
 <%@ page import="java.util.List" %>
 
 
@@ -18,8 +19,8 @@
     <h1>The Map</h1>
     <ul>
     <li>To join a conversation that has already started at a location, just click on the marker that is there!</li>
-    <li>To add a new marker, log in and click on a spot on the map. Be sure to fill out the location name field to succesfully save your marker and start a new conversation! <p>(Tip: click on the marker that you just created to see its exact coordinates)</p></li>
-    </ul>   
+    <li>To add a new marker, click on a spot on the map and fill out the location name field to succesfully save your marker and start a new conversation! <p>(Tip: click on the marker that you just created to see its exact coordinates)</p></li>
+     
     <% if(request.getAttribute("error") != null){ %>
         <h2 style="color:red"><%= request.getAttribute("error") %></h2>
     <% } 
@@ -29,6 +30,7 @@
       <form action="/map" method="POST">
         <h3>Location Name:</h3>
         <input id="placeName" type="text" name="locationName">
+        <br/><p style="font-size:12px">To use an emoji, write an emoji name between colons (:cat: -> &#x1F431;)</p>
         <h3>Latitude:</h3>
         <input id="latitudeVal" type="text" name="latitudeVal">
         <h3>Longitude:</h3>
@@ -38,8 +40,9 @@
       </form>
     <% } 
     else { %>
-     <a href="/login">Login</a> or  <a href="/register">Register</a> to add a marker!
+     <a id="ul-link" href="/login">Login</a> or  <a id="ul-link" href="/register">Register</a> to add a marker!
     <% } %>
+      </ul>  
       <hr/>
     <!--The search element for the map -->
     <input id="pac-input" class="controls" type="text" placeholder="Search Google Maps">
@@ -49,7 +52,7 @@
   </div>
     <script>
       <% if(request.getSession().getAttribute("user") == null) { %>
-        document.getElementById("map").style.marginTop = "-375px";
+        document.getElementById("map").style.marginTop = "-335px";
       <% } %>
 
       var locNames = [];
@@ -61,7 +64,7 @@
        for(Marker marker: markers) {
        %>
            markerLocs.push({lat: <%= marker.getLatitude() %>, lng: <%= marker.getLongitude() %>},);
-           locNames.push("<%= marker.getLocationName() %>",);
+           locNames.push("<%= EmojiParser.parseToUnicode(marker.getLocationName()) %>",);
           convoNames.push("<%= marker.getLocationName().replaceAll("\\s", "") %>",);
        <%} 
     }%>
@@ -74,8 +77,8 @@
   // The map, centered in the United States
      map = new google.maps.Map(
       document.getElementById('map'), {
-        center: {lat: 41.881832, lng: -87.623177},
-        zoom: 1
+        center: {lat: 38.70748253635325, lng: -9.147507253577942},
+        zoom: 2
       });
 
      var input = document.getElementById('pac-input');

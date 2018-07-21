@@ -19,6 +19,7 @@
 <%@ page import= "java.util.Locale" %>
 <%@ page import= "java.util.HashMap" %>
 <%@ page import= "java.util.Map" %>
+<%@ page import= "com.vdurmont.emoji.EmojiParser" %>
 
 <!DOCTYPE html>
 <html>
@@ -72,8 +73,8 @@
           Instant instant = conversation.getCreationTime();
           String output = formatter.format( instant ); %>
           <strong><%= output %>:</strong>
-          <a id="ul-link" href="/chat/<%= conversation.getTitle() %>">
-        <%= conversation.getTitle() %></a> created by 
+          <a id="link" href="/chat/<%= conversation.getTitle() %>">
+        <strong><%= EmojiParser.parseToUnicode(conversation.getTitle()) %></strong></a> created by 
         <strong><a id="link" href="/profile/<%= owner%>">
         <%= owner %> </a> </strong>
         </li>
@@ -140,15 +141,15 @@
           if (message.getParentMessageId() == null) { %>
           <strong> <%= output %>: </strong>
           <strong> <a id="link" href="/profile/<%= owner%>"><%= owner %> </a> </strong> sent a message in
-          <a id="ul-link" href="/chat/<%= title %>">
-          <%= title %></a>
+          <strong><a id="link" href="/chat/<%= title %>">
+          <%= title %></a></strong>
           : "<%=message.getContent()%>"
           <% } 
           else { %>
           <strong> <%= output %>: </strong>
           <strong> <a id="link" href="/profile/<%= owner%>"><%= owner %> </a> </strong> replied to a message in
-          <a id="ul-link" href="/chat/<%= title %>">
-          <%= title %></a>
+          <strong><a id="link" href="/chat/<%= title %>">
+          <%= title %></a></strong>
           : "<%=message.getContent()%>"
           <% } %>
         </li>

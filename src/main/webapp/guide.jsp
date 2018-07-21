@@ -29,7 +29,7 @@
       <p>
         <ul>
           <li>Our chat app currently uses the BBCode markup language to allow users to syle their text. We currently do not allow HTML tags for text styling in order for our app to be as user friendly as possible. You can see the guide below that lists all the possible BBCode tags that you can use when starting a conversation on our chat app.</li>
-          <li>Our chat app also allows emoji! You may copy and paste an emoji in our application or you can access an emoji by simply typing in the emoji name enclosed by colons.
+          <li>Our chat app also allows emoji! You can access an emoji by simply typing in the emoji name enclosed by colons.
             <ul>
               <li>Example - :smile: would become &#X1F601;</li>
               <li>Can't figure out the name of the emoji that you want to use? <a href="https://www.webpagefx.com/tools/emoji-cheat-sheet/">Click here</a> for a cheat sheet!</li>

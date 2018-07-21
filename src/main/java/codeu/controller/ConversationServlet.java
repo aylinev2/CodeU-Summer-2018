@@ -116,12 +116,6 @@ public class ConversationServlet extends HttpServlet {
     }
 
     String conversationTitle = request.getParameter("conversationTitle");
-    if (!conversationTitle.matches("[\\w*]*")) {
-      request.setAttribute("error", "Please enter only letters and numbers.");
-      request.getRequestDispatcher("/WEB-INF/view/conversations.jsp").forward(request, response);
-      return;
-    }
-          
     if (conversationTitle.isEmpty()) {
         request.setAttribute("error", "Please enter at least one letter or number for the conversation title.");
         List<Conversation> conversations = conversationStore.getAllConversations();

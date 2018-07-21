@@ -15,10 +15,12 @@
 --%>
 <%@ page import="java.util.List" %>
 <%@ page import="codeu.model.data.Marker" %>
+<%@ page import="com.vdurmont.emoji.EmojiParser" %>
 
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
   <title>Conversations</title>
   <link rel="stylesheet" href="/css/main.css">
 </head>
@@ -46,7 +48,7 @@
       String convoName = marker.getLocationName().replaceAll("\\s", "");
     %>
       <li><a id="link" href="/chat/<%= convoName %>">
-        <%= marker.getLocationName() %></a></li>
+        <%= EmojiParser.parseToUnicode(marker.getLocationName()) %></a></li>
     <%
       }
     %>
