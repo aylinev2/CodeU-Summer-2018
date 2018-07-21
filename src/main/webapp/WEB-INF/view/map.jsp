@@ -4,6 +4,7 @@
 <%@ page import="codeu.model.store.basic.ConversationStore" %>
 <%@ page import="java.util.List" %>
 
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,18 +13,18 @@
   <link rel="stylesheet" href="/css/main.css">
   </head>
   <body>
-    <%@ include file="/WEB-INF/view/navbar.jsp" %>
-    <div id="container2">
+    <%@ include file="/WEB-INF/view/navbar.jsp" %>  
+  <div id="container2">
     <h1>The Map</h1>
     <ul>
     <li>To join a conversation that has already started at a location, just click on the marker that is there!</li>
     <li>To add a new marker, log in and click on a spot on the map. Be sure to fill out the location name field to succesfully save your marker and start a new conversation! <p>(Tip: click on the marker that you just created to see its exact coordinates)</p></li>
-    </ul>
-
+    </ul>   
     <% if(request.getAttribute("error") != null){ %>
         <h2 style="color:red"><%= request.getAttribute("error") %></h2>
-    <% } %>
-   
+    <% } 
+    if(request.getSession().getAttribute("user") != null){ 
+    %>
       <h2>Add a new marker:</h2>
       <form action="/map" method="POST">
         <h3>Location Name:</h3>
@@ -34,16 +35,23 @@
         <input id="longitudeVal" type="text" name="longitudeVal">
         <br/><br/>
         <button type="submit">Submit</button>
-    </form>
+      </form>
+    <% } 
+    else { %>
+     <a href="/login">Login</a> or  <a href="/register">Register</a> to add a marker!
+    <% } %>
       <hr/>
     <!--The search element for the map -->
     <input id="pac-input" class="controls" type="text" placeholder="Search Google Maps">
     <button id= "clearButton" onclick="resetSearch()">Clear</button>
-    <!--The div element for the map -->
-      <div id="map"></div>
-    </div> 
-
+    <!--The div element for the map --> 
+    <div id="map"></div>
+  </div>
     <script>
+      <% if(request.getSession().getAttribute("user") == null) { %>
+        document.getElementById("map").style.marginTop = "-375px";
+      <% } %>
+
       var locNames = [];
       var convoNames = [];
       var markerLocs = [];
@@ -67,8 +75,13 @@
      map = new google.maps.Map(
       document.getElementById('map'), {
         center: {lat: 41.881832, lng: -87.623177},
-        zoom: 4
+        zoom: 1
       });
+
+     var input = document.getElementById('pac-input');
+     var clearButton = document.getElementById('clearButton');
+     map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
+     map.controls[google.maps.ControlPosition.TOP_CENTER].push(clearButton);
 
   // This event listener calls addMarker() when the map is clicked.
         google.maps.event.addListener(map, 'click', function(event) {
@@ -87,12 +100,8 @@
       // Code to display search box
       // Create the search box and link it to the UI element.
       var stepDisplay = new google.maps.InfoWindow;
-      var input = document.getElementById('pac-input');
-      var clearButton = document.getElementById('clearButton');
       var searchBox = new google.maps.places.SearchBox(input);
       var locationDisplay = new google.maps.InfoWindow;
-      map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
-      map.controls[google.maps.ControlPosition.TOP_CENTER].push(clearButton);
 
       // Bias the SearchBox results towards current map's viewport.
       map.addListener('bounds_changed', function() {
