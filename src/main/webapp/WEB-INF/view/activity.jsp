@@ -31,11 +31,17 @@
 
   <%@ include file="navbar.jsp" %>
 
+  
   <div id="container">
       <% DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT ).withLocale( Locale.US ).withZone( ZoneId.systemDefault() ); %>
 
       <h1>Site Activity</h1>
-      <p> All that's going on:</p>
+      <p> All that's going on: (Jump to- 
+        <a id="ul-link" href="#1">Conversations</a>
+        <a id="ul-link" href="#2">Users</a>
+        <a id="ul-link" href="#3">Messages</a> ) </p>
+    
+      <section id="1">
       <strong> Conversations: </strong>
       <%
       List<Conversation> conversations =
@@ -79,6 +85,8 @@
       }
       %>
       <hr/>
+      </section>
+      <section id="2">
       <strong> Users: </strong>
       <%
       if(users == null || users.isEmpty()){
@@ -108,6 +116,8 @@
       }
       %>
        <hr/>
+      </section>
+      <section id="3">
       <strong> Messages: </strong>
       <%
       if(messages == null || messages.isEmpty()){
@@ -149,8 +159,9 @@
       <%
       }
       %>
+    </section>
 
-    </div>
+    
   </div>
 </body>
 </html>
