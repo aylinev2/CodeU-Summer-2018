@@ -78,8 +78,9 @@ public class RegisterServlet extends HttpServlet {
     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
     String defaultAboutMe = "Welcome to " + username + "'s profile!";
+    String defaultProfileImg = "/About-IMG/Default-Profile-IMG.png";
 
-    User user = new User(UUID.randomUUID(), username, defaultAboutMe, hashedPassword, Instant.now());
+    User user = new User(UUID.randomUUID(), username, defaultAboutMe, hashedPassword, Instant.now(), defaultProfileImg);
     userStore.addUser(user);
 
     request.getSession().setAttribute("user", username);

@@ -120,7 +120,7 @@ public class MapServletTest {
                  UUID.randomUUID(),
                  "test_username", "test_aboutMe",
                  "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
-                 Instant.now());
+                 Instant.now(), "/About-IMG/Default-Profile-IMG.png");
         Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
         
         mapServlet.doPost(mockRequest, mockResponse);
@@ -143,7 +143,7 @@ public class MapServletTest {
             UUID.randomUUID(),
             "test_username", "test_aboutMe",
             "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
-            Instant.now());
+            Instant.now(), "/About-IMG/Default-Profile-IMG.png");
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
 
     Mockito.when(mockConversationStore.isTitleTaken("test_locationName")).thenReturn(true);
@@ -170,7 +170,7 @@ public class MapServletTest {
             UUID.randomUUID(),
             "test_username", "test_aboutMe",
             "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
-            Instant.now());
+            Instant.now(), "/About-IMG/Default-Profile-IMG.png");
     Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
 
     Mockito.when(mockConversationStore.isTitleTaken("test_locationName")).thenReturn(false);
@@ -197,7 +197,7 @@ public class MapServletTest {
             UUID.randomUUID(),
             "test_username", "test_aboutMe",
             "$2a$10$eDhncK/4cNH2KE.Y51AWpeL8/5znNBQLuAFlyJpSYNODR/SJQ/Fg6",
-            Instant.now());
+            Instant.now(), "/About-IMG/Default-Profile-IMG.png");
 
     Marker fakeMarker =
         new Marker(
