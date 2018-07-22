@@ -135,7 +135,7 @@
         <li> 
          <% 
           String owner = (String) idToName.get(message.getAuthorId());
-          String title = (String) idToTitle.get(message.getConversationId());
+          String title = EmojiParser.parseToUnicode((String) idToTitle.get(message.getConversationId()));
           Instant instant = message.getCreationTime();
           String output = formatter.format( instant ); 
           if (message.getParentMessageId() == null) { %>

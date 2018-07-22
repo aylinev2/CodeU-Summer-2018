@@ -17,6 +17,7 @@
 <%@ page import= "java.time.format.FormatStyle" %>
 <%@ page import= "java.util.Locale" %>
 <%@ page import= "java.time.Instant" %>
+<%@ page import= "com.vdurmont.emoji.EmojiParser" %>
 
 <%
 User user = (User) request.getAttribute("userToAccess");
@@ -47,17 +48,14 @@ DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.
   <%@ include file="/WEB-INF/view/navbar.jsp" %>
 
   <div id="container">
-
-    <h1><%= user.getName() %>'s Profile Page</h1>
-
-    <hr/>
-      <div style="text-align: center;">
+  <div style="text-align: center;">
+      <h1><%= user.getName() %>'s Profile Page</h1>
+      <hr/>
       <img src="<%=user.getPic()%>" class="prof-pic">
       <h2>About <%= user.getName()%></h2>
       <p>
         <%= processor.process(user.getAboutMe())%>
       </p>
-      <div>
 
       <% if(request.getSession().getAttribute("error") != null) { %>
        <h2 style="color:red"><%= request.getSession().getAttribute("error") %></h2>
@@ -82,6 +80,7 @@ DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.
      <hr/>
      <h2><%= user.getName()%>'s Sent Messages</h2>
      
+     </div>
      <div id="activity">
       <ul>
      <%
@@ -95,7 +94,7 @@ DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.
       for (Message message : messages) {
           Marker mkr = mkrStore.getMarkerByConvo(message.getConversationId());
           if (mkr != null){
-            String mkrName = mkr.getLocationName();
+            String mkrName = EmojiParser.parseToUnicode(mkr.getLocationName());
             String convoName = mkrName.replaceAll("\\s", "");
          %>
          <li><b><%= formatter.format(message.getCreationTime()) %> in <a id="link" href="/chat/<%= convoName%>"><%= mkrName%></a>: </b> <%= message.getContent() %>

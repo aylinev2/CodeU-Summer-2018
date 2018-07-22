@@ -39,6 +39,16 @@ nav a:hover {
   color: #55d8d3;
 }
 
+hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #8e8e8e;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-top-color: rgb(142, 142, 142);
+}
+
 #activity {
   background-color: white;
   height: 475px;
@@ -87,7 +97,7 @@ nav a:hover {
 
 #map {  
   margin-left: 600px;
-  margin-top: -745px;
+  margin-top: -765px;
   width: 700px;
   height: 700px;
 }
@@ -114,8 +124,27 @@ button {
   width: 200px;
 }
 
-.prof-picConvo {
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
+.img-comment-list {
+    list-style: none;  
+    padding: 0;
+}
+.img-comment-list li {
+    margin:0;
+    margin-top:10px;
+}
+
+.img-comment-list li > div {
+    display:table-cell;
+}
+
+.img-comment-list img {
+    border-radius:50%;
+    width: 42px;
+    height: 42px;
+    margin-right: 10px;
+    margin-top: 20px;
+}
+
+.img-comment-list p {
+    margin: 0;
 }
