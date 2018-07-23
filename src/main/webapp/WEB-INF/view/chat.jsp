@@ -13,6 +13,9 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <%@ page import="java.util.List" %>
 <%@ page import="codeu.model.data.Conversation" %>
 <%@ page import="codeu.model.data.Message" %>
@@ -22,7 +25,15 @@
 <%@ page import="codeu.model.store.basic.MessageStore" %>
 <%@ page import="codeu.model.store.basic.MarkerStore" %>
 <%@ page import="com.vdurmont.emoji.EmojiParser" %>
+<%@ page import= "java.time.format.DateTimeFormatter" %>
+<%@ page import= "java.util.Date" %>
+<%@ page import= "java.time.LocalDateTime" %>
+<%@ page import= "java.time.ZoneId" %>
+<%@ page import= "java.time.Instant" %>
+<%@ page import= "java.time.format.FormatStyle" %>
+<%@ page import= "java.util.Locale" %>
 <%
+DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(Locale.US).withZone(ZoneId.systemDefault());
 Conversation conversation = (Conversation) request.getAttribute("conversation");
 List<Message> messages = (List<Message>) request.getAttribute("messages");
 Marker mkr = MarkerStore.getInstance().getMarkerByConvo(conversation.getId());
@@ -75,22 +86,45 @@ double lng = mkr.getLongitude();
         .getUser(message.getAuthorId()).getName();
         User user = (User) UserStore.getInstance().getUser(author); 
     %>
+
+      <ul class="img-comment-list">
+        <li>
+          <div class="comment-img">
+              <img src="<%=user.getPic()%>">
+          </div>
+          <div class="comment-text">
+              <strong><a id="link" href="/profile/<%= author%>"><%= author%></a></strong>
+              <p><%= message.getContent() %></p><p style="font-size:9px"><%=formatter.format(message.getCreationTime()) %></p>
+          </div>
+          </li>
+      </ul>
       
-      <li> <img src="<%=user.getPic()%>" class="prof-picConvo"> <strong><a id="link" href="/profile/<%= author%>"><%= author%>:</a></strong> <%= message.getContent() %>
       <% 
       List<Message> replies = MessageStore.getInstance().getRepliesInMessage(message.getId());
       if( replies != null) {
         for(Message reply: replies) {
-        String replyAuthor = UserStore.getInstance()
-        .getUser(reply.getAuthorId()).getName();
+        User replyAuth = UserStore.getInstance()
+        .getUser(reply.getAuthorId());
+        String replyAuthor = replyAuth.getName();
       %>
-      <p style ="padding-left:2em">
-      <strong><a id="link" href="/profile/<%= replyAuthor%>"><%= replyAuthor%>: </a></strong><%= reply.getContent()%> </p>
+      <p>
+        <ul class="img-comment-list" style="margin-left: 60px">
+        <li>
+        <div class="comment-img">
+              <img src="<%=replyAuth.getPic()%>">
+        </div>
+        <div class="comment-text">
+              <strong><a id="link" href="/profile/<%= replyAuthor%>"><%= replyAuthor%></a></strong>
+              <p><%= reply.getContent()%></p><p style="font-size:9px"><%=formatter.format(reply.getCreationTime()) %></p>
+        </div>
+        </li>
+        </ul>
+      </p>
     <%
       }
     }
     %>
-      </li>
+      
     <%
      if (request.getSession().getAttribute("user") != null) { %> 
       <form action="/chat/<%= conversation.getTitle() %>" method="POST" id="replyForm">
@@ -110,12 +144,10 @@ double lng = mkr.getLongitude();
     <% if (request.getSession().getAttribute("user") != null) { %>
     <form action="/chat/<%= conversation.getTitle() %>" method="POST">
         <input type="text" name="message">
-        <br/>
         <button type="submit">Send</button>
         <br>
         <p> Our chat app currently supports BBCode for text styling. <a id="ul-link" href="/guide.jsp">Click here</a> to learn more about our text styling options.</p>
     </form> 
-    <br>
     <form action="/chat/<%= conversation.getTitle() %>" method="POST" id="replyForm" class="hide">
         <p id="replyingTo"></p>
         <input type="hidden" name="messageUUID"/>

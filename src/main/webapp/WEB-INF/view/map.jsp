@@ -30,7 +30,7 @@
       <form action="/map" method="POST">
         <h3>Location Name:</h3>
         <input id="placeName" type="text" name="locationName">
-        <br/><p style="font-size:12px">To use an emoji, write an emoji name between colons (:cat: -> &#x1F431;)</p>
+        <br/><p style="font-size:12px">To use an emoji, write an <a id="ul-link" href="https://www.webpagefx.com/tools/emoji-cheat-sheet/">emoji name</a> between colons (:cat: -> &#x1F431;)</p>
         <h3>Latitude:</h3>
         <input id="latitudeVal" type="text" name="latitudeVal">
         <h3>Longitude:</h3>
@@ -52,7 +52,7 @@
   </div>
     <script>
       <% if(request.getSession().getAttribute("user") == null) { %>
-        document.getElementById("map").style.marginTop = "-335px";
+        document.getElementById("map").style.marginTop = "-355px";
       <% } %>
 
       var locNames = [];
