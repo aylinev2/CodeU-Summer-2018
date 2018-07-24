@@ -78,7 +78,7 @@ public class RegisterServlet extends HttpServlet {
     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
     String defaultAboutMe = "Welcome to " + username + "'s profile!";
-    String defaultProfileImg = "/About-IMG/Default-Profile-IMG.png";
+    String defaultProfileImg = "https://cdn1.iconfinder.com/data/icons/emoticon-17/128/EMOTION_3-02-512.png";
 
     User user = new User(UUID.randomUUID(), username, defaultAboutMe, hashedPassword, Instant.now(), defaultProfileImg);
     userStore.addUser(user);
