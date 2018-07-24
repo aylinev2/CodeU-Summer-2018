@@ -35,6 +35,15 @@ nav a {
   text-decoration: none;
 }
 
+nav h1 {
+  color: white;
+  display: inline-block;
+  font-size: 24px;
+  margin: 15px;
+  text-decoration: none;
+  font-weight: normal;
+}
+
 nav a:hover {
   color: #55d8d3;
 }

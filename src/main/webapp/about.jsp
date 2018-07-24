@@ -33,7 +33,7 @@
       </p>
       <ul>
         <li><strong>Activity Feed:</strong> A feed that shows all of the application's activity such as when users start conversations, write messages, or join the application.</li>
-        <li><strong>Profile Pages:</strong> Pages that display a user's about me and a mini feed that includes all of the messages a user has sent. When logged in, users have the option to edit their about me right from their profile page.</li>
+        <li><strong>Profile Pages:</strong> Pages that display a user's about me, profile picture, and a mini feed that includes all of the messages a user has sent. When logged in, users have the option to edit their about me and picture right from their profile page.</li>
         <li><strong>Text Styling:</strong> The ability to style text by using certain BBCode tags ([b]wow![/b] -> <b>wow!</b>) or parse text to emojis (:cat: -> &#x1F431;). Our website also has a <a id="ul-link" href="/guide.jsp">text styling guide</a> available for those who aren't familiar with BBCode tags and would like to learn how to use them on our site. </li>
       </ul>
 

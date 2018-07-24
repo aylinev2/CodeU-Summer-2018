@@ -92,6 +92,16 @@ public class ChatServletTest {
     Mockito.when(mockMessageStore.getMessagesInConversation(fakeConversationId))
         .thenReturn(fakeMessageList);
 
+    Mockito.when(mockSession.getAttribute("user")).thenReturn("test_username");
+
+    User fakeUser =
+        new User(
+            UUID.randomUUID(),
+            "test_username", "test_aboutMe",
+            "$2a$10$bBiLUAVmUFK6Iwg5rmpBUOIBW6rIMhU1eKfi3KR60V9UXaYTwPfHy",
+            Instant.now(), "/About-IMG/Default-Profile-IMG.png");
+    Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
+
     chatServlet.doGet(mockRequest, mockResponse);
 
     Mockito.verify(mockRequest).setAttribute("conversation", fakeConversation);
@@ -102,12 +112,31 @@ public class ChatServletTest {
   @Test
   public void testDoGet_badConversation() throws IOException, ServletException {
     Mockito.when(mockRequest.getRequestURI()).thenReturn("/chat/bad_conversation");
+    Mockito.when(mockSession.getAttribute("user")).thenReturn("test_username");
+
+    User fakeUser =
+        new User(
+            UUID.randomUUID(),
+            "test_username", "test_aboutMe",
+            "$2a$10$bBiLUAVmUFK6Iwg5rmpBUOIBW6rIMhU1eKfi3KR60V9UXaYTwPfHy",
+            Instant.now(), "/About-IMG/Default-Profile-IMG.png");
+    Mockito.when(mockUserStore.getUser("test_username")).thenReturn(fakeUser);
     Mockito.when(mockConversationStore.getConversationWithTitle("bad_conversation"))
         .thenReturn(null);
 
     chatServlet.doGet(mockRequest, mockResponse);
 
     Mockito.verify(mockResponse).sendRedirect("/conversations");
+  }
+
+  @Test
+  public void testDoGet_UserNotLoggedIn() throws IOException, ServletException {
+    Mockito.when(mockRequest.getRequestURI()).thenReturn("/chat/bad_conversation");
+    Mockito.when(mockSession.getAttribute("user")).thenReturn(null);
+
+    chatServlet.doGet(mockRequest, mockResponse);
+
+    Mockito.verify(mockResponse).sendRedirect("/login");
   }
 
   @Test
